@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Yokohama.pm #4に行ってきた</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2009-04-18 02:43:10</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2009/04/18/yokohama_pm_four/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2009/04/18/yokohama_pm_four/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Yokohama.pm #4に行ってきた</h1>
+    <p>Perlは全然上達しませんが、再びYokohama.pmへいって参りました。ネタ的にPerlを深く理解していなくても役に立つものばかりで非常に有意義でした。</p>
+<p>以下、iPhoneでがんばってとったメモ。あくまでiPhoneでとったメモなので、そこんとこよろよろ。</p>
+<div class="section" id="qudo-skinny">
+<h2>Qudo &amp; Skinny</h2>
+<p><a class="reference external" href="http://d.hatena.ne.jp/nekokak/">nekokakさん</a> が自身で開発されている <a class="reference external" href="http://github.com/nekokak/qudo/tree/master">Qudo</a> と <a class="reference external" href="http://github.com/nekokak/p5-dbix-skinny/tree/master">Skinny</a> の紹介</p>
+<blockquote>
+<p><a class="reference external" href="http://github.com/nekokak/p5-dbix-skinny/tree/master">Skinny</a> : スキニー。モデルを書くためのもの。ルールベースでコールバックをかける。名前固定や正規表現でに対してフックできる。</p>
+<p><a class="reference external" href="http://github.com/nekokak/qudo/tree/master">Qudo</a> : クドー。TheSchwartzに変わるもの。TheSchwartzのコマンドをタイポしてやだから始めた。</p>
+<p>キューをドゥーするものってことでQudo。TheSchwartzはDODべったりだがQudoは好きなO/Rとかつかえる。フックをいろんな場所に入れてる。また、TheSchwartzはPerlをシリアライズしたものを格納するが、QudoはJsonで格納するので、別言語と組み合わせて使いやすい。エラーを一定数で消したりしない。エラったジョブをもう一度キューに入れやすくしている。</p>
+</blockquote>
+<p>ジョブ・キューおもしろそうだなぁ。Pythonはどんなのがあるんだろう？と思ったが、PythonはGILの影響で並列に弱いらしい。</p>
+</div>
+<div class="section" id="diperl">
+<h2>DI×Perl</h2>
+<p>JPA/モダンPerl入門の <a class="reference external" href="http://mt.endeworks.jp/d-6/">牧さん</a> によるPerlのDI現状。</p>
+<blockquote>
+<p>DI自体はメインストリームに出て10年くらい？</p>
+<p>Bread::Boardくらい。本番で使ってるのはほんの数人。</p>
+<p>Bread::BoardのDSL書いてると…結局全部書いてる！www</p>
+<p>Bread::Boardを美しく分割したものがじきに取り込まれるとのこと。</p>
+<p>PerlはDIできないの？っていわれたときにできるよ！と言えるよw</p>
+</blockquote>
+<p>LLにDIはやっぱり…とか思った。</p>
+</div>
+<div class="section" id="angeloswaf">
+<h2>Angelosで学ぶ優しいWAFの作り方</h2>
+<p>dannさん が作っている <a class="reference external" href="http://github.com/dann/angelos/tree/master">Angelos</a> の紹介</p>
+<blockquote>
+<p>他の言語のいいところをとった。</p>
+<p>ruby フルスタック+規約</p>
+<p>Python wsgi(抽象化とミドルウェア)</p>
+<p>java DI</p>
+<p>(Peel プラガブルで自由)</p>
+</blockquote>
+<p>抽象化とミドルウェア的なものはJava servletじゃね？っていつも思う。</p>
+<p>Railsなんかみてても思うんだけど、routerでurlとアクションのメソッド名がカップリングしてるのってダサくね？設定してないサーブレットみたいな。。</p>
+<p>Angelosは総じてすっきりしていて良い感じっぽい。</p>
+</div>
+<div class="section" id="peel-with-amazon-elastic-mapreduce">
+<h2>Peel with Amazon Elastic MapReduce</h2>
+<p><a class="reference external" href="http://journal.soffritto.org/">lopnorさん</a> がPerlでAmazonのMapReduceを使うTipsを紹介</p>
+<blockquote>
+<p>MapReduce: クラスタで計算量の大きな処理をする。</p>
+<p>jsonでcredemtialを書く。S3に入力データ、結果をおける。mapper,reducerのプログラムもS3に置いて指定する。</p>
+<p>CPAN使えるか?local::libを使ってjarにすれば使えるよ！</p>
+<p>注意点。出力ディレクトリが既にあるとそれだけで失敗になる！</p>
+<p>インスタンスの単位課金が1時間なので効率の良いインスタンス数を目指そう！</p>
+</blockquote>
+<p>ふーむ。必要になったら試してみたい。が、分散できる計算でまとまった量の計算をする機会がないなぁ。</p>
+</div>
+<div class="section" id="simo">
+<h2>簡単オブジェクト指向入門 Simo入門</h2>
+<p><a class="reference external" href="http://d.hatena.ne.jp/perlcodesample/">perlcodesampleさん</a> の <a class="reference external" href="http://search.cpan.org/dist/Simo/">Simo</a> 入門</p>
+<blockquote>
+<p>SimoはMooseより簡単で、Class::Accessorより機能豊富。</p>
+<p>use strict use warningsは自動。</p>
+<pre class="literal-block">
+package Hoge;
+use Simo;
+
+sub title {ac};
+sub name {ac};
+</pre>
+<p>acって書くだけでアクセッサが出来る。 acに続けてハッシュ定義的に制限書ける。違反すると例外が飛ぶ。</p>
+<p>アクセッサで値生成のフック書ける。</p>
+<p>トリガーも書ける。</p>
+</blockquote>
+<p>なかなか簡単シンプルでよい感じ。制限を違反した場合のエラーは、値を設定した途端に発生するのかな？複数のエラーを同時には取れない？</p>
+<p>このへん使ってシェル的なプログラムを書いていくのがPerlへの近道かなぁ。</p>
+</div>
+<div class="section" id="capbaseeventually-consistent">
+<h2>CAPとBASEとEventually Consistent</h2>
+<p><a class="reference external" href="yohei-y.blogspot.com">山本陽平さん</a> のお話</p>
+<blockquote>
+<p>分散重要。だが難しい。</p>
+<p>CAP定理。Consistency、 Availability、 Partition?</p>
+<p>Consistency</p>
+<p>・更新されたらその後は必ず最新のデータが取れる strong</p>
+<p>・最新が取れるとは限らない。 weak → Eventual Consistency 結果整合性でググれカス！ある程度の時間(inconsistent window)経過後は必ず最新のデータが取れるというもの。</p>
+<p>Availability 冗長化</p>
+<p>Partition 複数のサーバに分散して格納できる。</p>
+<p>この3つを同時に満たすことはできない（証明されている）</p>
+<p>最近は、構造化オーバーレイ key-value メッセージキュー等の方法がある。</p>
+<p>Dbms由来とP2P由来。</p>
+<p>ACIDはもうダメ。BASEだよ。ってのはFUDだから状況に応じて最適なものを選ぼう！</p>
+</blockquote>
+<p>おもろいなぁ</p>
+</div>
+<div class="section" id="perl-completion-el-imakado">
+<h2>perl-completion.elの紹介 IMAKADOさん</h2>
+<blockquote>
+emacsの拡張。補完、perldoc、モジュールファイルをひらいたりできる。カヤックオープンソースの時間でやってる。おそくならないように非同期でやってる。</blockquote>
+</div>
+<div class="section" id="memcache-queue-masartz">
+<h2>Memcache-Queue masartzさん</h2>
+<blockquote>
+モダンPerl入門を発売日に新宿紀伊國屋で6冊買い占めた！バックエンドを好きにしてみたかった。通常はQudoつかえよっ！俺もメンテナダシ</blockquote>
+</div>
+<div class="section" id="html-aafind-komoriya">
+<h2>HTML::AAFind komoriyaさん</h2>
+<blockquote>
+HTML内のAAを探し出す！画像にして200ピクセルにしちゃえば携帯でもみられるお！とやる夫が説明してくれた。</blockquote>
+<p>これは素晴らしい！是非LDRで使って欲しい！AAが崩れて悲しいことが多いんだよぉ</p>
+</div>
+<div class="section" id="id4">
+<h2>懇親会</h2>
+<p>すぎゃーんさんが小笠原に行ったことがあるらしい。すげー。片道30時間だってさ。</p>
+<p>日本に2人しかいないという医師の国家試験を通ったCTOの一人の話がすげーおもろい。</p>
+<p>撤収しようと思ったらビジネス鞄が二つとりのこされていた。Perl Mongersすげーっ！って大騒ぎしてたら2人トイレに行っていただけだった。超www</p>
+<p>ZIGOROuさんについて行けば駅につけると思ったのに、電車無くなっても飲む人たちの集団とかしていて危険だったw</p>
+<p>Perlの会楽しい</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2009/04/15/too_difficult_for_me/index.html">オレには難しすぎるぜ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2009/04/19/jango_my_own_juke_box/index.html">jangoのJuke Box</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>あなたがDjangoを利用すべき10の理由</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-01-30 08:13:03</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/01/30/3042306a305fdjango3092522975283059304d10306e740675/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/01/30/3042306a305fdjango3092522975283059304d10306e740675/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>あなたがDjangoを利用すべき10の理由</h1>
+    <p>有用なエントリーがあったので、超訳。他にも <a class="reference external" href="http://www.djangoproject.com/weblog/2006/jan/27/reviews/">これ</a> とか面白そう。</p>
+<blockquote>
+original : <a class="reference external" href="http://www.jacobian.org/2006/jan/27/why-django/">http://www.jacobian.org/2006/jan/27/why-django/</a></blockquote>
+<div class="section" id="django10">
+<h2>Djangoを使うべき10の理由</h2>
+<ol class="arabic simple">
+<li>Djangoは現時点で動作する</li>
+</ol>
+<blockquote>
+<p>Djangoが2005年の7月に初めてリリースされたことにだまされてはいけない。</p>
+<p>既に2年以上もヘビーユースされてきている物だ。</p>
+<p>表示が出来なくなってしまうバグがないことを誓おう。</p>
+</blockquote>
+<p>2.デプロイは楽勝</p>
+<blockquote>
+<p>Webフレームワークの世界では <a class="reference external" href="http://www.it-entrepreneur.com/?p=15">悲しい話</a> や <a class="reference external" href="http://www.petersblog.org/node/1075">デプロイの困難</a> さに満ちている。</p>
+<p>Django製サイトの <a class="reference external" href="http://www.djangoproject.com/documentation/modpython/">デプロイ</a> が確立されているだけでなく、Django製サイトは非常に安定している。</p>
+<p>我々は10個のサイト対する一日1500万ヒット以上をシングルDjangoインストールで捌いている（WebサーバとDBサーバ一つづつで）。</p>
+</blockquote>
+<ol class="arabic simple" start="3">
+<li>サイトはダウンしない</li>
+</ol>
+<blockquote>
+<p>Djangoサイトはスラド効果もFark効果も過激なNCSSバスケファン効果も凌いだ。</p>
+<p>（おかしいのは、ljworld.comの編集者が何故ある日いきなり300万ヒットも普段より多いトラフィックがあったのかを訪ねてきたことだ。Farkされていた事が発覚したけれど、私は全然気に留めなかった）</p>
+</blockquote>
+<ol class="arabic simple" start="4">
+<li>Djangoは速い</li>
+</ol>
+<blockquote>
+<p>フレームワークのそこここで効果的なデザインになるように心がけている。</p>
+<p>Djangoのテンプレートをベンチマークしてみたところ、Kidテンプレートより4倍、Cheetahより6倍速かった。</p>
+<p>つまり、リクエスト毎にレンダリングするものよりも、コンパイルしたテンプレートを処理するものの方が遅かったことということだ。</p>
+<p>DjangoのO/Rマッパーも可能な限りパフォーマンスに気をつけている。データベースへのアクセスがが発生した際には明らかになる。</p>
+<p>もし、Djangoがまだ十分な速度を持っていない場合には、 <a class="reference external" href="http://www.djangoproject.com/documentation/cache/">ばかげたくらい簡単</a> にキャッシュの設定をすることが出来る（ページ単位でもサイト全体でも）。</p>
+<p>設定可能なキャッシュのうち <a class="reference external" href="http://www.danga.com/memcached/">memcached</a> はLiveJournalやSlash dot自身が使用している物だ。</p>
+</blockquote>
+<ol class="arabic simple" start="5">
+<li>Djangoはスケール</li>
+</ol>
+<blockquote>
+<p>シェアホスティングで個人サイトも、小さなバンドのサイトも、でっかいデータベースのサイトも50万ユーザを超えるソーシャルネットワークサイトもDjangoはハンドル出来る。</p>
+<p>結局のところハードウェアの予算にのみ縛られる。</p>
+</blockquote>
+<ol class="arabic simple" start="6">
+<li>Djangoの自動管理画面は心に衝撃を与える</li>
+</ol>
+<blockquote>
+<p>コンテンツ志向のWebサイトを開発する上で、もっともつまらないのが管理用画面の開発だ。</p>
+<p>何度フォームのバリデートファンクションを書いた？</p>
+<p>Djangoの管理画面はコンテンツ志向のサイトに、データベースの発明以来となる目を見張る物だ。</p>
+<p>もし何らかの理由でDjangoを使えないとしても管理インターフェースがどうあるべきかチェックすべきだ。</p>
+</blockquote>
+<ol class="arabic simple" start="7">
+<li>全体を移行する必要はない</li>
+</ol>
+<blockquote>
+<p>既に述べたように、Djangoの管理画面が心に衝撃を与える。</p>
+<p>幸運なことにレガシーサイトをDjangoに移行する必要はなくて、Djangoの管理画面だけを使用することが出来る。</p>
+<p>一瞬でデータベースを内観してレガシーデータの管理インターフェースを得ることが出来る。</p>
+<p>Djangoをこの使い方で使用しだした人々が既にいる。</p>
+</blockquote>
+<ol class="arabic simple" start="8">
+<li>Djangoはデザイナーと共存できる</li>
+</ol>
+<blockquote>
+<p>DjangoのテンプレートはPython的でないと批判されています。簡単に説明するとテンプレート言語はあなたのための物ではない。</p>
+<p>我々の新しいデザイナーJeff CroftはDjangoのテンプレートを一日で学び、実務に移っている。</p>
+<p>確かに、あなたがサイトの構築を全てするのであれば、テンプレートを学ぶのはくだらないことだろう。</p>
+<p>でも、もしYahooに雇われていたとするとデザインを誰かの手にまかせられるのがうれしいだろう。</p>
+</blockquote>
+<ol class="arabic simple" start="9">
+<li>Djangoは実務と共に歩んできた</li>
+</ol>
+<blockquote>
+<p>Djangoのどの機能も実際の問題を解決するために存在する。</p>
+<p>django-developpersメーリングリストを見れば、度々Adrianがこう訪ねるのを目にすることだろう。</p>
+<p>「この提案は実務の何を解決するの？」</p>
+<p>Djangoはニュース業界という殺人的にタイトなデッドラインから花咲いてきた。我々のデッドラインはもし数時間でないとしてもほんの数日だ。</p>
+<p>あなたは今まで想像もしなかったスピードで驚愕する大きなサイトを構築できるだろう。</p>
+<p>よく見るようなテレビ局のサイトを立ち上げようとしていますが、ほんの数週間で構築した。</p>
+</blockquote>
+<p>10.われわれがここにいる</p>
+<blockquote>
+<p>Djangoの活動的でフレンドリーなコミュニティに誇りを持っている。</p>
+<p>django-usersやdjango-devやIRCで行われている。</p>
+<p>あなたを助けてくれる賢い人々に出会うことが出来るだろう。</p>
+<p>陳腐な言い方ですが、コミュニティは我々の大きな証明だと考えている。</p>
+</blockquote>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/01/27/464-jp505c6b62/index.html">464.jp停止</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/01/31/67008fd1306edjango20060131/index.html">最近のDjango20060131</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

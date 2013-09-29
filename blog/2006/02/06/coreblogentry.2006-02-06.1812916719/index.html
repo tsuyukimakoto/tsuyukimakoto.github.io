@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Djangoのi18n</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-02-06 07:35:44</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/02/06/coreblogentry.2006-02-06.1812916719/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/02/06/coreblogentry.2006-02-06.1812916719/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Djangoのi18n</h1>
+    <p><a class="reference external" href="http://ymasuda.jp/python/django/">Yasushi Masudaさんのところ</a> にDjangoのi18nドキュメントが（ <a class="reference external" href="http://coreblog.org/jp/jzi/">日本のZope情報</a> より）！</p>
+<p>私のところにリンクされている物の内、チュートリアルは第一版（２００５年８月頃のバージョンがつく前のDjangoに基づく）です。</p>
+<p>Djangoのi18nに関しては、 <a class="reference external" href="http://groups.google.com/group/Django-I18N">i18nのメーリングリスト</a> があります。</p>
+<p>翻訳の力が分散してしまうともったいないのでまずは、 <a class="reference external" href="http://code.djangoproject.com/wiki/Localization">l10n（お！？）のwiki</a> に名前を追加して、強調してやりたいなぁ、とか思ったりして。</p>
+<p>i18nの現状 i18nメーリングリストではドキュメントの翻訳を諦めている状態のようです。</p>
+<p>理由はDjango本体のドキュメントが更新される頻度が非常に速いからです。</p>
+<p>なので、いまやるとしたら本体のreSTに併せてあるていど準備をしておくということなのかなと思っています。</p>
+<p>バージョン1が出るあたりで一気に翻訳をしようということで、おそらく翻訳した物は本体(djangoproject.com）に配置できるのではないかと推測されます。</p>
+<p>追記</p>
+<blockquote>
+<p>mopemopeさんの指摘を受けてi18nのログを見てみた所、 <strong>上記のような（ドキュメントの翻訳をするといった）情報はありません</strong> でした。 どこから思いこんでしまったのか。  <strong>Masudaさん、大変申し訳ありませんでした。</strong></p>
+<p>しかしながらそれであればなおのこと、日本語化されたドキュメントへの入り口があった方がいいのではないかと思った次第ですが、それは <a class="reference external" href="http://ymasuda.jp/python/django/">Yasushi Masudaさんのところ</a> が最適ではないかと再び。</p>
+<p>sourceforgeにcvsとサイトをホストしてもらうっていうのも手かなと思いましたが、mod_pythonが動かないようなので一石二鳥はあきらめました 。</p>
+<p>しかし、この「いい加減・早とちり」は何とかしないと破滅するな。。。</p>
+</blockquote>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/02/06/65e5672c306edjango306a30933068304b306e7de030815207/index.html">日本のDjangoなんとかの締め切りは2006-02-08</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/02/06/3046304930fc-3061308730fc308430fc3063/index.html">うぉー！ちょーやべーっ！</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

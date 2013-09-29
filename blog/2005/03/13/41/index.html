@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>GentooにZopeをインストール</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-03-13 02:35:09</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/03/13/41/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/03/13/41/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>GentooにZopeをインストール</h1>
+    <p>今日も出先で困った事になった。</p>
+<p>どこのスーパーに何が売っていてどこによれば今日の買いものが済むのかが分からない。</p>
+<p>さっさと家計簿を作っていれば。。。</p>
+<p>家計簿は、 <a class="reference external" href="../../../../2005/03/10/29/">Laszlo</a> かFlexとJava/PostgreSQLによるWebServiceで作成しようと思っていた。</p>
+<p>普段と違うO/Rを使おうと思って、Hibernateの設定までは済ませていた。</p>
+<p>なまけていた言い訳をするとHibernateが面倒臭いからだ(完全にいいがかり)。Torqueはあんなに面倒ではないもん。</p>
+<p>で、なぜこのエントリになったかというと、もう面倒だし今学ぶべきはZopeだろう(JavaとFlexは仕事で十分)と、家デスクトップにZopeをいれてみたから。</p>
+<p>あと、定期的に実装が変わる(Java/php/Zope/php)とともに消えていく覚書のひとつに <a class="reference external" href="http://nnyuu.hn.org:8080/myportal/ZopeTips">リンクを貼っていただいている</a> ので、その復活も含め(<a class="reference external" href="http://www.everes.net/resource/Tech/zope/zopeCharset">http://www.everes.net/resource/Tech/zope/zopeCharset</a> はこちらです)。</p>
+<ul class="simple">
+<li>Gentooなので、インストールは簡単</li>
+</ul>
+<pre><code class="language-bash"># emerge net-zope/zope
+
+Zopeのインストール(2.7.3が入った。pythonは2.3.4。あれ、このpythonはお金の計算やばい？)</code></pre><ul>
+<li><p class="first">emerge app-admin/zope-config</p>
+<p>Zopeインスタンスの設定に使うもの。</p>
+</li>
+<li><p class="first">zope-config</p>
+<p>Zopeインスタンスの設定。
+インスタンスの名前(/etc/init.dの中にできるスクリプトの名前にもなる。
+こんかいはzope-homeにした)を決定。</p>
+<p>インスタンスを起動するユーザとグループ(今回は両方zopeにした。</p>
+<p>net-zope/zopeをいれたときに勝手に作られたみたいだし)を決定する。</p>
+<p>その後、初期ユーザとパスワードを入力する。</p>
+</li>
+<li><p class="first">rc-update add zope-home default</p>
+<p>自動起動するための設定。zope-homeという部分がインスタンス名と同じになる</p>
+</li>
+<li><p class="first">/etc/init.d/zope-home start</p>
+<p>今回は手動で起動</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://localhost:8080/">http://localhost:8080/</a></p>
+<p>ブラウザで確認。Zopeのページが表示されていれば良い</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://localhost:8080/manage">http://localhost:8080/manage</a></p>
+<p>初期ユーザ名とパスワードで管理画面へログイン(ベーシック認証)</p>
+</li>
+<li><p class="first">Zopeの文字コード設定</p>
+<p>左側のツリーからRoot Folderを選択し、右側に表示されるページのPropertiesタブを選択。
+プロパティの追加をする(これがhttp://www.everes.net/resource/Tech/zope/zopeCharset)。</p>
+<p>Name: management_page_charset Type: string Value: UTF-8</p>
+</li>
+</ul>
+<p>とりあえず、以上</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/03/13/37/index.html">plone本</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/03/13/42/index.html">やったやった</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

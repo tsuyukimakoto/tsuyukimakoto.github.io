@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>BMO人柱募集</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-01-07 00:33:17</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/01/07/try-bmo-out/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/01/07/try-bmo-out/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>BMO人柱募集</h1>
+    <blockquote>
+<p>2008/01/10 追記</p>
+<p>UTIと呼ばれるファイルの関連付け部分が消えており、Cover Flow等が動作しない状態でした。</p>
+<p>修正するとともに、Pluginはアプリケーションのバンドルに含めましたので、アプリケーションをアプリケーションフォルダに放り込むだけで利用できるようになりました。</p>
+<p>ホームフォルダのLibrary/QuickLookに既にBMO用のプラグインをインストールしている場合には完全に（ゴミ箱からも）消してください。</p>
+<p>また、BMOアプリケーション起動後、一度ログアウトしないとプラグインが読み込まれない場合があります。</p>
+</blockquote>
+<div class="section" id="bmo">
+<h2>BMOとは何か。</h2>
+<p>BMOは、物理的に存在するメディアをOSXで一覧するためのアプリケーションです。
+恐ろしいことに、Butsuri Media OrganazerでBMOという名前になっています。</p>
+<p>BMOは、本、CD、DVD、ゲームに印刷されているバーコードをiSightで読み取り、AmazonのAPIを利用して画像や情報をmacに保存します。iSightのついているmacで利用してください。Leopardと呼ばれているOSX 10.5以上が必要です。
+保存した情報は、OSX Leopard(10.5)から搭載されたCover FlowとQuick Lookという仕組みを利用して表示します。</p>
+</div>
+<div class="section" id="id1">
+<h2>BMOの外観と作り</h2>
+<p>PythonからOSXのアプリケーション作成フレームワークCocoaを触るためのフレームワーク**pyobjc**がLeopardから標準開発ツールに含ま
+れるようになりました。BMOは、そのpyobjcを使って作られています。</p>
+<img alt="BMO" src="http://art3.photozou.jp/pub/478/1478/photo/6660754.png" />
+<p>検索フィールド左にある、「S」というボタンをクリックするとバーコード読み取りウィンドウが開きます。</p>
+<p>バーコードの読み取りに関する部分は、MITライセンスで提供されている Barcode scanner というObjectiveCで書かれたライブラリを利用しています。</p>
+<p>読み取り用のウィンドウが大きいと感じたため、小さくしてみたりしましたが、読み取り精度が酷く落ちてしまったため元に戻しました。</p>
+</div>
+<div class="section" id="cover-flowquick-look">
+<h2>Cover FlowとQuick Look</h2>
+<p>Cover FlowとQuick
+Lookは、ObjectiveCでプラグインを記述すると特定の拡張子を持ったファイルに対して処理を行ってくれるという仕組みです。</p>
+<img alt="Cover Flow" src="http://art1.photozou.jp/pub/478/1478/photo/6660759.png" />
+<img alt="Quick Look" src="http://art8.photozou.jp/pub/478/1478/photo/6660761.png" />
+<p>BMO用のCover FlowとQuick Lookの実装は、いろいろとまずいところが多いため、パフォーマンスに大きな問題があります。</p>
+<p>Cocoaフレームワーク全体のクラス構成等をよく学んで修正をしていこうと考えています。</p>
+</div>
+<div class="section" id="id2">
+<h2>BMOとプラグインのインストール</h2>
+<p>今のところインストーラは用意されていません。</p>
+<p>このページに添付されているBMO_0_1.zipをダウンロード、展開してください。</p>
+<img alt="BMO_0_1.zipを展開したところ" src="http://art1.photozou.jp/pub/478/1478/photo/6661274.png" />
+<p>BMO_0_1というフォルダには、上記画像のように二つのファイルが見えるはずです。</p>
+</div>
+<div class="section" id="id3">
+<h2>BMOのインストール</h2>
+<p>BMO というファイルを、アプリケーションフォルダに放り込んでください。</p>
+</div>
+<div class="section" id="bmoquicklook">
+<h2>BMOQuickLookプラグインのインストール（この手順は不要になりました）</h2>
+<p>Cover Flow 、 Quick Look のプラグインは、 QuickLookBMO.qlgenerator というファイルです。</p>
+<p>プラグインは、自分のホームフォルダの下にあるライブラリフォルダの QuickLook というフォルダに放り込みます。
+他のプラグインを導入していない場合には、おそらくライブラリフォルダ中に QuickLook というフォルダはまだありませんので、自分で QuickLookというフォルダを作成してその中に QuickLookBMO.qlgenerator を放り込んでください。</p>
+<p>以上でインストールは完了です。</p>
+</div>
+<div class="section" id="id4">
+<h2>BMOの使い方</h2>
+<p>アプリケーションフォルダのBMOアイコンをダブルクリックして、アプリケーションを起動します。
+画面左下にグレーのウィンドウが開きますので、ウィンドウ左上の「S」というボタンをクリックしてください。</p>
+<p>iSightのキャプチャ画面が表示されますので、真ん中あたりの赤い横線にバーコードをあわせるような感じでバーコードをスキャンしてください。ちょっと慣れが必
+要かもしれません。
+バーコードの読み取りに成功すると、いったんキャプチャ画面が閉じて、BMOのウィンドウに画像が表示されます。ウィンドウ下部にNo Items Foundと出た場合には、Amazonでその商品を扱っていないか、またはバーコードの読み取りに失敗している可能性があります。</p>
+<p>バーコードの読み取りウィンドウが続けて開きますので、続けてスキャンを行えます。
+作業を終了する場合には、メニューから「Quit BMO」を選択してください。</p>
+</div>
+<div class="section" id="id5">
+<h2>Cover Flow、Quick Lookの使い方</h2>
+<p>Finderで自分のフォルダを開いてください。「BMO」というフォルダができているはずです。</p>
+<p>「BMO」というフォルダ開き、Cover Flowモードで表示（表示モード4つのうち一番右のボタン）すると、スキャンしたメディアの画像が CoverFlow で表示されます。
+いずれかのメディアを選択（ないしはCover Flowで表示）したままスペースキーを押すと、 Quick Look で詳細情報を開きます。</p>
+</div>
+<div class="section" id="id6">
+<h2>お約束 :)</h2>
+<p>このアプリケーションを利用したことによる損害・不利益等についていかなる責任も負いません :(</p>
+</div>
+<div class="section" id="id7">
+<h2>バグや要望の伝え方</h2>
+<p>ここにコメントするか、mtsuyuki あっと gmail.com宛にメールを送ってください。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/01/04/quicklook/index.html">Quick LookとCover Flowでメディア管理</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/01/13/java-fantasy/index.html">Java製フレームワーク夢想するぞ</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

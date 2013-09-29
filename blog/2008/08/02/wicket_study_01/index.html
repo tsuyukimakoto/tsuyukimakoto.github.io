@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>第一回wicket勉強会</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-08-02 02:06:51</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/08/02/wicket_study_01/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/08/02/wicket_study_01/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>第一回wicket勉強会</h1>
+    <p>「じゃ」の仲間として、当然`第一回wicket勉強会`_に行ってきたですわ。</p>
+<p>会場は`Xarts株式会社 東京オフィス`_、後楽園駅の目の前の素敵なオフィスでした。通年採用しているそうですよ。</p>
+<p>眠くて整理できないので、「いんたーねっとましーん」で頑張ってとったメモをはっつけておく</p>
+<p>つーか、30人のwicket勉強会に藤沢南側住民が3人もいるとかwww</p>
+<div class="section" id="t-yano">
+<h2><a class="reference external" href="http://d.hatena.ne.jp/t_yano/">世界のt_yano</a></h2>
+<ul class="simple">
+<li>メモリの問題</li>
+</ul>
+<p>同じページオブジェクト内では現在の状態以外はセカンドレベルキャッシュと呼ばれるファイルに格納される。セカンドメモリキャッシュはデフォルトで5コのキャッシュが保持される。次のページに移った場合には前のページの状態は直前のままのこり、次のページのバージョン1が生成される。</p>
+<p>Teedaにあるような、セッションの境界がどこかにあるのか気になったけど、Teedaにさえも本当にそんなものがあったか自身が無かったので聞いてみることはせず。まぁ、いいや。</p>
+<ul class="simple">
+<li>クラスタリング</li>
+</ul>
+<p>セッション同期ができていればきちんとセカンドレベルキャッシュも同期される。ただしサーバが落ちた場合にはwicketでは同期
+を再開するすべが無い。コミッタはサーバで対処すべき問題だといっているらしい。</p>
+<ul class="simple">
+<li>Ajax</li>
+</ul>
+<p>コンポーネントの更新＝DOMの更新。behaviorを参照のこと。課題：コンポーネントの追加が困難。10コのリストに一つ追加した
+い場合には11コのオブジェクトを返すしかない。DOMのIDを破壊してしまう。</p>
+<ul class="simple">
+<li>メッセージ</li>
+</ul>
+<p>プロパティがデフォルト。ページと同じ名前でプロパティファイルを作っておく。同じ名前だけ？バリデーションに引っ掛かるとページの変数には値が入らない。かつ、そのさきのバリデータも走らない。</p>
+<p>ループのいらない部分はwicket:removeというタグでくくる。htmlとしての表示は変わらない。</p>
+<p>Ajaxを使った複数要素のインタラクションもJavaのコード上で表現できる。例えばCHECKBOXをチェックするとSELECT要素の中身が変わるような場合、CHECKBOXにBehaviorを設定し呼ばれた時点でSELECTのインスタンスをいじると、HTMLも変更される。</p>
+</div>
+<div class="section" id="id1">
+<h2>たけうちさん</h2>
+<p>IComponentResolverをimplementsするとhtmlに存在するwicketidがページクラスになかった場合に、そのオブジェクトを引数に
+特定のメソッドを呼び出してくれる。TAGにいんちき属性をつけておけばそれもとれるので、動的にいろいろ出来る（その場でコンポーネントを作って追加できる）。</p>
+<p>（wicket web beanというのを使うとhtmlを書かないで良くなるらしい）</p>
+</div>
+<div class="section" id="id2">
+<h2>ぎしさん</h2>
+<p>千歳科学技術大学のひと。</p>
+<p>JSF+Springからwicketに技術を変えたら教育コストが1/4、トータル開発期間が1/6に減った。</p>
+<ul class="simple">
+<li>利点</li>
+</ul>
+<p>UI用のタグが出てこないので出来上がりが想像しやすい。XMLがほとんど出てこない。設定の分散が無い。Struts時代は6000行。J
+SF+Spring時代でも2000行だった。</p>
+<p>月間残業時間が130時間から60時間になった。</p>
+</div>
+<div class="section" id="id3">
+<h2>けいすけん</h2>
+<p>なぜかscala。一応scalaからwicketを使うときっと楽に書ける。って話しのふりしてやっぱりscala。</p>
+<p>immplicit conversionはおもろいと思うんだけど、コードを同構成したら見やすいのかな。</p>
+</div>
+<div class="section" id="id4">
+<h2>たなかさん</h2>
+<p>2年も前にwicket採用。いつの間にか社内の標準フレームワーク。</p>
+<p>デザイナがHTMLいじってそのままsvnに入れてくれるようになった。</p>
+<p>eclipseからjettyで動作確認してからってのが熱い。djangoと同じ話しだ。</p>
+<p>モンハン始めたらしい。← 狩りに生きましょう:)</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/07/31/django_admin_row_level_permission/index.html">Adminで行レベル権限管理</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/08/23/loaddata_with_log/index.html">loaddataでもLogを保存する</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>第三回Python温泉</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-06-29 09:38:27</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/06/29/pyspa3/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/06/29/pyspa3/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>第三回Python温泉</h1>
+    <p>まとまった成果は無いけど、一応メモ</p>
+<div class="section" id="mercurial">
+<h2>自分のリポジトリをmercurialに移行する。</h2>
+<p>分散リポジトリはbranchを切るのが容易だから、ぜひsvnから移行するといい。正確にはsvnよりmercurialの方がbranchを切るのが容易。sv
+nはbranch切ったrevisionとか覚えておかなきゃいけない。</p>
+<p>自分でbranch切ることはあんまりないけど、svnからhttpに切り替えたかったからちょうど良いので。webインターフェースのcssを <a class="reference external" href="http://blog.monospace.jp/">pateo</a> さんが書いているし。</p>
+</div>
+<div class="section" id="eclipse">
+<h2>Eclipseのプラグインはそんなに難しくない</h2>
+<p>世の中の解説がいたずらに難しすぎる。それから、EclipseのManifest.mf編集UIがかえって難しくしている気がする。 <a class="reference external" href="http://www.ibm.com/developerworks/jp/opensource/library/os-eclipse-plugindev1/">IBMのページ(1と2)</a> か、 <a class="reference external" href="http://yoichiro.cocolog-nifty.com/eclipse/2004/05/eclipse.html">よういちろうさんの昔のエントリ</a> を見れば良い気がする。あとは、APIドキュメントを読むしか無い。</p>
+</div>
+<div class="section" id="google-app-engine">
+<h2>Google App Engineについて</h2>
+<p>ブログをGAEに移してみようと思い、手を付けたとたんにManyToManyのめんどくささに萎える。が、ListPropertyを使えば、このブログの関連コンテンツのようなものから単なるManyToManyまで非常に簡単に関連づけられるらしい。</p>
+<p>BigTableはユーザごとにすべてのレコードで一意なKeyを持っているらしいので、DjangoのContentsTypeのようなテーブルさえ必要なく、関
+連するレコードを特定できる（中間テーブルもいらない）。</p>
+</div>
+<div class="section" id="id1">
+<h2>ブラウザでデザインを変更するのがはやっているらしい</h2>
+<p><a class="reference external" href="http://www.cssez.com/design.php#">cssez</a> というものの、強化版を見た。旧式のマシンでもさくさく動いていて、裏はDjangoで作ってるらしい。現在の対応CMSは15くらいだとか。
+世の中に類似の物が沢山出てきているらしくて、かなりrichじゃないと駄目な時代。ちなみに、mootoolsとjqueryを組み合わせると重たいらしく、cssezはmootoolsからextJsにしたらしい。</p>
+<p>あとは忘れた。</p>
+<blockquote>
+<p>say -v Good tanpakushitu wo makichirasu nishio herokazu cyboze labo</p>
+<p>flashと映像の処理落ちについて</p>
+<p>虫にはガムテープか、PCを掃除するスプレーを反対向きに使う。</p>
+<p>伊豆は5年くらい揺れてない。</p>
+<p>二泊(朝食×2、昼食×1、夕食×2、おやつ)で17,200。</p>
+<p>第四回は10/24, 10/25, 10/26。既に10名集まったので予約したらしい。</p>
+</blockquote>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/06/25/cinnamon-the-movie/index.html">シナモン ザ ムービーのDVD</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/07/19/micro-blog/index.html">マイクロブログ等々</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

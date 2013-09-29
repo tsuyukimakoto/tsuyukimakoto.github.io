@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>rhacoのEclipseプラグイン</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-10-18 12:56:25</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/10/18/rhaco-eclipse-plugins/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/10/18/rhaco-eclipse-plugins/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>rhacoのEclipseプラグイン</h1>
+    <p>yabekenさんが <a class="reference external" href="http://d.hatena.ne.jp/yabeken/20081017/1224229619">Rhaco Development Tools</a> というrhaco用のEclipsePluginsを開発しているようです（すでに動作する）。</p>
+<p>そもそもrhacoは、Eclipseで各種補完ができることを思想の中心においています。</p>
+<p>が、今激しく開発中のrhaco2はマジックメソッド？とかいうものを使うことになっていて、補完が難しくなっていました。なんでも、クラスに変数を定義すると暗黙でアクセッサが動的に存在するようになるとか（これで、C#やPythonのproperty的考えが使える）。</p>
+<p>そこで登場したのが rhaco 用 Eclipse Plugins の Rhaco Development Tools。Rhaco Development Tools を使うと、マジックメソッドを補完してくれるようになるそうです（ <a class="reference external" href="http://d.hatena.ne.jp/yabeken/20081017/1224229619">yabekenさんエントリ</a> の画面ダンプ参照）。いままで、補完を気にして実装されてこなかった動的系のアイデアが沢山あったので、このRhaco Development Toolsの登場によりrhacoの変態度が増していくことでしょう。</p>
+<p>もう一つの思想、「どこでも動く」を守るために、PHP自体のカスタマイズや独自エクステンションの導入というPHP自体を変える方向性がとれないため、このEclipse Pluginsの登場はrhacoにとってかなり大きなインパクトです。</p>
+<p>ついでに、Rhaco::importに渡す文字列も補完ができるようになってます。詳しくは、 <a class="reference external" href="http://d.hatena.ne.jp/yabeken/20081017/1224229619">yabekenさんのエントリ</a> で。</p>
+<p>ちなみに、 <a class="reference external" href="http://rhaco-users.jp/">rhaco-users.jp</a> からRhaco Development Toolsのダウンロードを行うには、 <a class="reference external" href="http://rhaco-users.jp/">rhaco-users.jp</a> の <strong>rhaco をダウンロードする</strong> というリンクをクリックして、rhaco関連物のダウンロードページへ行けばよいようです。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/10/17/ccc_2008_fall_java-ja_LT/index.html">継承だろJK</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/10/18/nhk_cloud_computing/index.html">クローズアップ現代でクラウド特集やったからってさぁ</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

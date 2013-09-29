@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>lingrのボットPython版</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-02-02 16:24:29</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/02/02/lingr-bot/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/02/02/lingr-bot/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>lingrのボットPython版</h1>
+    <p>うくくの人が作った <a class="reference external" href="http://www.lingr.com/room/django-ja">lingr</a> 用の <a class="reference external" href="http://d.hatena.ne.jp/mopemope/20070201">Pythonエコーボット</a> をいじくって、会話から適当なサイトを推薦するボットにしました。</p>
+<p>会話の文脈なんて知ったことじゃありません。インチキです。コードもインチキです(yahoo_searchんとこね)。</p>
+<p>人の会話からひらがな以外をn個集めて、そのうちのm個を使ってYahooにお尋ねをします。</p>
+<p>教えてくれたサイトから一つ、 <a class="reference external" href="http://image.simpleapi.net/">simpleapi</a> のサムネイルとURLをボットが推薦します。</p>
+<p>邪魔臭いです</p>
+<pre><code class="language-python">  # coding: utf-8
+  import urllib
+  from django.utils import simplejson
+  from BeautifulSoup import BeautifulSoup as Soup
+  from random import choice, randint
+
+  import re
+
+  #FIXME START
+  room_id = 'xxxxxx'
+  bot_nickname = 'xxxxxx'
+  yahoo_key = 'xxxxxx' #YAHOO.CO.JP Developer API application key
+  api_key = "xxxxxx" #LINGR API KEY
+  word_count = 12
+  word_count_for_query = 2
+  #FIXME END
+
+  _YAHOO_URL = 'http://api.search.yahoo.co.jp/WebSearchService/V1/webSearch?appid=%s' % yahoo_key
+  _SIMPLEAPI_URL = 'http://img.simpleapi.net/small/%s?.png'
+
+  _CREATE_URL = "http://www.lingr.com/api/session/create/"
+  _ENTER_URL = "http://www.lingr.com/api/room/enter"
+  _SAY_URL = "http://www.lingr.com/api/room/say"
+  _OBSERVE_URL = "http://www.lingr.com/api/room/observe/"
+  _GET_MESSAGES_URL = "http://www.lingr.com/api/room/get_messages/"
+
+
+  class Lingr(object):
+
+      def __init__(self, api_key):
+          self.api_key = api_key
+          data = dict(api_key=api_key,format="json", client_type="human")
+          r = urllib.urlopen(_CREATE_URL, urllib.urlencode(data))
+          json =  r.readlines()
+          json = simplejson.loads(json[0])
+          self.session = json["session"]
+
+      def enter_room(self, id, nickname="anonymous"):
+          room = LingrRoom(self.session, id, nickname)
+          return room
+
+  class LingrRoom(object):
+
+      def __init__(self, session, id, nickname):
+          self.session = session
+          self.id = id
+          self.nickname = nickname
+          data = dict(session=session,id=id,nickname=nickname,format="json")
+          r = urllib.urlopen(_ENTER_URL, urllib.urlencode(data))
+          json =  r.readlines()
+          json =  simplejson.loads(json[0])
+          self.ticket = json["ticket"]
+          self.counter = json["room"]["counter"]
+          self.word = []
+
+      def yahoo_search(self, query):
+          if not query:
+              return None
+          q = re.sub(u'[\u3041-\u3093 &lt;&gt;＜＞:]', ' ', query).strip().encode('utf-8')
+          self.word += [w for w in q.split(' ') if len(w) &gt; 0]
+          if len(self.word) &lt; word_count:
+              return None
+          q = ' '.join([choice(self.word) for i in range(word_count_for_query)])
+          self.word = []
+          url = '%s&amp;%s' % (_YAHOO_URL, urllib.urlencode({'query':q}))
+          s = Soup(urllib.urlopen(url).read().replace('', ''))
+          targets = s.findAll('result')
+          if targets:
+              [x.extract() for x in s.findAll('cache')]
+              urls = s.findAll('url')
+              if urls:
+                  neta = urls[randint(0, len(urls) -1)].string
+                  self.say(_SIMPLEAPI_URL % (neta,))
+                  self.say(neta)
+
+
+      def observe(self, callback=None):
+          data = dict(session=self.session,ticket=self.ticket,counter=self.counter,format="json")
+          url = _OBSERVE_URL+"?"+urllib.urlencode(data)
+          r = urllib.urlopen(url)
+          json =  r.readlines()
+          json =  simplejson.loads(json[0])
+          try:
+              self.counter = json["counter"]
+              if callback:
+                  messages = json["messages"]
+                  for m in messages:
+                      type = m["type"]
+                      text = m["text"]
+                      if type == "user" and text:
+                          callback(text)
+          except KeyError:
+              pass
+
+      def say(self, message):
+          message = message.encode('utf-8')
+          data = dict(session=self.session,ticket=self.ticket,message=message,format="json")
+          r = urllib.urlopen(_SAY_URL, urllib.urlencode(data))
+          json = r.readlines()
+          json = simplejson.loads(json[0])
+          try:
+              self.counter = json["counter"]
+          except KeyError:
+              pass
+
+      def start(self):
+          import time
+          while 1:
+              self.observe(self.yahoo_search)
+              time.sleep(1)
+
+  if __name__ == '__main__':
+      lingr = Lingr(api_key)
+      room = lingr.enter_room(room_id, nickname=bot_nickname)
+      room.start()</code></pre><p><strong>自己責任で</strong></p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/02/01/turbogears-and-django-onsen/index.html">TGとDjangoの温泉</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/02/03/mochio-at-lingr/index.html">梅田望夫サロン at Lingr</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Rails勉強会に行ってきた</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-04-15 23:25:18</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/04/15/RailsMeetingTokyo-0017/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/04/15/RailsMeetingTokyo-0017/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Rails勉強会に行ってきた</h1>
+    <p><a class="reference external" href="http://wiki.fdiary.net/rails/?RailsMeetingTokyo-0017">Rails勉強会</a> に行ってきました。</p>
+<p>運営している側と参加者側の垣根の低い勉強会でした。もちろん、運営の方々が多くのタスクをこなしているからこそ17回も続いている訳ですが、喋る人もセッション内容も動的に(曰くアジャイルに)決定して行く様が面白く感じられました。</p>
+<p>セッションは、「初級者コース」と「cruisecontrol.rb・puppet・JRuby(避難所)」に参加。</p>
+<p>Railsは数日間試しただけなのですが、ちょくちょくPythonネタを振っていただいたりして無事に過ごしました:)</p>
+<p>「RadRailsがaptanaに譲渡されて開発がどうなってるかがよくわからない」「gem_serverでローカルにgemでインストールしてある(Rails含む)ライブラリのドキュメントが参照できる」というようなことを学びました。</p>
+<p>それから、「RailsのActiveRecordがモデルにアトリビュートを持っていないことは設計ミスかもしれない」、と感じている人がRails使いの中にも数人いました。ですよねぇ、DRYにならないもん。</p>
+<p>Railsと関係のないところでは、</p>
+<blockquote>
+「セレニウムは、お客さんのバグ報告に使う。バグフィックスはシナリオを通せるようにする。シナリオをためることでエンバグを予防する」</blockquote>
+<p>というのがビビっときた。</p>
+<p>で、今回はSnakes And Rubiesの日本版への一歩！</p>
+<p>今回思いついたネタは、</p>
+<ol class="arabic simple">
+<li>開発環境の差異</li>
+<li>ジェネレートされるものの差異</li>
+<li>マイグレーション</li>
+<li>汎用的なビューのあつかい(ext_paginate vs generic view)</li>
+<li>テスト(似てるけどさ)</li>
+<li>開発サーバの振る舞い(プロセスが刺さる！？)</li>
+<li>エディタ(vimとかemacsとかだとつまらん)</li>
+</ol>
+<p>むぅ。いまいち。次回、5月20日のRails勉強会発起人の井上さんも不参加らしいし、もう少しもんだ方がいいかも。。。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/04/14/position-paper-for-rails-17/index.html">Rails 勉強会用 ポジションペーパ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/04/16/silverlight/index.html">silverlightがマルチプラットフォーム？</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

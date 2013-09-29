@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>今週のサクサクパーサー</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-07-14 13:04:54</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/07/14/108/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/07/14/108/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>今週のサクサクパーサー</h1>
+    <p>今週のsakusakuというページを勝手にパースしてみました。</p>
+<p>プログラムはPython,Java,Ruby,PHPで書き、最終的にはhttpに乗せてRSSとして「本日ないしは明日のトピック」を配信するところまでをやってみようと思っています。</p>
+<p>今回は、ネット越しにHTMLを取得して今日・明日のコンテンツを配列にするところまでです。</p>
+<div class="section" id="python">
+<h2>Python</h2>
+<p>Pythonは2.3.5を使用しました。japanese_codecsが必要かもしれません。</p>
+<p>HTMLのパース自体は標準のクラスを用いて行うことが可能でした。</p>
+<p>Pythonのクラスやライブラリは思想の一貫性があり非常に推測しやすいので素敵です。</p>
+<pre><code class="language-python">  # -*- coding: UTF-8 -*-
+  ###########################################################################
+  # Copyright 2005 everes.net
+  # Licensed under the Apache License, Version 2.0 (the "License");
+  # you may not use this file except in compliance with the License.
+  # You may obtain a copy of the License at
+  #
+  #      http://www.apache.org/licenses/LICENSE-2.0
+  #
+  # Unless required by applicable law or agreed to in writing, software
+  # distributed under the License is distributed on an "AS IS" BASIS,
+  # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  # See the License for the specific language governing permissions and
+  # limitations under the License.
+  ###########################################################################
+
+  from HTMLParser import HTMLParser
+  from datetime import date
+  import urllib
+
+  class SakusakuParser(HTMLParser):
+      sakusaku = None
+
+      def setCharset(self, encoding):
+          self.sakusaku = SakusakuWeek(encoding)
+          self.sakusaku.clearData()
+
+      def getSakusakuWeek(self):
+          return self.sakusaku
+
+      def handle_data(self, data):
+          self.sakusaku.parseData(data)
+
+      def handle_starttag(self, tag, attrs):
+          self.sakusaku.startTag(tag, attrs)
+
+      def handle_endtag(self, tag):
+          self.sakusaku.endTag(tag)
+
+  class SakusakuWeek:
+      weekContents = []
+      contentsArea = -1
+      divCount = 0
+      today = None
+      tmp_content = ""
+
+      def __init__(self, encoding):
+          self.charset = encoding
+          weekContents = []
+
+      def clearData(self):
+          weekContents = []
+          contentsArea = -1
+          divCount = 0
+          today = None
+          tmp_content = ""
+
+      def getContents(self):
+          return self.content
+
+      def getToday(self):
+          self.today = date.today()
+          result = self.weekContents[self.today.weekday()].split('●')
+          return result[1:len(result) - 1]
+
+      def getTomorrow(self):
+          self.today = date.today()
+          result = self.weekContents[self.today.weekday() + 1].split('●')
+          return result[1:len(result) - 1]
+
+      def parseData(self, data):
+          if self.isContentsArea():
+              data = unicode(data, self.charset).encode("UTF-8")
+              data = data.strip(" ¥t¥r¥n")
+              if data:
+                  self.tmp_content += data
+
+      def startTag(self, tag, attrs):
+          if tag == 'div':
+              for i in range(len(attrs)):
+                  if attrs[i][0] == 'style':
+                      if attrs[i][1] == 'margin:10px':
+                          self.setContentsArea(1)
+              self.div()
+
+      def endTag(self, tag):
+          if tag == 'div':
+              self.endDiv()
+
+      def isContentsArea(self):
+          return self.contentsArea == 1
+
+      def setContentsArea(self, mode):
+          if mode == 1:
+              self.contentsArea = 1
+              self.divCount = 0
+          else:
+              self.weekContents.append(self.tmp_content)
+              self.tmp_content = ""
+              self.contentsArea = -1
+
+      def div(self):
+          if self.isContentsArea():
+              self.divCount += 1
+
+      def endDiv(self):
+          if self.isContentsArea():
+              self.divCount -= 1
+              if self.divCount == 0:
+                  self.setContentsArea(-1)
+
+  class Sakusaku:
+      sakusaku = None
+
+      def feed(self):
+          url = "http://www.tvk-yokohama.com/saku2/week.html"
+          data = urllib.urlopen( url )
+          charset = data.headers.getparam('charset')
+          if charset == None:
+              charset = 'japanese.shift_jis'
+          parser = SakusakuParser()
+          parser.setCharset(charset)
+          parser.feed( data.read() )
+          self.sakusaku = parser.getSakusakuWeek()
+
+      def getToday(self):
+          self.feed()
+          return self.sakusaku.getToday()
+
+      def getTomorrow(self):
+          self.feed()
+          return self.sakusaku.getTomorrow()
+
+  def main():
+      sakusaku = Sakusaku()
+      try:
+          content = sakusaku.getToday()
+      except IndexError,e:
+          content = ["None","Holiday"]
+
+      for i in range(len(content)):
+          print '  %s' % content[i]
+
+  if __name__ == "__main__":
+      main()</code></pre></div>
+<div class="section" id="java">
+<h2>JAVA</h2>
+<p>Javaも標準のライブラリのみで実装が可能です(swingパッケージですが)。</p>
+<p>LLな言語ではないのですが、普段仕事で使用しているのでつい作ってしまいました。</p>
+<p>仕事で使っていてこのコードは恥ずかしいのですが、もうJavaはおもしろくはないので手抜きです。</p>
+<pre><code class="language-java">  /**************************************************************************
+    Copyright 2005 everes.net
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+  **************************************************************************/
+
+  package net.everes.junk;
+
+  import java.io.InputStreamReader;
+  import java.net.HttpURLConnection;
+  import java.net.URL;
+  import java.util.ArrayList;
+  import java.util.Calendar;
+  import java.util.Date;
+  import java.util.Enumeration;
+  import java.util.List;
+
+  import javax.swing.text.html.HTML;
+  import javax.swing.text.html.HTMLEditorKit;
+  import javax.swing.text.html.parser.DTD;
+  import javax.swing.text.html.parser.DocumentParser;
+  import javax.swing.text.html.parser.TagElement;
+  import javax.swing.text.html.parser.ParserDelegator;
+  import javax.swing.text.MutableAttributeSet;
+  public class SakusakuCallback extends HTMLEditorKit.ParserCallback {
+      List weekContents;
+      boolean contentsArea;
+      int today;
+      int tomorrow;
+      String tmpContent;
+      int divCount = 0;
+
+      public SakusakuCallback() {
+          super();
+          weekContents = new ArrayList();
+          contentsArea = false;
+          Calendar calendar = Calendar.getInstance();
+          calendar.setTime(new Date());
+          today = calendar.get(Calendar.DAY_OF_WEEK) - 2;
+          tomorrow = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+          tmpContent = "";
+      }
+
+      public void handleText(char[] data, int pos) {
+          if(contentsArea) {
+              tmpContent += new String(data);
+          }
+      }
+
+      public void handleStartTag(HTML.Tag tag, MutableAttributeSet attrs, int pos) {
+          if(tag.equals(HTML.Tag.DIV)) {
+              if(!contentsArea) {
+                  Enumeration enumeration = attrs.getAttributeNames();
+                  while(enumeration.hasMoreElements()) {
+                      Object obj = enumeration.nextElement();
+                      String name = "" + obj;
+                      if(name.equals("style")) {
+                          Object value = attrs.getAttribute(obj);
+                          if(value.toString().equals("margin:10px")) {
+                              contentsArea = true;
+                              divCount = 0;
+                          }
+                      }
+                  }
+              }
+              findDiv();
+          }
+      }
+
+      public void handleEndTag(HTML.Tag tag, int pos) {
+          if(tag.equals(HTML.Tag.DIV)) {
+              findEndDiv();
+          }
+      }
+
+      public String[] getToday() throws ArrayIndexOutOfBoundsException {
+          String tmp = weekContents.get(today).replaceAll(" ¥t¥r¥n","");
+          String[] result = tmp.split("●");
+          String[] contents = new String[result.length];
+          for(int i = 0;i &lt; result.length;i++) {
+              contents[i] = result[i];
+          }
+          return contents;
+      }
+
+      private void findDiv() {
+          if(contentsArea) {
+              divCount += 1;
+          }
+      }
+
+      private void findEndDiv() {
+          if(contentsArea) {
+              divCount -= 1;
+          }
+          if(contentsArea) {
+              if(divCount == 0) {
+                  contentsArea = false;
+                  weekContents.add(tmpContent);
+                  tmpContent = "";
+              }
+          }
+      }
+
+      public List getContents() {
+          return this.weekContents;
+      }
+
+      public static void main(String[] args) {
+          try {
+              URL url = new URL("http", "www.tvk-yokohama.com", "/saku2/week.html");
+              HttpURLConnection request = (HttpURLConnection) url.openConnection();
+              ParserDelegator parser = new ParserDelegator();
+              HTMLEditorKit.ParserCallback sakusaku = new SakusakuCallback();
+
+              parser.parse(new InputStreamReader(request.getInputStream()), sakusaku, true);
+
+              String[] result = ((SakusakuCallback)sakusaku).getToday();
+
+              for(String day: result) {
+                  System.out.println(day);
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+      }
+  }</code></pre></div>
+<div class="section" id="ruby">
+<h2>RUBY</h2>
+<p>現場の若いのにやるように進めながら先に作ってしまいました（シャアサクくんは見ないでね）。</p>
+<p>残念ながらRAAというライブラリ群にあったHTMLパーサでは「今週のサクサク」はパースできませんでした。アトリビュートがクォートされていないとこけてしまいます。</p>
+<p>いい感じに動くHTMLパーサがありましたので、それを使ってやってみました。</p>
+<p>＃ただし、パーサはストリームを求めているのにHTTPでストリームを返すやり方が発見できず。。。ま、仕方ないですが。</p>
+<p>Rubyでおもしろかったのは、無名クラスの作り方です。</p>
+<p>下記のコードではパーサのクラスを継承して作っていますが、Ruby的にはクラスをインスタンス化してからインスタンスのメソッドを書き換えることができるようです。</p>
+<p>実際には恐ろしくて使えませんが、Rubyはやばそうだと思わせるに十分でした。</p>
+<pre><code class="language-java">###########################################################################
+# Copyright 2005 everes.net
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+###########################################################################
+require 'simplehtmlparse' #http://arika.org/archive/?C=M;O=A
+require 'net/http'
+require 'date'
+require 'nkf'
+
+class Sakusaku &lt; SimpleHtmlParse
+  weekContents = Array.new
+  contentsArea = 0
+  divCount = 0
+  tmpString = ""
+
+  def initialize(io)
+        super(io)
+        @weekContents = Array.new
+        @divCount = 0
+        @tmpString = ""
+  end
+
+  def begin_tag(name, attribute, orig_text)
+    if(name == "DIV")
+          if(attribute.has_key? "STYLE")
+            if(attribute["STYLE"] == "margin:10px")
+                  @contentsArea = 1
+                  @divCount = 0
+                end
+      end
+          if(@contentsArea == 1)
+            @divCount += 1
+          end
+        end
+  end
+
+  def end_tag(name, attribute)
+    if(@contentsArea == 1)
+          if(name == "DIV")
+            @divCount -= 1
+                if(@divCount == 0)
+                  @weekContents &lt;&lt; @tmpString
+                  @tmpString = ""
+                  @contentsArea = 0
+                end
+          end
+        end
+  end
+
+  def text(orig_text)
+    if(@contentsArea == 1)
+        tmp = orig_text.chomp.gsub(/¥t¥s　/,'')
+        if(tmp != '')
+            @tmpString &lt;&lt; orig_text.gsub(/¥t¥s/,'')
+        end
+    end
+  end
+
+  def getWeekContents()
+    return @weekContents
+  end
+
+  def getToday()
+    dt = Date::today
+    today = dt.wday - 1
+  return  getContents(today)
+  end
+
+  def getTomorrow()
+    dt = Date::today
+    tomorrow = dt.wday
+  return getContents(tomorrow)
+  end
+
+  def getContents(dayofweek)
+      tmp = @weekContents[dayofweek].split('●')
+      tmp.delete_at(0)
+    return tmp
+  end
+
+end
+
+Net::HTTP.version_1_2
+body = Net::HTTP.get('www.tvk-yokohama.com', '/saku2/week.html', 80)
+f = open("week_tmp.html","w+")
+f.puts(NKF.nkf('-w',body))
+f.close()
+
+f = open("week_tmp.html")
+
+sakusaku = Sakusaku.new(f)
+sakusaku.parse
+
+f.close()
+begin
+  result = sakusaku.getTomorrow
+  result.each {|x| puts x}
+rescue
+  puts "holiday"
+end</code></pre></div>
+<div class="section" id="php">
+<h2>PHP</h2>
+<p>phpは挫折しました。</p>
+<p>標準のXML関数はHTMLのパースができません（XHTMLならできる）。</p>
+<p>仕方なくごちゃごちゃなPEARも見てみましたが、標準と同様でした（そのあたりの思想の欠如もphpが好きでない理由です）。</p>
+<p>世の中にライブラリも見あたりません。</p>
+<p>phpのHTMLパーサは、知人が作っている（まだ未公開）ので作りたくありません。</p>
+<p>知人はあっという間にphpでサクサクパーサを作りました。</p>
+<p>結論としてphp（というか言語を取り巻く環境）は嫌いです。</p>
+<p>以下、書き途中でがっかりしたコード。</p>
+<pre><code class="language-java">  // php 挫折(;o;)　phpのXML関数ではXHTML以外はパースできず、他に良さそうなパーサも見つからず。。。
+
+  function beginTag($psr, $name, $attributes) {
+      print "start" . $name . "¥n";
+  }
+
+  function endTag($psr, $name) {
+     print "end:" . $name . "¥n";
+  }
+
+  function text($psr, $data) {
+      print $data;
+  }
+
+  function getSakusakuData() {
+      $URL = "http://www.tvk-yokohama.com/saku2/week.html";
+
+      $buff = "";
+      $fp = fopen($URL,"r");
+      while ( !feof($fp) ) {
+      $buff .= fgets($fp,4096);
+      }
+      fclose($fp);
+      $buff = mb_convert_encoding($buff, "UTF-8", "Shift_JIS");
+      return $buff;
+  }
+
+  $data = getSakusakuData();
+  $parser = xml_parser_create();
+  xml_set_element_handler($parser, "begintag", "endTag");
+  xml_set_character_data_handler($parser, "text");
+  xml_parser_set_option($parser,XML_OPTION_SKIP_WHITE,1);
+  xml_parse($parser, $data);
+  xml_parser_free($parser);</code></pre></div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/07/12/107/index.html">Realm認証のカスタマイズ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/07/18/109/index.html">DBTestCase</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

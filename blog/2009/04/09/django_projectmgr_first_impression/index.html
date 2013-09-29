@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>django-projectmgrを動かしてみる</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2009-04-09 01:10:40</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2009/04/09/django_projectmgr_first_impression/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2009/04/09/django_projectmgr_first_impression/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>django-projectmgrを動かしてみる</h1>
+    <p>sakusakuのあかぎあいウィークを見ながら、 <a class="reference external" href="http://www.washingtontimes.com/">ワシントンタイムス</a> の <a class="reference external" href="http://opensource.washingtontimes.com/projects/django-projectmgr/">django-projectmgr</a> を試しちまおうという謎の企画でござんす。djangoは1.0のリリース版を使ってます。</p>
+<p><a class="reference external" href="http://opensource.washingtontimes.com/projects/django-projectmgr/">django-projectmgr</a> はdjango製Version Control System manager and bug and feature tracking applicationらしいです。俺的にはいじりにくいtracの代わりにしたいと狙ってるやつです。とにかくwiki記法が嫌いなんで（tracを入れてるサーバにdocutilsを入れてもらったから実はそんなに困ってはいない）。</p>
+<p>さてさて、こまったことにこの <a class="reference external" href="http://opensource.washingtontimes.com/projects/django-projectmgr/">django-projectmgr</a> は、今のところ全くドキュメントがありません。チェックアウトの仕方もよくわからなかったのですが、なんとなくやったらチェックアウトできました。</p>
+<p>まず、 <a class="reference external" href="http://opensource.washingtontimes.com/projects/django-projectmgr/">django-projectmgr</a> は、djangoのアプリケーションだということが重要です。merbでいうところのスライス？ですね。merb、いいところをパクリましたよ。</p>
+<p>ちなみに、djangoは再利用可能なアプリケーションを組み合わせてサイトを構築します。GAEにJavaが登場したというニュースで、Pythonがあんまり人気なさそうなことを書いている人もいますが、 <a class="reference external" href="http://code.google.com/hosting/search?q=label:django">DjangoのアプリケーションがGoogle Codeに幾つ登録されているか</a> 知ってますか？</p>
+<p>ま、いいや。まず、適当なプロジェクトを作ります。</p>
+<pre><code class="language-bash">  $ django-admin.py startproject wt</code></pre><p>で、面倒なので今回はプロジェクトの中にdjango-projectmgrをチェックアウトします。起動してみるとわかるんですが、 <a class="reference external" href="http://code.google.com/p/django-threadedcomments">django-threadedcomments</a> というアプリケーションも利用しているようなので同じ場所にチェックアウトしてしまいます。</p>
+<pre><code class="language-bash">    $ cd wt
+    $ svn co http://opensource.washingtontimes.com/projects/public/django-projectmgr/trunk/projectmgr projectmgr
+    $ svn co http://django-threadedcomments.googlecode.com/svn/trunk/threadedcomments threadedcomments</code></pre><p>チェックアウトできたら、プロジェクトのsettings.pyを修正します。※一部抜粋</p>
+<pre><code class="language-python">wt/settings.py
+
+    DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+    DATABASE_NAME = 'test.db'             # Or path to database file if using sqlite3.
+
+    INSTALLED_APPS = (
+      'django.contrib.auth',
+      'django.contrib.contenttypes',
+      'django.contrib.sessions',
+      'django.contrib.sites',
+      'django.contrib.admindocs',
+      'django.contrib.admin',
+      'threadedcomments',
+      'projectmgr',
+    )</code></pre><p>リクエストを割り振ります。プロジェクトのurls.pyでadminとadmindoc、それからprojectmgrへリクエストを委譲する設定をします。よくわからないので、adminとadmindoc以外は全部委譲してしまっています。</p>
+<pre><code class="language-python">wt/urls.py
+
+    from django.contrib import admin
+    admin.autodiscover()
+
+    urlpatterns = patterns('',
+        (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+        (r'^admin/(.*)', admin.site.root),
+        (r'^', include('wt.projectmgr.urls')),
+    )</code></pre><p>はやる気持ちを抑えつつ、必要なテーブルを作ります。スーパーユーザも作っておきましょう。次いで、開発サーバを起動します。</p>
+<pre><code class="language-bash">$ python manage.py syncdb
+$ python manage.py runserver</code></pre><p>期待をしつつ、ブラウザでhttp://localhost:8000/を開きます！</p>
+<img alt="http://img.skitch.com/20090408-dpynbh7ua3a12kd886jhwu5k58.jpg" src="http://img.skitch.com/20090408-dpynbh7ua3a12kd886jhwu5k58.jpg" />
+<p>あれれれれ？base.htmlがないって言われてる。セオリーに従って、アプリケーションのテンプレートはbase.htmlというファイルを継承しているようです。プロジェクトに組み込みやすい（再利用しやすい）素晴らしい実装なのですが、恐ろしいことにサンプル的なbase.htmlがありません。</p>
+<p>エラーを出しているテンプレート(wt/projectmgr/templates/project_list.html)を見てみると、 <strong>{% block content %}</strong> というブロックを使っているようです。ついでにアプリケーションのテンプレートディレクトリ(wt/projectmgr/templates)を見てみると、project_base.htmlというそれっぽいテンプレートがあります。</p>
+<p>必要そうなブロックを定義してみます。アプリケーションのコードベースを汚さないよう、プロジェクト用のテンプレートディレクトリを定義します。</p>
+<pre><code class="language-bash">    $ mkdir templates
+    $ touch templates/base.html</code></pre><pre><code class="language-markup">wt/templates/base.html
+
+    {% block extra_head %}
+    {% endblock %}
+    {% block content %}
+      {% block tabcontent %}
+      {% endblock %}
+    {% endblock %}</code></pre><pre><code class="language-python">wt/settings.py
+
+    import os
+    BASE_DIR = os.path.dirname(__file__)
+
+    TEMPLATE_DIRS = (
+      os.path.join(BASE_DIR,'templates'),
+    )</code></pre><p>再びhttp://localhost:8000/を開くと…なんかでた。</p>
+<img alt="http://img.skitch.com/20090408-ees2rb8bqdipq567329h5ahwp1.jpg" src="http://img.skitch.com/20090408-ees2rb8bqdipq567329h5ahwp1.jpg" />
+<p>んー。adminでリポジトリを設定しないといけないっぽい。…いろいろあるな。</p>
+<img alt="http://img.skitch.com/20090408-8twt13nq9dnqu2nrq8ej6mds3q.jpg" src="http://img.skitch.com/20090408-8twt13nq9dnqu2nrq8ej6mds3q.jpg" />
+<p>よくわからないまま、Source Repositoriesにデータを追加してみた。改めて、<a class="reference external" href="http://localhost:8000">http://localhost:8000</a>/を開くと…設定したリポジトリが出た！</p>
+<img alt="http://img.skitch.com/20090408-qib7m67gik6484kcn5ghn841mi.jpg" src="http://img.skitch.com/20090408-qib7m67gik6484kcn5ghn841mi.jpg" />
+<p>リポジトリのリンクをクリックしてみると…オー！ノー！</p>
+<img alt="http://img.skitch.com/20090408-8d6gdxsmrbrs65wkj1tw97djde.jpg" src="http://img.skitch.com/20090408-8d6gdxsmrbrs65wkj1tw97djde.jpg" />
+<p>なんだよー、markdownかよー。restructuredtextがいいぜー。projectmgr/templatetags/wiki.pyを書き換えればいいんだけどさぁ。美しくないよねぇ。</p>
+<p>とりあえず、from markdown import markdownをコメントアウトすれば、こんな画面が出る。つか、wiki.pyでmarkdownの呼び出しをtry..exceptしてるのに、インポート文はベタかよっ＞＜</p>
+<img alt="http://img.skitch.com/20090408-ts88ypm928u6n2wkdf3kdukds3.jpg" src="http://img.skitch.com/20090408-ts88ypm928u6n2wkdf3kdukds3.jpg" />
+<p>結論。もう少しきちんとしてから使うか、なんとか仲間に入れてもらってまともにするか、だな。仲間に入れてもらうのは難しそうだなぁ。。。markdownが好きな人はもう少し踏み込んでみたらいいかも。 <strong>ドキュメントがなくて、django的な知識がないと辛いところ</strong> は突破した気がする。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2009/04/04/too_cost_to_keep_being_a_programmer/index.html">お金がかかるとプログラマでいられなくなる</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2009/04/11/quick_search_iphone_document/index.html">iPhone開発時にクラスリファレンスをすばやく見る方法</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

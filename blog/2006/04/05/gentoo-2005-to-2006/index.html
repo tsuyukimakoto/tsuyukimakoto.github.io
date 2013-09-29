@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>gentooのportageを更新する</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-04-05 10:41:03</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/04/05/gentoo-2005-to-2006/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/04/05/gentoo-2005-to-2006/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>gentooのportageを更新する</h1>
+    <p>ちょっと手が空いたのと、現場の若いのがGentooを古いEdenのPCに入れようと四苦八苦しているのに触発されて、自宅の放置Gentooの状態を更新しようとしたんだけど。。。</p>
+<blockquote>
+<strong>Cannot resolve a virtual package name to an ebuild</strong></blockquote>
+<p>いや、実はちょっと前にやろうとしたときに出たのを放置してたんだけどね。</p>
+<p>ぐぐってみたら <a class="reference external" href="http://www.gentoo.org/news/ja/gwn/20060306-newsletter.xml">対処法がGentooのサイトにあった</a> 。</p>
+<pre><code class="language-bash">  # emerge -av</code></pre><p>portageかなり古い(Portage versions prior to 2.0.51.20)場合に発生するらしい。</p>
+<p>portageをアップグレードしたら emerge --syncが通るようになった。</p>
+<p>ついでに <a class="reference external" href="http://wiki.gentoo.gr.jp/index.php?%5B%5Btips%BD%B8%2Fcdb%A4%C7Portage%A4%F2%B9%E2%C2%AE%B2%BD%5D%5D">emerge --syncが速くなるというTips</a> をメモ。</p>
+<p>portage2.1では使えない技らしいけど（2.1は現在~x86みたい）、確かにえらい速くなった。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/04/04/django-turbogears-ror-in-alexa/index.html">Alexaholicしてみた</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/04/09/python-workshop-edge-2006/index.html">Python Workshop the Edge 2006</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

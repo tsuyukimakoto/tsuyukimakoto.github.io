@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>COREBlogのアーカイブリンクをシンプルにする</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-11-17 08:32:36</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/11/17/159/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/11/17/159/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>COREBlogのアーカイブリンクをシンプルにする</h1>
+    <p>アーカイブへの月毎リンクが結構な数になってしまったので、シンプルにしてみた。</p>
+<p>いつも通りDTMLをごにょごにょしてごまかそうとした所、DTMLは変数をぐりぐりすることが出来ないことに気づく（今頃かい・・・）。</p>
+<p>ついにCOREBlogのソースコードをいじってしまった。</p>
+<p>※COREBlog1.2を対象にしています。</p>
+<p>参考にして壊れても知りません。</p>
+<p>またZopeのコード記述に関する定石も知らないので、いい加減なコードです。</p>
+<p>まず、modulesのarchivesをZMI上でコピーペースとしてarchives2というDTMLMethod?を作る。</p>
+<pre><code class="language-markup">  &lt;dtml-unless module_item_count&gt;
+    &lt;dtml-call "REQUEST.set('module_item_count',15)"&gt;
+  &lt;/dtml-unless&gt;
+  &lt;dtml-let prev_year="0"&gt;
+  &lt;h3&gt;&lt;dtml-if "_.len(document_title)&gt;0"&gt;&lt;dtml-var document_title&gt;&lt;dtml-else&gt;ARCHIVES&lt;/dtml-if&gt;&lt;/h3&gt;
+
+  &lt;ul&gt;
+  &lt;dtml-in prefix="year_loop" expr="month_archive_items2(count=36)"&gt;
+  &lt;dtml-if year_loop_odd&gt;&lt;li class="odd"&gt;
+  &lt;dtml-elif year_loop_even&gt;&lt;li class="even"&gt;
+  &lt;/dtml-if&gt;
+  &lt;dtml-in prefix="month_loop" expr="year_loop_item" mapping reverse&gt;
+  &lt;dtml-if expr="month_loop_number == 1"&gt;
+  &lt;dtml-var year&gt;:
+  &lt;/dtml-if&gt;
+  &lt;a href="&lt;dtml-var blogurl&gt;/monthlist_html?year=&lt;dtml-var year&gt;&amp;month=&lt;dtml-var month&gt;"&gt;&lt;dtml-var month&gt;&lt;/a&gt;
+  &lt;/dtml-in&gt;
+  &lt;/li&gt;
+  &lt;/dtml-in&gt;
+  &lt;/ul&gt;
+  &lt;/dtml-let&gt;</code></pre><p>COREBlogのCOREBlog.pyを修正する。</p>
+<p>def month_archive_items(self,count=1,start_year=0,start_month=0):のメソッドの下あたりに追記する。</p>
+<pre><code class="language-python">    security.declareProtected(View, 'month_archive_items2')
+
+    def month_archive_items2(self,count=1,start_year=0,start_month=0):
+        """ Return list of year/month archive. """
+        count = r2i(count,1)
+        start_year = r2i(start_year,0)
+        start_month = r2i(start_month,0)
+        if start_year == 0 or start_month == 0 or start_day == 0:
+            #Base date is today
+            t = localtime(time())
+            year = t[0]
+            month = t[1]
+        else:
+            year = year
+            month = month
+
+        ret_l = []
+        ret_d = {}
+        cnt = 100   #limitter
+        while cnt &gt; 0 and count &gt; 0:
+            if not self.datemap.has_key(year):
+                cnt = cnt - 1
+                month = 12
+                year = year - 1
+                continue
+            year_s = self.datemap[year]
+            if year_s.has_key(month):
+                if ret_d.has_key(year):
+                    ret_l = ret_d[year]
+                else:
+                    ret_l = []
+                    ret_d[year] = ret_l
+                ret_l.append({"year":year,"month":month})
+                count = count - 1
+            month = month - 1
+            if month &lt; 1:
+                month = 12
+                year = year - 1
+            cnt = cnt - 1
+        ret_x = []
+        for k in ret_d:
+            ret_x.append(ret_d[k])
+
+        return ret_x</code></pre><p>COREBlog.pyへの変更を反映するために、リフレッシュかZopeの再起動をする。</p>
+<p>modulesのindex_htmlにあるdtml-varをarchiveからarchive2に変更する。</p>
+<p>終わり</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/11/16/158/index.html">django 0.9 release</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/11/19/160/index.html">RhacoのTemplateParserについてのメモ</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

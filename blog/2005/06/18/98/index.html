@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>[不定期]ZopeのProductを試す</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-06-18 01:39:30</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/06/18/98/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/06/18/98/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>[不定期]ZopeのProductを試す</h1>
+    <p>今回は、 <a class="reference external" href="http://zwiki.org/">ZWiki</a> を試してみます(ZWiki-0.42)。</p>
+<ul>
+<li><p class="first">ZWikiとは何か？</p>
+<p>Zope上で動作するWikiクローンです。</p>
+<p>Zopeで動作するWikiクローンには、CMFWikiというものがあったようですが、2004年秋にZWikiに吸収されました。</p>
+<p>現時点では未公開ですが、開発中のものとしてmooyaさんの <a class="reference external" href="http://mooya.ath.cx/UkiUkiPage">ukiuki</a> というZope用Wikiクローンが期待されています(プラグイン指向でWikiページ内にBlogインスタンスが追加できちゃうとか)。</p>
+<p>pythonのcgiで動作するWikiクローンとしては、 <a class="reference external" href="http://moinmoin.wikiwikiweb.de/MoinMoinWikis">moinmoin</a> という物も存在します。</p>
+</li>
+<li><p class="first">Wikiとは何か？</p>
+<p>CMSの一種。</p>
+<p>もともとの考え方としては、誰でもどこからでもページの追加・編集が簡単にできるもの。</p>
+<p>誰でも、ということでログイン無しでも書き込める。</p>
+<p>どこからでも、ということでWebブラウザのみで利用ができる。</p>
+<p>簡単に、ということで独特の記法がある。</p>
+</li>
+<li><p class="first">再び、ZWikiとは何か？</p>
+<ul>
+<li><p class="first">権限の設定が可能</p>
+<p>誰でも、という事もできますが、せっかくZope上で動作するので、権限を制限する事ができます。</p>
+<p>設定できる権限は次の９種類。</p>
+<ol class="arabic simple">
+<li>Zwiki: Add wikis</li>
+</ol>
+<blockquote>
+<p>wikiインスタンスの追加権限</p>
+</blockquote>
+<ol class="arabic simple" start="2">
+<li>Zwiki: Add pages</li>
+</ol>
+<blockquote>
+<p>wikiページの追加権限</p>
+</blockquote>
+<ol class="arabic simple" start="3">
+<li>Zwiki: Edit pages</li>
+</ol>
+<blockquote>
+<p>wikiページの編集権限</p>
+</blockquote>
+<ol class="arabic simple" start="4">
+<li>Zwiki: Delete pages</li>
+</ol>
+<blockquote>
+<p>wikiページの削除権限</p>
+</blockquote>
+<ol class="arabic simple" start="5">
+<li>Zwiki: Change page types</li>
+</ol>
+<blockquote>
+<p>wikiページの種類変更権限(？)</p>
+</blockquote>
+<ol class="arabic simple" start="6">
+<li>Zwiki: Rename pages</li>
+</ol>
+<blockquote>
+<p>wikiページの名前(URLの一部)変更権限</p>
+</blockquote>
+<ol class="arabic simple" start="7">
+<li>Zwiki: Reparent pages</li>
+</ol>
+<blockquote>
+<p>wikiページの親wiki変更変元</p>
+</blockquote>
+<ol class="arabic simple" start="8">
+<li>Zwiki: Add comments</li>
+</ol>
+<blockquote>
+<p>wikiページへのコメント権限</p>
+</blockquote>
+<ol class="arabic simple" start="9">
+<li>Zwiki: Rate pages</li>
+</ol>
+<blockquote>
+<p>wikiページのレイティング(★ひとつから★５まで)権限</p>
+</blockquote>
+</li>
+<li><p class="first">親子関係の作成が可能</p>
+<p>Wikiページに対して、下位階層のページを簡単に追加できます。</p>
+<p>上位階層のページ(image1)には、下位階層のページ一覧が自動的に追加されます。</p>
+<p>下位階層のページ(image2)には、ナビゲーションが自動的に追加されます。</p>
+<p>＃もちろん一般的なWikiと同様にWikiワードで自動的にリンクを貼る事もできます。</p>
+</li>
+<li><p class="first">表記方法が選択できる</p>
+<p>Wikiには独特の表記方法があります。</p>
+<p>HTMLも何も知らない人が一から覚えるのであれば、比較的単純でHTMLでありがちなタグの閉じ忘れ等も考える必要の無い便利な物である事は間違いありません。</p>
+<p>しかし、始めのうちは改行一つとっても記述するのが困難です。また、Wikiクローンの種類によって様々な方言があり、せっかく覚えても使う場面はあまりありません。</p>
+<p>ZWikiは次のような記法をWikiページ毎に選択する事ができます。</p>
+<ol class="arabic simple">
+<li>Structured Text</li>
+</ol>
+<blockquote>
+<p>Pythonの特殊な記法の一つ。Wiki方式よりも自由度があります。</p>
+</blockquote>
+<ol class="arabic simple" start="2">
+<li>reStructured Text</li>
+</ol>
+<blockquote>
+<p>Structured Textの発展型です。より自由度があります。</p>
+</blockquote>
+<ol class="arabic simple" start="3">
+<li>WikiWikiWeb markup</li>
+</ol>
+<blockquote>
+<p>WikiWikiWebというWikiクローン形式の記法です。</p>
+</blockquote>
+<ol class="arabic simple" start="4">
+<li>HTML</li>
+</ol>
+<blockquote>
+<p>言わずと知れたHTML形式で記述が可能です。汎用性は一番。</p>
+</blockquote>
+<ol class="arabic simple" start="5">
+<li>Plain text</li>
+</ol>
+<blockquote>
+<p>これこそ誰でも記述ができる記法です。テキストがそのまま入力可能です。</p>
+</blockquote>
+<ol class="arabic simple" start="6">
+<li>MoinMoin markup</li>
+</ol>
+<blockquote>
+<p>MoinMoinというWikiクローン形式の記法です。</p>
+<p>特にHTMLの入力方法だと、Zopeの利点として外部エディタという物が利用来ます。</p>
+<p>InternetExploreかFireFoxを使用しているのであれば、Zopeに標準添付されている <a class="reference external" href="http://www.zfl.uni-bielefeld.de/personal/mjablonski/epoz/index.html">Epoz</a> や最近話題の <a class="reference external" href="http://www.fckeditor.net/demo/default.html">FCKEditor</a> 、はては本当の外部エディタ(DreamWeaverでさえも)だって利用可能です。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">ZWikiのインストールは？</p>
+<ul>
+<li><p class="first">必要な物</p>
+<p>Zope2.7系かZope2.8系</p>
+</li>
+<li><p class="first">インストール方法</p>
+<p>ZopeインスタンスのProductディレクトリに <a class="reference external" href="http://zwiki.org/FrontPage">ZWikiのFrontPage</a> からダウンロードしたZWikiを展開したディレクトリを配置し、Zopeインスタンスを再起動します。</p>
+</li>
+<li><p class="first">Zopeで使用する場合は、「ZMIからZWikiを追加する」だけです。</p>
+</li>
+<li><p class="first">Ploneで使用する場合は、「Ploneの設定-&gt;プロダクツを追加･削除でZWikiをインストール」し、好きな場所にZWikiページを追加します。</p>
+</li>
+</ul>
+</li>
+</ul>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/06/08/97/index.html">オブジェクト脳の作り方</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/06/24/100/index.html">掟破りなミステリー</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

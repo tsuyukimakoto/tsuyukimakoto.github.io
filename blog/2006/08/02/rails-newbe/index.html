@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Rails初心者の雑感</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-08-02 01:32:11</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/08/02/rails-newbe/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/08/02/rails-newbe/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Rails初心者の雑感</h1>
+    <p>ちょっと訳あってRuby on Railsを触っています。</p>
+<p>RubyもRailsも非常なる初心者によるRails雑感です。いろいろといい手を知っている人は教えてください(あくまでレールに乗れない、RubyもRailsも初心者である、という条件を加味して読んでください)。</p>
+<div class="section" id="id1">
+<h2>既存データベースとの連携</h2>
+<p>複数スキーマをレールに乗ったまま扱うのは非常に困難があるようです。</p>
+<p>Railsのデータベース設定は、development/test/productionと3つのデータベースを設定できるようになっています。</p>
+<p>rakeというJavaでいうant/Djangoでいうmanage.pyのようなコマンドを実行すると、引数無しの場合はAll Testが走ります。All Testが走る際に、rakeはdevelopment環境のスキーマをtest環境にコピーしようと試みます。これは、「開発環境のデータベースにはよけいなデータが含まれていて、テストがしにくい」という問題と「開発環境とテスト環境のデータベースを分けると、管理が大変」という二つの問題をクリアするための動作だと推測することができます。予期しないデータが含まれていると通らないテストというものに疑問がないことはありませんが。。</p>
+<p>しかし、Rails本や世の中のRailsブログを見ても、「スキーマをコピーする」という行為が何を意味するのかが記述されていません。実際に何をしてくれるのか。何度かトライしてみたところ次の表のような感じでした(本当はもっときちんと検証したい。でもRadRailsでデバッガがキャッチされないエラーを吐くもんだから時間がない)。</p>
+<p>DBオブジェクト テスト環境へのコピー テーブル ダンプして、Create？</p>
+<p>文字セマンティクスをchar設定しているUTF8のOracleデータベースの場合、きちんと開発環境のカラムサイズの4倍のサイズで非char設定してくれます。</p>
+<p>ただし、4倍した際にvarchar2の最大値4000を超えるようなカラムが対象の場合は、ひそかに4000に設定します(エラーとはなりません)。</p>
+<p>シーケンス テーブル名から自動で作成(開発環境のものは無視)</p>
+<p>シノニム なにもしないけど、条件次第でデータを消す</p>
+<p>ビュー なにもしない</p>
+<p>たまに、存在するオブジェクト名ですというエラーをデータベースが返してくるので、既にテスト環境にコピー済みのオブジェクトをどこかで管理している可能性があります。また、fixtureというテストで利用するデータをテストで定義してある場合には、対象のテーブルのデータを全部削除します(条件無しのDELETE文)。</p>
+<p>対象のテーブルデータを全部消してしまうので、スキーマ違いのテーブルをシノニムで対処してしまうとシノニムの参照先のデータが消されてしまいます。よって、テスト環境には手動でテーブルを作成、fixtureでデータを投入する必要があります。(開発環境のデータを使いたくてテスト環境を全部シノニムにしたら開発環境のデータが全部消されます。きっと)</p>
+<p>ビューは更新が可能なものでなければ、シノニムをテスト環境で利用しても問題なさそうですが、テーブルのシノニムが利用できないので、やはり手動で開発環境と同期をとる必要があるでしょう。</p>
+<p>スキーマが複数あり、かつ一部が既存のスキーマである場合は、Railsでレールに乗ることはできません。海外でも正規化された既存データベースとの相性の悪さは話題になっているようです。</p>
+<p>規模が大きくなければなんとか対応が可能な範囲だと判断しましたが、テスト環境ではなく、開発環境でテストさせてくれてもいいんじゃないかとは思います。</p>
+</div>
+<div class="section" id="dryactiverecord">
+<h2>DRYというかActiveRecordについて</h2>
+<p>Railsというと、ActiveRecordが有名で、プラスScaffoldで「データベースが変わっても全然問題ないよー。CRUD簡単だよー」というイメージがあります。</p>
+<p>確かにスクリーンキャストを見たりしても、そんな雰囲気があります。</p>
+<p>しかし、実際はモデルごとにバリデータを定義します。せっかく変数を書かず空っぽなActiveRecordの継承クラスに、書いていない変数名を指定してバリデータを定義します。</p>
+<p>必須バリデータと、最大長指定バリデータを一つのカラムに対して指定するがあるとすると、書いていない変数名を2行に書く必要があります。</p>
+<p>結局書くのであれば、DjangoやTurboGearsのようにモデルに変数(カラム)の型を指定する方がスマートな気がしますが。本番環境のmigrate用の記述もDRYとしては？</p>
+</div>
+<div class="section" id="i18n">
+<h2>i18nについて</h2>
+<p>Railsにはデフォルトのよく使うバリデータがついています。また、バリデータで検証エラーとなった場合には、Scaffold画面に自動でエラーメッセージが出ます。便利です。</p>
+<p>ただし、表示されるメッセージが英語です。日本語化したいのですがデフォルトのメッセージのpoとmoがどこに含まれているのかがわかりません。どなたかご存知の方、教えてください。全部はじめからやるのはおかしいし。</p>
+<p><strong>探す必要もありませんでした、設定すれば自動的に日本語が表示されます。</strong></p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/07/30/django_095_released/index.html">Django0.95がリリースされました。</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/08/09/tabblo-is-fun/index.html">tabbloってやっぱおもろいな。</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

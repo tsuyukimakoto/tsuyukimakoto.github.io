@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>RailsのStreamlinedアナウンスから面白いことに！</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-08-18 22:57:18</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/08/18/rails-streamlined-or-django-admin/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/08/18/rails-streamlined-or-django-admin/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>RailsのStreamlinedアナウンスから面白いことに！</h1>
+    <p>誤読に対していただいたコメントや、 <a class="reference external" href="http://d.hatena.ne.jp/machi_pon/20060820/1156033042">喧嘩とかして欲しくないですけどね…(Usa*Usa日記)</a> というエントリに、またまた勝手に調子づいてしまっていた ことに気づきました。一部訂正等の修正を入れました。</p>
+<p>会社で同僚とわーきゃー言っている気分で書いてしまうことがよくあるので、気をつけないと。。。</p>
+<p>Railsの <a class="reference external" href="http://weblog.rubyonrails.org/2006/8/16/streamlined-taking-admins-beyond-scaffolding">blogに必見のエントリー</a> が。</p>
+<p>エントリー自体は、RailsのAjax ScaffoldをベースとしたDjangoのadminライクな <a class="reference external" href="http://streamlined.relevancellc.com/">Streamlined</a> に関するアナウンスなんだけど、コメントにDjangoのAdrianが登場し「失望した！単なるコードジェネレーションに失望した！」とのたまった。</p>
+<p>すぐさまDHHによる反論。DHHによれば、</p>
+<blockquote>
+Scaffold自体も入門用として存在しているだけでなれてきたらスクラッチで書くべきもの <strong>Scaffoldはあくまで「足場」</strong> 、StreamlinedについてもRailsのコアに取り入れるようなものではない、Djangoのadminのようにmodelにメタ情報を記述するのは気に入らないとのこと。</blockquote>
+<p>実は、streamlinedはコードジェネレーションだけではなく動的生成でも動作するらしい(本当のところどうなのかは知らない)。さらにさらに、 <a class="reference external" href="http://www.agilewebdevelopment.com/plugins/auto_admin">auto_admin</a> というRailsのDjango adminを作っている人がいたり(見た目は完全にDjango)、Railsで作っているサイトの管理画面にDjangoを使っている人がいたり(RailsのmodelをDjangoのmodelにする補助スクリプトあり)と、面白いことになっています。</p>
+<p>RailsのAjax Scaffoldはなかなか見た目もよくて、関連も扱えるようになってきて、もう少しでadminになるんじゃないかと思っていた矢先の出来事でした。</p>
+<p>海外のRails使っている人って、Djangoがいいっていう人がいっぱいいて、でもRailsに取り込もうとしていたりしてなんだか面白い(デザイナー達はDjangoへ逃げたりしてるようですが)。</p>
+<div class="notes"><blockquote class="last"><i class="icon-info"></i>実際のことを言えば、Djangoを使っている人たちもRSJが良いっていったり、Scaffoldが欲しいって言ったりしています。Scaffold については本家のwikiに利用可能なコードがあります。もちろんAdrianはコアに組み込もうとはしませんが。 </blockquote></div><p>そうそう、「RailsのコアチームはRailsがこうあるべきっている信念が感じられるけどDjangoには感じられない」っていうコメントにAdrianが切れてるのも面白いです。</p>
+<p>私的には</p>
+<blockquote>
+<p><strong>世のAjax必須ムードにもめげず黒魔術を取り除くのに半年かけるのがDjango</strong> 。</p>
+<p><strong>has_oneとbelongs_toを双方のmodelに定義しなければいけないDRYがRails</strong> 。</p>
+</blockquote>
+<p>って思っているんだけど、Django派だからかな。</p>
+<p>ん？いや？、業務にRailsつっこもうとしてるんですからRailsラブですよ、もちろん。</p>
+<p>複数スキーマ＆ロジック満載データベースが含まれる業務系にRailsつっこんだチームなんてそうは無いに違いないぞ。</p>
+<p>だれか、Railsの偉い人、Streamlinedの使い勝手とか具体的な動作とか、解説してくださーい。Rubyのコードは追いたくないもんで。。。catwalkと比べてどうなんだろう？</p>
+<p>が、ここで <strong>大きな疑問</strong> が。 <strong>なんでDjangoを使わないの！？</strong></p>
+<p>本が無いから？</p>
+<p>Python系の特徴ともいえる理路整然としたドキュメントがありますよっ(完全なる日本語訳もあるし)！</p>
+<p>つーか、 <a class="reference external" href="http://www.amazon.co.jp/gp/redirect.html?link_code=ur2&amp;tag=everes-22&amp;camp=247&amp;creative=1211&amp;location=%2Fgp%2Fproduct%2F1590597257%2F">Pro Django 本出るし！</a></p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/08/15/ajax-address/index.html">無理矢理Railsのajax_scaffold型にするとこうなる</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/08/19/django-to-be-the-python-web-framework/index.html">DjangoこそがPythonのWebフレームワークだ、とか</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

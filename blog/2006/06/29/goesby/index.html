@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>GOESBY.COM</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-06-29 10:26:08</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/06/29/goesby/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/06/29/goesby/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>GOESBY.COM</h1>
+    <p><a class="reference external" href="http://rails.drecom.jp/">ドリコムソフトウェアコンテスト</a> に同僚と作ったものを応募しました(PHPのコーディングはすべて同僚担当)。</p>
+<p><a class="reference external" href="http://www.itmedia.co.jp/bizid/articles/0607/04/news035.html">ITMedia 「未読RSS恐怖症」対策</a> に最適なサービスです。</p>
+<p>Drecom Award on Railsですが、PHPベースのフレームワーク <a class="reference external" href="http://www.rhaco.org">rhaco</a> で作成したソーシャルブックマークサービスです。</p>
+<p>その名を <a class="reference external" href="http://www.goesby.com/">GOESBY.COM</a> 。   特徴は、メモリ機能とGOESBY機能。</p>
+<p>詳しくは <a class="reference external" href="http://www.goesby.com/help.php">ヘルプ</a> を見てもらったり登録して使ってみてもらえばいいんだけど、簡単に言うと「メモリ機能は、後で見る(24時間で消える)ブックマーク」と「GOESBY機能はブックマークやRSSの自動再生」。</p>
+<p>とにかく最近は処理するフィードとかブックマークとかが多すぎるので「少しでも負担を少なくしたい＆無駄を省きたい」という発想と、「お昼休みに弁当と箸で両手が塞がっているような状況でも処理したい」という欲求から作成されています。</p>
+<p>また、ブックマークもコンテンツだという考えから各ユーザの情報としてGoogle AdSenseが登録できます。良質なブックマークを集めてシェアしてあげることで関連する良質な広告が表示され、場合によっては小遣いを得られるかもしれません(AdSenseの表示箇所は各ユーザのブックマーク一覧と各ユーザのブックマーク検索結果)。</p>
+<p>技術的な面としては「国際化されている」「テンプレートが実行環境なしで遷移できる状態を保っている」「cronなしでもRSSの更新がなんとか行える」「配置にコストがかからない」といったところが面白いところになっています(近日中にドリコムのコンテストページで公開される予定です)。</p>
+<div class="section" id="id1">
+<h2>今後の展開</h2>
+<p>未だ発想はあっても未実装な機能が沢山あります。が、ドリコムの審査中は機能の改変ができないのでしばらくペンドです。</p>
+<p>機能自体ではない展開としては、次のようなことを考えています。</p>
+<p>PHP4か5とMySQLないしはPostgreSQLが動作すれば配置が簡単なので、最近流行の社内ローカルソーシャルブックマークに利用してもらう(ライセンス形態未定)。</p>
+<p>簡単簡単と書き続けてどんなもんなんだとお思いでしょう。</p>
+<ul>
+<li><p class="first">GOESBY.COMの配置は次のフローで完了します。</p>
+<ol class="arabic simple">
+<li>MySQLAdminとかでユーザとデータベースの入れ物を作成</li>
+<li>rhacoをWebサーバが読み込める好きな所に置く</li>
+<li>goesbyをドキュメントルートの下の方に置く</li>
+<li>ブラウザで設定画を出す</li>
+</ol>
+<blockquote>
+<p>「rhacoの場所、データベースの種類、データベースのユーザ情報」を入力、サブミットボタンをクリックテーブルの作成やフレームワークへのパスの設定は上記のフローで完了しています。httpd.conf等への追加の設定は不要です。</p>
+<p>また、PHPのコンパイルオプションは大抵のレンタルサーバでカバーされる程度しか必要ないので、小さなグループで使用する等の用途にも向いていると思います。</p>
+<p>利用可能な言語は今のところ「日本語」「英語」の二カ国語です(gettextのオプションは不要です。safariで見ると常に英語の表示になります)。</p>
+</blockquote>
+</li>
+</ul>
+<p>GOSEBY.COMは <strong>del.icio.usのブックマークエクスポートとbloglinesのOPMLエクスポートをインポート可能です</strong> 。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/06/22/lost-2006/index.html">負けたわけだけど</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/07/03/goesby-drecom-award-on-rails/index.html">ドリコムソフトウェアコンテストの応募作品をGOESBY</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

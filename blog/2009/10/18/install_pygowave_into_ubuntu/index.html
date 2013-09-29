@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Google Waveクローンをubuntuに入れる</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2009-10-18 19:11:03</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2009/10/18/install_pygowave_into_ubuntu/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2009/10/18/install_pygowave_into_ubuntu/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Google Waveクローンをubuntuに入れる</h1>
+    <p>waveの招待がどうとか微妙な盛り上がりを見せている <a class="reference external" href="https://wave.google.com/">Google Wave</a> ですが、数ヶ月前に <a class="reference external" href="http://github.com/p2k/pygowave">クローンというかアレげなやつ</a> が出ていたのを思い出して入れてみました。</p>
+<p>VirtualBox上のubuntu9.04に入れたのですが、ちょいと癖があったのと日本語のインストール記述が見当たらなかったのでログを残してみます。</p>
+<p>正しく入れられた自信はありませんが、Registerしてログインして複数人でWaveできるところまではできました。</p>
+<p>ちなみに本物のGoogle Wave、私は mtsuyukiあっとgooglewave.com です。今のところInvitationもいくつか余ってたりします。</p>
+<p>以下、インストールに関する記述。</p>
+<div class="section" id="pygowave">
+<h2>PyGoWaveのインストールログと前提</h2>
+<p><strong>実施日 2009/10/18</strong></p>
+<p><strong>インストールに使ったOS ubuntu 9.04(日本語 Remix CD)</strong></p>
+<p>私はzshを使っています。</p>
+<p>VirtualBox上のubuntuにはvboxという名前でアクセスできるようにした。OSXの/etc/hostsとubuntuの/etc/hostsに以下のエントリを追加した（ipはネットワークをブリッジした後に/sbin/ifconfigで確認ね）</p>
+<pre><code class="language-bash">/etc/hosts
+
+    xxx.xxx.xxx.xxx   vbox #mac側
+    127.0.0.1         vbox #ubuntu側</code></pre><p>ubuntuは2009/10/18の時点の最新に更新してある。また、OSXから参照できるようにVirtualBoxの仮想イメージ設定でネットワークをブリッジに変更してある。</p>
+<p>基本的には <a class="reference external" href="http://wiki.github.com/p2k/pygowave/pygowaveserverinstallation">ここ(PyGoWaveServerInstallation)</a> を見ればいいんですが、いくつかはまりどころがあったりします。</p>
+</div>
+<div class="section" id="id2">
+<h2>まずは必要なものをバッツリ入れましょう。</h2>
+<p>どーんと入れる。なんどかMySQLのrootユーザパスワードを要求されるけど、ローカル専用なので何も入れずにエンター！でごまかした。もちろん入れてもいいけど、その場合は覚えておいてね。</p>
+<pre><code class="language-bash">    $ sudo apt-get --quiet --quiet install mysql-server apache2 libapache2-mod-python libapache2-mod-proxy-html python-setuptools python-mysqldb python-twisted python-lxml python-imaging python-simplejson erlang subversion mercurial git-core</code></pre></div>
+<div class="section" id="rabbitmq">
+<h2>rabbitmq関連のインストール</h2>
+<div class="section" id="rabbitmqumbrella">
+<h3>rabbitmqのumbrellaを使ってがつんと取得</h3>
+<p>apt-getとかで入れるとどうしてよいのかよくわからなくなってしまうので、rabbitmq-public-umbrellaを使っていれる。</p>
+<pre><code class="language-bash">    $ mkdir ~/tmp
+    $ cd ~/tmp
+    $ hg clone http://hg.rabbitmq.com/rabbitmq-public-umbrella
+    $ cd rabbitmq-public-umbrella
+    $ make co
+    $ make</code></pre></div>
+<div class="section" id="id3">
+<h3>rabbitmqの設定ファイルをごにょごにょする</h3>
+<p>rabbitmqの設定ファイルを作る</p>
+<pre><code class="language-bash">    $ sudo mkdir /etc/rabbitmq
+    $ sudo touch /etc/rabbitmq/rabbitmq.conf</code></pre><p>/etc/rabbitmq/rabbitmq.confを編集する。正直何が書かれてるのかわからんぜ。</p>
+<pre><code class="language-bash">/etc/rabbitmq/rabbitmq.conf
+
+    NODENAME=rabbit
+    NODE_IP_ADDRESS=0.0.0.0
+    NODE_PORT=5672
+
+    LOG_BASE=/var/log/rabbitmq
+    MNESIA_BASE=/var/lib/rabbitmq/mnesia
+
+    SERVER_START_ARGS='
+      -rabbit
+        stomp_listeners [{"0.0.0.0",61613}]
+        extra_startup_steps [{"STOMP-listeners",rabbit_stomp,kickstart,[]}]'</code></pre></div>
+<div class="section" id="rabbitmq-stomp">
+<h3>rabbitmq-stompプラグインを有効にする</h3>
+<p>プラグインディレクトリを用意して、rabbitmq-stompプラグインを配置後、pluginを更新する</p>
+<pre><code class="language-bash">    $ cd ~/tmp/rabbitmq-public-umbrella/rabbitmq-server
+    $ mkdir plugins
+    $ ln -s ~/tmp/rabbitmq-public-umbrella/rabbitmq-stomp ~/tmp/rabbitmq-public-umbrella/rabbitmq-server/plugins
+    $ sudo ./scripts/rabbitmq-activate-plugins
+    $ sudo ./scripts/rabbitmq-server start</code></pre><p>broker runningの次の行に starting STOMP Adapter (binding to [{&quot;127.0.0.1&quot;,61613}])  ...done とか出てれば成功。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>rabbitmqの設定をする</h2>
+<p>ユーザ作ったり権限設定したりしているようです。よくわかりません。 RANDOMって所はすきな文字列にしてください</p>
+<pre><code class="language-bash">    $ cd ~/tmp/rabbitmq-public-umbrella/rabbitmq-server
+    $ sudo ./scripts/rabbitmqctl change_password guest RANDOM
+    $ sudo ./scripts/rabbitmqctl add_user pygowave_client pygowave_client
+    $ sudo ./scripts/rabbitmqctl add_user pygowave_server pygowave_server
+    $ sudo ./scripts/rabbitmqctl set_permissions pygowave_client '^[^.]+\.[^.]+\.waveop$|^wavelet.direct$' '^[^.]+\.[^.]+\.(waveop|clientop)$|^wavelet.topic$' '^[^.]+\.[^.]+\.(clientop|waveop)$|^wavelet.direct$'
+    $ sudo ./scripts/rabbitmqctl set_permissions pygowave_server '^[^.]+\.[^.]+\.waveop$|^wavelet_rpc_singlethread$|^wavelet\.(topic|direct)$' '^[^.]+\.[^.]+\.waveop$|^wavelet_rpc_singlethread$|^wavelet\.direct$' '^[^.]+\.[^.]+\.waveop$|^wavelet_rpc_singlethread$|^wavelet\.(topic|direct)$'</code></pre></div>
+<div class="section" id="django-django-registration-carrot">
+<h2>django/django-registration/carrotのインストール</h2>
+<p>apt-getで入るDjangoは古すぎるので手で入れる。</p>
+<pre><code class="language-bash">    $ sudo easy_install django
+    $ sudo easy_install django-registration
+    $ sudo easy_install carrot</code></pre></div>
+<div class="section" id="orbited">
+<h2>orbitedのインストールと設定</h2>
+<p>指示通りにやった。やってやった。</p>
+<pre><code class="language-bash">    $ sudo easy_install orbited
+    $ sudo chown www-data /var/orbited
+    $ sudo touch /etc/orbited.cfg</code></pre><p>/etc/orbited.cfgを編集する</p>
+<pre><code class="language-bash">    [global]
+    reactor=epoll
+    pid.location=/var/run/orbited.pid
+    user=www-data
+    group=www-data
+    proxy.enabled=1
+
+    [listen]
+    http://localhost:9000
+
+    [access]
+    * -&gt; localhost:61613
+
+    [logging]
+    debug=SCREEN,/var/orbited/debug.log
+    info=SCREEN,/var/orbited/info.log
+    access=SCREEN,/var/orbited/info.log
+    warn=SCREEN,/var/orbited/error.log
+    error=SCREEN,/var/orbited/error.log
+
+    enabled.default=info,access,warn,error
+
+    [loggers]
+    Daemon=info,access,warn,error
+    TCPConnection=info,access,warn,error</code></pre><p>orbitedを起動する</p>
+<pre><code class="language-bash">    $ sudo orbited</code></pre></div>
+<div class="section" id="id5">
+<h2>いよいよPyGoWaveを入れる</h2>
+<p>そろそろ面倒なので権限とか完全にローカル用です。ディレクトリ名とか変えない方が身のためです。</p>
+<pre><code class="language-bash">    $ sudo mkdir -p /srv/http/pygowave_project
+    $ cd /srv/http/pygowave_project
+    $ sudo git init
+    $ sudo git pull git://github.com/p2k/pygowave.git refs/tags/v0.3</code></pre></div>
+<div class="section" id="settings-py">
+<h2>settings.pyをいじると幸せな気がして変更しました。</h2>
+<p>時間とか地域とかOrbitedの動作サーバ名を変更します。</p>
+<pre><code class="language-bash">    diff --git a/settings.py b/settings.py
+    index 9b82257..50db36d 100644
+    --- a/settings.py
+    +++ b/settings.py
+    @@ -38,7 +38,7 @@ DATABASE_PORT = ''             # Set to empty string for default. Not used with
+     DEFAULT_FROM_EMAIL = 'noreply@localhost'
+
+     # The domain used in wave URLs
+    -WAVE_DOMAIN = 'localhost'
+    +WAVE_DOMAIN = 'vbox'
+
+     LOGIN_URL = '/pygowave/accounts/login/'
+     LOGIN_REDIRECT_URL = '/pygowave/home/'
+    @@ -51,11 +51,11 @@ IS_LOCAL = True
+     # although not all choices may be available on all operating systems.
+     # If running in a Windows environment this must be set to the same as your
+     # system time zone.
+    -TIME_ZONE = 'Europe/Berlin'
+    +TIME_ZONE = 'Japan'
+
+     # Language code for this installation. All choices can be found here:
+     # http://www.i18nguy.com/unicode/language-identifiers.html
+    -LANGUAGE_CODE = 'en-us'
+    +LANGUAGE_CODE = 'ja'
+
+     LANGUAGES = (
+            ('de', 'German - Deutsch'),
+    @@ -163,5 +163,6 @@ AMQP_PASSWORD = "pygowave_server"
+     AMQP_VHOST = "/"
+
+     # Orbited settings here
+    -ORBITED_SERVER = "p2k-i9400-arch"
+    -ORBITED_PORT = 80
+    +ORBITED_SERVER = "vbox"
+    +ORBITED_PORT =80</code></pre></div>
+<div class="section" id="mysqlpygowave">
+<h2>mysqlにpygowaveユーザと権限を作る</h2>
+<p>/etc/mysql/my.cnfを編集してmysqlの文字コードを変更する</p>
+<pre><code class="language-bash">[mysqld]セクションに追加
+
+    default-character-set=utf8
+    character_set_server=utf8</code></pre><pre><code class="language-bash">[mysql]セクションに追加
+
+    default-character-set=utf8</code></pre><p>いったん再起動</p>
+<pre><code class="language-bash">    $ sudo /etc/init.d/mysql restart</code></pre><p>ユーザや権限やデータベースを作る</p>
+<pre><code class="language-bash">    $ mysql -u root
+    mysql &gt; CREATE DATABASE `pygowave`;
+    mysql &gt; CREATE USER 'pygowave'@'localhost' IDENTIFIED BY 'pygowave';
+    mysql &gt; GRANT ALL PRIVILEGES ON `pygowave`.* TO 'pygowave'@'localhost' WITH GRANT OPTION;
+    mysql &gt; exit;</code></pre></div>
+<div class="section" id="id6">
+<h2>PyGoWaveのテーブルを作ったりします。</h2>
+<p>まぁ、いつも通りですね！ついでにいくつか権限も変えておきます。</p>
+<pre><code class="language-bash">    $ python manage.py syncdb
+    $ sudo chown www-data ./media/* ./pygowave_client/cache locale pygowave_client/locale</code></pre></div>
+<div class="section" id="carrot">
+<h2>carrotのバージョンによる問題を回避</h2>
+<p>PyGoWaveのサーバを起動する</p>
+<pre><code class="language-bash">    $ sudo ./launch-pygowave-rpc</code></pre><p>※ carrotの特定のバージョン以外ではエラーが出るようです。ImportError: cannot import name DefaultBackendとか出るまでやらなくてもよいです。</p>
+<p>エラーが出たら、amqp_rpc_server.pyを少しいじります。緊急回避です。触っちゃいけないことになったものを触ったりとかとか、いろいろ。</p>
+<pre><code class="language-bash">    diff --git a/amqp_rpc_server.py b/amqp_rpc_server.py
+    index 78d20e2..da70bbd 100644
+    --- a/amqp_rpc_server.py
+    +++ b/amqp_rpc_server.py
+    @@ -21,7 +21,7 @@ import logging.handlers
+
+     from carrot.connection import DjangoAMQPConnection
+     from carrot.messaging import Consumer, Publisher
+    -from carrot.backends import DefaultBackend
+    +from carrot.backends import DEFAULT_BACKEND as DefaultBackend
+     from django.core.exceptions import ObjectDoesNotExist
+
+     from pygowave_server.models import Participant, ParticipantConn, Gadget, GadgetElement, Delta
+    @@ -150,7 +150,7 @@ class PyGoWaveMessageProcessor(object):
+                    self.publisher.send(message_data, routing_key=routing_key, delivery_mode=1)
+
+            def receive(self, message_data, message):
+    -               rkey = message.amqp_message.routing_key
+    +               rkey = message._amqp_message.routing_key
+                    participant_conn_key, wavelet_id, message_category = rkey.split(".")
+
+                    if message_category != "clientop":
+    @@ -327,7 +327,8 @@ class PyGoWaveMessageProcessor(object):
+
+                    # Re-open the channel if it was closed (this is a pyamqlib issue)
+                    if self.publisher.backend.channel.connection == None:
+    -                       self.publisher.backend.channel = self.publisher.backend.connection.connection.channel()
+    +                       #self.publisher.backend.channel = self.publisher.backend.connection.connection.channel()
+    +                       self.publisher.backend.channe()
+
+                    return qex</code></pre></div>
+<div class="section" id="apache2">
+<h2>apache2の設定を書く</h2>
+<p>/etc/apache2/sites-enabled/000-defaultを修正します。</p>
+<pre><code class="language-bash">&lt;/VirtualHost&gt;の直情に書く
+
+    &lt;Location /pygowave&gt;
+      SetHandler python-program
+      PythonHandler django.core.handlers.modpython
+      SetEnv DJANGO_SETTINGS_MODULE settings
+      PythonOption django.root /pygowave
+      PythonDebug On
+      PythonInterpreter pygowave_django
+      PythonPath "['/srv/http/pygowave_project'] + sys.path"
+    &lt;/Location&gt;
+
+    Alias /pygowave/media /srv/http/pygowave_project/media
+    &lt;Location "/pygowave/media"&gt;
+      SetHandler None
+      Options Indexes FollowSymLinks
+      Order allow,deny
+      Allow from all
+    &lt;/Location&gt;
+    &lt;Location "/static"&gt;
+    SetHandler None
+    Options Indexes FollowSymLinks
+    Order allow,deny
+    Allow from all
+    &lt;/Location&gt;
+    &lt;Location "/tcp"&gt;
+    SetHandler None
+    Options Indexes FollowSymLinks
+    Order allow,deny
+    Allow from all
+    &lt;/Location&gt;
+
+    ProxyRequests Off
+    ProxyPass /static http://localhost:9000/static
+    ProxyPass /tcp http://localhost:9000/tcp</code></pre><p>md5じゃなくってhashlib使えっていわれたら、これまた緊急回避します。/usr/lib/python2.6/dist-packages/mod_python/importer.py</p>
+<pre><code class="language-bash">    - import md5
+    + from hashlib import md5</code></pre></div>
+<div class="section" id="mod-proxyapache">
+<h2>mod_proxyを有効にしてapacheを再起動する</h2>
+<p>まず、LoadModuleを追加します。/etc/apache2/mods-enabled/proxy_html.load</p>
+<pre><code class="language-bash">    LoadModule proxy_ftp_module /usr/lib/apache2/modules/mod_proxy_ftp.so
+    LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
+    LoadModule proxy_connect_module /usr/lib/apache2/modules/mod_proxy_connect.so</code></pre><p>へー</p>
+<pre><code class="language-bash">    $ sudo a2enmod proxy
+    $ sudo /etc/init.d/apache2 restart</code></pre></div>
+<div class="section" id="id7">
+<h2>メール送信できるようにする</h2>
+<p>VirtualBoxからgmailを使ってメールを送ろうとしたらおこられた、面倒なのでdjblackholeを使う。間違っても表におかないように。</p>
+<pre><code class="language-bash">    $ cd /srv/http
+    $ sudo svn co http://svn.coderepos.org/share/lang/python/djblackhole
+    $ cd djblackhole
+    $ sudo python manage.py syncdb
+    $ sudo python manage.py blackholesmtpd &amp;
+    $ sudo python manage.py runserver 0.0.0.0:8000</code></pre></div>
+<div class="section" id="wave">
+<h2>アカウントを作ってログインしてWaveしてみる</h2>
+<p><a class="reference external" href="http://vbox/pygowave/">http://vbox/pygowave/</a> にアクセスして、 Register? というリンクからユーザを作ってみる。</p>
+<p>メールはどんなアドレスを入れていようとも <a class="reference external" href="http://vbox:8000/admin/maillog/loggedmail/">http://vbox:8000/admin/maillog/loggedmail/</a> で見られる（djblackholeね）。</p>
+<p>アクティベーションのリンクをブラウザでがつんと開けば、ログインしてWaveできちゃう。アクティベーションリンクのドメインがexample.comになっちゃってるのを直したい人は拙著を買ってくれていいですよ＞＜</p>
+<p>と、新しいWaveを作っても何も起きない？DebugとLeave Waveの下にチャットウィンドウが表示されない場合にはもう一度おまじない（zsh使おうぜ）。</p>
+<pre><code class="language-bash">    $ sudo chown www-data /srv/http/pygowave_project/pygowave_client/cache/**</code></pre><p>ほかにもいろいろやってるとエラー出たりするかもしれないけど知りません。</p>
+<p>ユーザつくってOSXとubuntuで非同期チャットができちゃう！…ircの代わりにするにはごっついな。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2009/10/13/mercurial_with_textmate/index.html">TextMateでMercurialを使う準備</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2009/10/25/how_to_use_keynote/index.html">時間制限のある発表を時間通りに終わらせるために</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

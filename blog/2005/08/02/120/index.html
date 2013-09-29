@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Djangoによる家計簿アプリケーション</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-08-02 01:59:15</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/08/02/120/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/08/02/120/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Djangoによる家計簿アプリケーション</h1>
+    <div class="section" id="django">
+<h2>ずっと作ろう作ろうと思っていた家計簿を、せっかくだからDjangoで作ってみた。</h2>
+<p>作ろうと思うたびに、モデリングとフレームワークの選定でお腹いっぱいになってしまっていたので、Djangoの <a class="reference external" href="www.everes.net/cgi-bin/trac.cgi/wiki/DjangoTutorialOne">チュートリアル２</a> まででできる内容を作ってみた（データベースにデータさえ入れれば、あとはどうにでもなるし）。</p>
+<ul>
+<li><p class="first">とりあえずの要件</p>
+<p>現状は、自分が嫁のレシートを入力するだけなので、管理画面までの作成。</p>
+<p>集計は直にSQLでするかもしれない（どんな集計をするのかは、ある程度データを投入してみてから考える）。</p>
+<p>難しくしない</p>
+</li>
+<li><p class="first">主な考え方</p>
+<p>出費をレシートとしてとらえる</p>
+<p>レシートの内訳に、カテゴリをつける</p>
+<p>カテゴリはグループに属する（グループは、衣・食・住・社会保険・税等のレベルで作ろうと思う）</p>
+<p>レシートには店をつける</p>
+</li>
+</ul>
+<p>で、書いたコードは次のようになった。</p>
+<pre><code class="language-python">from django.core import meta
+
+# Create your models here.
+class Store(meta.Model):
+  fields = (
+    meta.CharField('name', 'Store Name', maxlength=50, core=True),
+  )
+  admin = meta.Admin()
+
+  def __repr__(self):
+    return self.name
+
+class CategoryGroup(meta.Model):
+  fields = (
+    meta.CharField('group_name', 'Category Group name', maxlength=100, core=True),
+  )
+  admin = meta.Admin()
+
+  def __repr__(self):
+    return self.group_name
+
+class Category(meta.Model):
+  fields = (
+    meta.CharField('name', 'Category Name', maxlength=100, core=True),
+    meta.ForeignKey(CategoryGroup),
+  )
+  admin = meta.Admin()
+
+  def __repr__(self):
+    return self.name
+
+class Receipt(meta.Model):
+  fields = (
+    meta.DateField('buy_date', 'buying date', core=True),
+    meta.TextField('memo', 'memo'),
+    meta.ForeignKey(Store),
+  )
+  admin = meta.Admin(
+    list_display = ('buy_date', 'store', 'totalPrice'),
+  )
+
+  def __repr__(self):
+    return self.buy_date.strftime('%Y-%m-%d') + ':' + self.get_store().name
+
+  def store(self):
+    return self.get_store().name
+
+  def totalPrice(self):
+    totalPrice = 0
+    tmpList = self.get_item_list()
+    for i in range(len(tmpList)):
+      totalPrice += tmpList[i].totalPrice()
+    return totalPrice
+
+class Item(meta.Model):
+  fields = (
+    meta.CharField('name', 'Item Name', maxlength=50, core=True),
+    meta.IntegerField('price', 'Item Price', core=True),
+    meta.IntegerField('amount', 'num', core=True),
+    meta.CharField('memo', 'Item memo', maxlength=500),
+    meta.ForeignKey(Receipt, edit_inline=True, num_in_admin=5, edit_inline_type=meta.TABULAR),
+    meta.ForeignKey(Category),
+  )
+
+  def __repr__(self):
+    return self.name
+
+  def totalPrice(self):
+    return self.price * self.amount
+  totalPrice.short_description = "Sub Total Price"</code></pre></div>
+<div class="section" id="id1">
+<h2>上記のコード以外に書いたりしたりしたこと</h2>
+<ul class="simple">
+<li>PostgreSQLに家計簿用のユーザとデータベース(UNICODE)を作成</li>
+<li>Djangoの管理コマンドを発行（イニシャライズ、家計簿プロジェクト開始、家計簿プロジェクトインストール、家計簿スーパユーザ作成）</li>
+<li>Djangoの設定（データベースの種類・データベースユーザ・データベース名の記述のみ）</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>できあがった物</h2>
+<ul class="simple">
+<li>レシートの一覧画面（ログイン後、レシート一覧の表示を選択すると表示される）</li>
+<li>レシートの追加、編集画面（レシート一覧の行をクリックするか、追加をクリックすると表示される）</li>
+</ul>
+<p>関連を持たせたモデルについては、いくつかの手法で同時に追加できる。</p>
+<p>上記のレシートと明細については、レシート入力時に同時に明細を追加できる。</p>
+<p>明細とカテゴリ、カテゴリとカテゴリグループについては、子供の追加時に必要な親が書けている場合、＋をクリックすると別ウィンドウが表示されて親の入力ができ、即座に子供の入力に使用できるようになる（現状では＋を押した子供の入力値リストにのみ反映される。一度空でサブミットして、バリデーションでこけさせる等の運用が必要。Djangoはリリースされていないステータスのものだからとりあえずあきらめる）。</p>
+</div>
+<div class="section" id="id3">
+<h2>Djangoの感想</h2>
+<p>フロントを作っていないので、まだ微妙な感想</p>
+<ul>
+<li><p class="first">入力文字列に'があっても日本語であっても全く問題ない。</p>
+</li>
+<li><p class="first">メニュー表示等のi18nは現在Djangoprojectの方で検討されている模様。</p>
+<p>ただし、日本人の姿を見かけないので、このまま放置すると日本語が扱われるかどうかは怪しい。</p>
+</li>
+<li><p class="first">現状では、モデルからデータベースの作成というトップダウン方式にしか対応していない。</p>
+</li>
+<li><p class="first">ついデータベースをドロップしてしまうと、アプリケーションレイヤーでないテーブルが消えてしまってつらい（initしなおし）。</p>
+</li>
+<li><p class="first">とりあえず、いい感じ（まだまだRailsが勝っているらしいが、Railsを使ってみていないので何ともいえない。</p>
+</li>
+<li><p class="first">Ajaxコンポーネントもsvnには存在する（ドキュメントか何かもネットで見かけた）</p>
+</li>
+<li><p class="first">チュートリアル３をちら見した感じだと、テンプレートはXML系ではない</p>
+</li>
+<li><p class="first">簡単な管理画面のみ必要なものについては、かなり速く作れる（今回のはなれれば5分くらいだろう）</p>
+</li>
+</ul>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/08/01/119/index.html">ご無沙汰してます。</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/08/03/121/index.html">Djangoを使った場合の集計とか</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

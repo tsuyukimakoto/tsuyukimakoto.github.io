@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>sourceforge.netのsubversionが全プロジェクトに解放されてた</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-03-22 10:36:37</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/03/22/sf-net-ready-svn-for-any-project/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/03/22/sf-net-ready-svn-for-any-project/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>sourceforge.netのsubversionが全プロジェクトに解放されてた</h1>
+    <p>なかなか解放されなかった <strong>Subversionがいつのまにか全プロジェクトで使用可能</strong> になっていました。</p>
+<p>実は、VPS7難民となってから公開する物については極力変わったアプリは使用しないようにしています（恐怖感有り）。</p>
+<p>実際はDjangoやSubversionは使っていますので、公開用のSubversionやtracを自サイトに自前で用意しないという方針にしたいということです（日本のDjango何とかはブログとは別サーバを借りている）。</p>
+<p>なので、sourceforge.netのsubversionは待ちに待ったサービスなのでした。</p>
+<p><a class="reference external" href="http://svn.sourceforge.net/viewcvs.cgi/workstyle-py/">http://svn.sourceforge.net/viewcvs.cgi/workstyle-py/</a> で現在のWorkStyle-Djangoのソースが参照できます。</p>
+<p>一応MagicRemovalBranchの2509で動作するように修正済みですが、コードがとんでもないので <a class="reference external" href="http://www.python.jp/Zope/workshop/200604">PythonWorkshop the Edge 2006</a> が終わって余裕が出たら書き直そうと思います。きっと３分の１位のコード量になることでしょう。</p>
+<p>Templateとか慣れてきたらDjangoの流儀に従うべきだと思い出したし。Djangoのテンプレートは素晴らしいよ！</p>
+<p>そうそう、sourceforge.netのsubversionですが、使用開始は下記のようにする必要があります。</p>
+<ol class="arabic simple">
+<li>projectページでadminリンクをクリック</li>
+<li>adminメニューが展開されるので、subversionメニューをクリック</li>
+<li>subversionを有効にするチェックボックスにチェックを入れて、updateボタンをクリック（safariでは何故か失敗した）</li>
+<li>で、migrationなりimportなりをすることになるのですが、この時点ではsubversionへの書き込み権限が誰にもありません。な     ので、Projectのユーザ管理でsubversionへの書き込み権限を与える必要があります（たぶんドキュメントに書いてない）。</li>
+<li>権限を与えたら、あとは好きにすればよいです（即座に反映されます）。</li>
+</ol>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/03/16/back-to-1996/index.html">1996年に到達できない</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/03/23/trackback-require-word-disabled/index.html">トラックバックに言及リンクを不要にした。</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

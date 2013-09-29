@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Tiger on Tiger</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-04-30 09:21:14</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/04/30/72/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/04/30/72/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Tiger on Tiger</h1>
+    <p><a class="reference external" href="http://pcweb.mycom.co.jp/news/2005/04/30/001.html.._:images/xcode2.0.jpg">ここ</a> を参考に、やってみた。</p>
+<p>インストールは、ダウンロード後に「つぎへ」や「同意します」をクリックするだけ。</p>
+<p>次に、デフォルトのJavaを変更する。</p>
+<p>今後のことも考えて、scriptを作っておくことにした。</p>
+<pre><code class="language-bash">#to_java5.sh
+cd /System/Library/Frameworks/JavaVM.framework/Versions
+sudo ln -fsh 1.5.0 CurrentJDK</code></pre><pre><code class="language-bash">#to_java1.4.sh
+cd /System/Library/Frameworks/JavaVM.framework/Versions
+sudo ln -fsh 1.4.2 CurrentJDK</code></pre><p>こんな感じの設定になる。たいしたことじゃない。</p>
+<pre><code class="language-bash">$ ls -la /System/Library/Frameworks/JavaVM.framework/Versions/
+total 40
+drwxr-xr-x   11 root  wheel  374 Apr 30 22:14 .
+drwxr-xr-x   10 root  wheel  340 Apr 29 21:03 ..
+lrwxr-xr-x    1 root  wheel    5 Apr 29 21:02 1.3 -&gt; 1.3.1
+drwxr-xr-x    8 root  wheel  272 Apr 29 21:02 1.3.1
+lrwxr-xr-x    1 root  wheel    5 Apr 29 21:02 1.4 -&gt; 1.4.2
+drwxr-xr-x    8 root  wheel  272 Jan 27 05:22 1.4.2
+lrwxr-xr-x    1 root  wheel    5 Apr 30 22:01 1.5 -&gt; 1.5.0
+drwxr-xr-x    8 root  wheel  272 Apr 30 22:01 1.5.0
+drwxr-xr-x    6 root  wheel  204 Apr 29 21:20 A
+lrwxr-xr-x    1 root  wheel    1 Apr 29 21:03 Current -&gt; A
+lrwxr-xr-x    1 root  wheel    5 Apr 30 22:14 CurrentJDK -&gt; 1.5.0</code></pre>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/04/30/71/index.html">Tiger(OSX10.4)の効能</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/05/09/75/index.html">iBookとiDVDと外付けDVDR</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

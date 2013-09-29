@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>LLRingのDjango製アプリ（フライング）</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-08-28 01:20:15</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/08/28/ll-ring-django/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/08/28/ll-ring-django/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>LLRingのDjango製アプリ（フライング）</h1>
+    <p>LL Ringの「君ならどう書く」で作成したDjangoアプリケーションを暫定公開します。</p>
+<p>LL Ringのサイト(かどうかはよくわかりませんが)で、正式に公開されることになると思いますので、あくまで暫定版ということでよろしくお願いいたします。</p>
+<p>少し、というかたくさん補足説明をします(詳細はファイルの中のREADMEを <strong>必ず</strong> 読んでください)。</p>
+<p>以下長々と</p>
+<ul>
+<li><p class="first">作りの構成</p>
+<p>見た目は管理画面風でしたが、データ登録に関する部分以外は管理画面の機能ではありません。</p>
+<p>「今月の状況」「最近の状況」「明細」は管理画面のCSSを用いて、独自に作成したものです。</p>
+</li>
+<li><p class="first">国際化</p>
+<p>実はインチキ英語で国際化されています。ソースやテンプレートは殆どが英語で記述されています。</p>
+</li>
+</ul>
+<p>管理画面の「ドキュメント」というリンクから、ソースコードに記述してあるドキュメントが「テンプレートタグ」「テンプレートフィルタ」「モデル」「ビュー」というカテゴリに分かれて表示されます(インストールしてあるアプリケーションのもの全てが、アプリケーション単位に分割されて表示されます)。</p>
+<p>これは、コマンドをキックしたりすること無く、動的に生成・表示されるものです。</p>
+<ul>
+<li><p class="first">タグ部分の実装</p>
+<p>Ivan Sagalaevさんの <a class="reference external" href="http://softwaremaniacs.org/soft/tags/en/">Tagアプリケーション v1.4</a> を利用しています。タグの追加や「管理画面での」or検索は、独自コードはありません。</p>
+<p>また、明細画面のタグ検索はand検索ができるようにしてあります。</p>
+</li>
+<li><p class="first">「最近の状況」</p>
+<p>直近の3ヶ月を表示するようになっていますが、URLを手でいじくることによって、どんな期間でもグラフ・表ともに出力されるよ     うに作成してあります。</p>
+</li>
+<li><p class="first">出費の管理画面</p>
+<p>既存の出費編集画面から一部の情報を変更して「新しく追加」という機能があります。頻繁に発生するものは日付だけかえればすみます。</p>
+</li>
+<li><p class="first">PyChart</p>
+<p>RailsのGraphと似たような使い方だと思います(決して難しいものではない)。</p>
+<p>ただ、折れ線グラフに微妙な罠があり、はまってしまいました。</p>
+</li>
+<li><p class="first">テンプレート</p>
+<p>汚いのは、管理画面のCSS(XHTML)の構成を把握していなかったためです。本来は継承でブロックをうまく定義して、まとまりをわかりやすく、無駄を省いて記述が可能です。</p>
+</li>
+<li><p class="first">Djangoの動作環境について</p>
+<p>うけた質問で、意味不明な回答をしましたが、基本は「Apache+mod_python」「Apache+FastCGI」「lighttpd+FastCGI」が動作環境です。</p>
+<p>Railsの開発サーバの5倍高速に起動する(マイ仕事マシン比)開発用サーバがついてます。</p>
+<p>詳しくは <a class="reference external" href="http://code.djangoproject.com/wiki/ServerArrangements">本家のWiki</a> を参照してください。なんだかへんてこな環境もあります。</p>
+</li>
+<li><p class="first">実はDjangoのInternalServerエラーページはすごいです(Debug時)</p>
+</li>
+<li><p class="first">プレゼン開始時に表示されていたデスクトップ画像は事件ではなく恋故意です</p>
+</li>
+<li><p class="first">Django勉強会、是非やりたいと思っています。マジでくる？</p>
+</li>
+</ul>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/08/19/django-to-be-the-python-web-framework/index.html">DjangoこそがPythonのWebフレームワークだ、とか</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/09/03/django-view-testing/index.html">DjangoのViewをテストする</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

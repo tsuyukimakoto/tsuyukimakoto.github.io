@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Djangoの管理画面用メディアファイル</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-04-06 02:10:07</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/04/06/django-admin-media/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/04/06/django-admin-media/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Djangoの管理画面用メディアファイル</h1>
+    <p>運用開始時に結構 <a class="reference external" href="http://d.hatena.ne.jp/methane/20070405/1175745376">はまり</a> やすいので、メモをしておきます。</p>
+<div class="section" id="id1">
+<h2>静的ファイル配信の思想</h2>
+<p>Djangoを <strong>運用する際には、メディアファイルは別の静的ファイル配信サーバからサーブすべし</strong> 、というのがDjango開発者達の思想です。</p>
+<p>つまり、推奨されるやり方は管理画面メディアファイル配信サーバとして別サーバを指し示し、メディアファイルは配信サーバにコピーしておくことです。</p>
+</div>
+<div class="section" id="id2">
+<h2>開発時の仕組み</h2>
+<p>デフォルトのADMIN_MEDIA_PREFIXは <strong>/media/</strong> となっています。開発サーバは起動時にメディアファイルを配信するようにハンドラを設定します。</p>
+<p>面白いことに、ADMIN_MEDIA_PREFIXの設定を、 /adminmedia/ 等に変更しても、開発サーバ上では正しく動作します。</p>
+<p>これは、ADMIN_MEDIA_PREFIXの値が、管理画面のcssを指し示すURLのプリフィックスだからです。もちろん開発サーバのハンドラも同じ値を見ています。</p>
+</div>
+<div class="section" id="id3">
+<h2>推奨される設定</h2>
+<ul>
+<li><p class="first">ベストな方法(別サーバapache)</p>
+<p>運用時のADMIN_MEDIA_PREFIXを <strong>http://static.example.com/media/</strong></p>
+<p>のように設定する。設定したURLで管理画面用のファイルが配信されるように、 django/contrib/admin/media をディレクトリごとコピーしておく。</p>
+</li>
+<li><p class="first">ベターな方法(同一サーバapache)</p>
+<p>運用時のADMIN_MEDIA_PREFIXは <strong>/media/</strong></p>
+<p>のように同一サーバからの配信となるように設定する。mod_pythonやfastcgiの設定はひとまず忘れて、「ADMIN_MEDIA_PREFIXの設定から呼び出されるURLで管理画面用のファイルが配信されるはずだ」という場所に、 django/contrib/admin/media をディレクトリごとコピーしておく。</p>
+<p>mod_pythonで運用する場合には、以下のようにmediaディレクトリのハンドラをオフにする。</p>
+<pre><code class="language-markup">  &lt;Location "/media/"&gt;
+    SetHandler None
+  &lt;/Location&gt;</code></pre><p>fastcgiで運用する場合には、以下のようにmediaディレクトリに対しては rewrite をかけないように設定する(コンディションを!- fにしてもよいはず)。</p>
+<pre><code class="language-markup">  RewriteRule ^(media/.*)$ - [L]</code></pre></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>推奨されない設定</h2>
+<p>しかし、管理インターフェースのメディアファイルについては量も頻度もたいしたことないので、以下のようにしても良いのではないかとも思う(イマイチな方法)。</p>
+<p><strong>ADMIN_MEDIA_DIR</strong> という定数を settings.py に定義する。指し示し先は管理画面用のメディアファイルディレクトリ (django/contrib/admin/media) のフルパス。</p>
+<p>次に urls.py で Django が静的ファイルを返すように設定する。</p>
+<pre><code class="language-python">  (r'^media/(?P.*)','django.views.static.serve',
+    {'document_root' : settings.ADMIN_MEDIA_DIR, 'show_indexes':False})</code></pre></div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/04/03/easy-made-cool-icon/index.html">格好いいアイコンを簡単に作る方法</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/04/07/changes/index.html">これから開発版Djangoにおこること</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

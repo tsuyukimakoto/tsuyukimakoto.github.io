@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Python hack-a-thonで起きた笑いと高コンテキスト文化</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2010-11-13 23:42:53</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2010/11/13/python_hack_a_thon_201011/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2010/11/13/python_hack_a_thon_201011/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Python hack-a-thonで起きた笑いと高コンテキスト文化</h1>
+    <p>タイトルに特に意味はない。</p>
+<p>日本の笑いは、知識や常識を共有していることから発するものが多いっていうのが前提で、今日の:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; import php
+</pre>
+<p>について。</p>
+<p>あそこにいた大半の人が共有したであろう情報。異論は認めない。</p>
+<blockquote>
+<p>1.PHPというプログラミング言語は、特にWebに強い性格を持つように設計されてきている</p>
+<p>2.PHPというプログラミング言語は、（ソフトに言えば）イジられることが多い。（ハードに言えばdisられることが多い）</p>
+<p>3.PHPというプログラミング言語は、開発者の母数が多いが故に駄目な開発者が目につく</p>
+<p>4.PHPというプログラミング言語はもともと言語ではなく、Perlというプログラミング言語で作られたライブラリだった</p>
+<p>5.Pythonというプログラミング言語は、（最近でこそ増えてきたが）日本では開発者の母数がかなり少なく選民的意識が少しある</p>
+<p>6.Pythonというプログラミング言語は、Webで使うための準備がPHPと比べて煩雑</p>
+<p>7.発表をしていたmoriyoshiは、PHPという言語自体を作る側にいて、PHPを作るのはC言語という言語を使っている</p>
+<p>8.発表をしていたmoriyoshiは、どちらかといえばPythonはC(++)を使っている</p>
+<p>9.発表をしていたmoriyoshiは、毎回PHPをネタに無茶なもの（つまり、誰が得するのかわからないもの）を作って発表をしている</p>
+<p>10.みんなPHPをdisるのは好きだが、本気でdisってる訳ではない。PHPはイジラレ愛されキャラ</p>
+<p>11.今回のイベントはPythonという言語名がついている</p>
+</blockquote>
+<p>以上のような考えがあることを知っている人たちの前で、moriyoshiがこんなことをした:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; import php
+</pre>
+<p>→ あえてWebに強いPHPという言語をWebから使うのがPHPに比べて煩雑なPythonから呼び出すことで、ナンセンスだという思いを呼び起こす。</p>
+<p>→ PHPを作る側にいるけどPHPをあまり使っていないmoriyoshiがPythonからあのPHPを呼び出すことで、ナンセンスだという思いを呼び起こす。</p>
+<p>→ わっはっはっはっは</p>
+<p>やべー、やっぱ説明できねーや
+蛇足
+-----------------------------</p>
+<p>高コンテキスト文化ってのがあるらしくって、受け手が相手の発した言葉に対して「察する」っていう言語環境のことを言うらしい。日本語は高コンテキスト文化No1。</p>
+<p>知識や常識の共有ってのが笑いのベースにあるのだから、対象にしている層から外れると何が面白いのかわからないってことが起きるのは仕方ないことなのだと思う。</p>
+<img alt="http://img.skitch.com/20101113-8kcx23xngsmwa54grx6fuysf17.png" src="http://img.skitch.com/20101113-8kcx23xngsmwa54grx6fuysf17.png" />
+<p>それでも、なんか楽しいってのは、まさに高コンテキスト文化なんだろうな。</p>
+<p>俺自身は完全な局所内輪ネタは嫌いなんだけど、知識や常識の範囲をとにかく広げていくとオフオフブロードウェイみたいに「パンツ出していぇーい、どっかーん」って世界で、それはそれで呆れる。</p>
+<p>米国と同じく英語で同じく他民族国家の英国でもフリンジはもう少しましに感じた。なぜだろう？</p>
+<p>今日来てた人たちの関連する本をアフィってみよう。すげーな</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2010/10/31/tm700_on_osx_no_transcode/index.html">Mac OSXでTM700のビデオを素敵に扱えた！iMovieで60fpsを扱うおまけ付き</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2010/11/21/i_need_storage_device_another_one/index.html">写真やビデオのオリジナル保存をしたい</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

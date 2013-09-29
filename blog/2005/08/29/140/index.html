@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>php4とPostgreSQLでPreparedStatement</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-08-29 12:59:23</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/08/29/140/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/08/29/140/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>php4とPostgreSQLでPreparedStatement</h1>
+    <p>hibernateがTorqueに比べて勝っている点は、唯一PreparedStatementを利用している点だ。</p>
+<p>という職場でのやりとりから、rhacoのO/RはPreparedStatementを使用してみようと調査。</p>
+<p>PreparedStatementを利用する利点は、主に二つ（あとは知らない）</p>
+<blockquote>
+<ul class="simple">
+<li>SQL Injectionに対して強くなる</li>
+<li>同じ文のプロパティ違いSQLは劇的に速くなる（可能性がある）</li>
+</ul>
+</blockquote>
+<p>php5ではphpの機能としてPreparedStatementが導入された模様ですが、php5を使う理由はどこにもない（だって、phpの利点は大抵のレンタルサーバで使えることでしょ？interfaceが欲しい？リフレクションが欲しい？php5は自分でインストールするから？=&gt;他の言語を検討すれば？）。</p>
+<p>php4にはPreparedStatementの機能がないので、自分で実装するしかない。</p>
+<p>PostgreSQLのSQL文でPREPAREという物があるので、これが使えそう。</p>
+<pre><code class="language-bash">PREPARE plan_name [ (datatype [, ...] ) ] AS statement
+EXECUTE plan_name [ (parameter [, ...] ) ]</code></pre><p>pg_execを二回投げて一つのSQL文が実行できるというもの。</p>
+<p>次のような特徴があるため、名前の管理が必要になる。</p>
+<ul class="simple">
+<li>１セッションの間 PREPARE は有効。</li>
+<li>ただし、plan_nameは１セッションの間に重複して宣言することは出来ない。</li>
+<li>DEALLOCATEでplan_nameを解放することは出来るが、宣言していない物を解放しようとするとエラーとなる。</li>
+</ul>
+<p>また、PREPAREでdatatypeを指定する必要があるので、JavaのPreparedStatementと同様に、ps-&gt;setInt(1, $value);のような型を指定するようなメソッドが無いとつらそう。</p>
+<p>つまり、PreaparedStatementというクラスを作成して、SQL文とplan_nameと各引数となる値のhashオブジェクトを持たせることになる。</p>
+<p>はたして、ここまでコストをかけて速くなるのだろうか？</p>
+<p>簡単なテーブルにデータを１万行インサートしてみた所、案の定下記のようになった。</p>
+<p>＃planの生成にコストのかかるSQLに効果的なのはわかっるけど・・・</p>
+<blockquote>
+<ul class="simple">
+<li>PreparedStatementを利用した物 =&gt; 28秒</li>
+<li>sprintfしたSQLを投げまくった物 =&gt; 24秒</li>
+</ul>
+</blockquote>
+<p>もう少し様々な条件でのテストと、PreparedStatementクラスのリファクタリングに励んでみよう。 以下、テストのガワ。</p>
+<pre><code class="language-php">  &lt;?
+  require_once("config.php");
+  require_once("RhacoModel/RDBConnection.php");
+  require_once("test/UnitBench.php");
+
+  class Test4 extends UnitBench {
+    var $db;
+    var $sql;
+    var $name;
+    var $ps;
+
+    function benchPreparedStatement() {
+      $this-&gt;db = RDBConnection::getConnection();
+      $this-&gt;sql = "INSERT INTO pre_test (no, memo) values ($1, $2) ;";
+      $this-&gt;name = "insert_pre_test";
+      $this-&gt;ps = $this-&gt;db-&gt;createStatement($this-&gt;name, $this-&gt;sql);
+      for($i = 0;$i &lt; 10000;$i++) {
+        $this-&gt;ps-&gt;clear(); //値のhashのみクリア
+        $this-&gt;ps-&gt;setInt(1, $i);
+        $this-&gt;ps-&gt;setText(2, sprintf("test(%s)", $i));
+        $this-&gt;ps-&gt;executeQuery(); //初回のみPREPARE文の組み立てと実行
+      }
+    }
+
+    function benchRawSql() {
+      $this-&gt;db = RDBConnection::getConnection();
+      for($i = 0;$i &lt; 10000;$i++) {
+        $memo = sprintf("test(%s)", $i); //見やすいようにばらしてあります
+        $rawSql = sprintf("INSERT INTO pre_test (no, memo) values (%s, '%s') ;", $i, $memo);
+        $this-&gt;db-&gt;executeQuery($rawSql); //ただ実行するのみ！
+      }
+    }
+  }
+  $test = new Test4();
+  ?&gt;</code></pre>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/08/26/139/index.html">pandora</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/08/31/141/index.html">tracのgoogle sitemaps</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

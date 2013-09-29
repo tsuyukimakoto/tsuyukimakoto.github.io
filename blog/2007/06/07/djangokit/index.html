@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>本命はDjangoKit</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-06-07 02:14:42</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/06/07/djangokit/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/06/07/djangokit/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>本命はDjangoKit</h1>
+    <p>さぁて。実のところ、ReviewBoardよりも <a class="reference external" href="http://code.google.com/p/djangokit/">DjangoKit</a> の方が熱いのです。</p>
+<p>DjangoKitは、 <a class="reference external" href="http://www.djangoproject.jp/">Django</a> で作ったアプリケーションをスタンドアロンのOSXアプリケーションにしてしまうアプリケーションです。</p>
+<p>Pythonで作ったアプリケーションをOSXのスタンドアロンアプリケーションにすること自体は <a class="reference external" href="http://pyobjc.sourceforge.net/">PyObjC</a> を使って今までもやってきましたし、DjangoKitもPyObjCを使っています。</p>
+<p>DjangoKitの楽しいところは、そのアプリケーションの利用部分にあります。</p>
+<p><a class="reference external" href="http://code.google.com/p/djangokit/downloads/list">サンプルとして提供</a> されているWikiアプリケーションを見てみましょう。</p>
+<p>アプリケーションは、単一のアプリケーションファイル(実際はディレクトリ)で配布可能です。</p>
+<img alt="App - DjangoKit" src="http://art6.photozou.jp/pub/478/1478/photo/3555240.png" />
+<p>ダブルクリックして起動すると、次のようなウィンドウが開きます。</p>
+<img alt="Wiki - DjangoKit" src="http://art6.photozou.jp/pub/478/1478/photo/3555238.png" />
+<p>単純にWebアプリケーションをスタンドアロンアプリケーションにしようとすると、自前サーバが起動するアプリケーションを作ってしまいがちですが、DjangoKitはもう一歩踏み込んで表示部分まで含んだアプリケーションを作るのです。</p>
+<p>このWikiアプリケーションはきちんとWikiっぽく動作しますし、追加・変更したページはアプリケーションを落としても消えません(SQLiteを使ってDBに保存される)。</p>
+<p>また、Djangoの特徴であるAdminへの移動等はDjangoKitのアプリケーションとしてのメニューから行います。トップページからAdminへのリンクを作り込む必要はありません。</p>
+<img alt="Menu - DjangoKit" src="http://art6.photozou.jp/pub/478/1478/photo/3555239.png" />
+<p>DjangoKitによるアプリケーション作成時にsyncdbが行われるようなので、サンプルのWikiアプリについてはログイン可能なユーザがわかりません。作者も「動くけどエレガントじゃねー。パッチ求む」と書いているのでそのうち改善されるでしょう。</p>
+<p>DjangoKitにDjangoで作ったアプリケーションを食わせるために必要な設定も簡単なので、DBを利用する簡単なアプリケーションを作りたい場合には意外といけてる方法かもしれません(Python自体も含まれるので、ファイルサイズは大きめですが)。</p>
+<p>次は、どの程度のライブラリまで可搬性を保てるのか等の気になる点を調査しようと思います(PyObjC次第！？)。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/06/06/java-python-round/index.html">JavaとかPythonのround</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/06/23/lxml/index.html">lxmlを使ってあるURLから画像のURL一覧を取得する</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

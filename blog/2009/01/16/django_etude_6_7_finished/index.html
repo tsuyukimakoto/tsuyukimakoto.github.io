@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Django勉強会Disc6/7開催しました</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2009-01-16 02:27:59</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2009/01/16/django_etude_6_7_finished/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2009/01/16/django_etude_6_7_finished/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Django勉強会Disc6/7開催しました</h1>
+    <p>Django勉強会 Disc6/7 を開催しました。</p>
+<p>中級者向けの内容(Disc7)については、動画がとられていたようなので、近いうちにどこかにあがると思います。</p>
+<p>初心者向けは、時間が足りなかったり、必要なライブラリのインストールにとまどってしたり、講師の意図したことを伝えきれ無かった部分がありました（ <a class="reference external" href="http://www.ueblog.org/blog/entry/pil-install/">上村さんのフォローアップ</a> が始まっています）。</p>
+<p>後日、Python編、Django編、ともに資料がアップされると思いますので、是非復習をしてみてください。資料を見てわからないことがある場合には、 <a class="reference external" href="http://groups.google.com/group/django-ja">django-ja</a> で質問を投げればきっと回答が得られます。</p>
+<p>以下、少し補足します。</p>
+<ul>
+<li><p class="first">Python/Djangoともに初めて使ってみる人へ</p>
+<p>今回の Dics6 は、「Pythonの本当に基本的な部分に関するセッション（ <a class="reference external" href="http://d.hatena.ne.jp/mopemope/">松原さん</a> ）」と「Djangoのプロジェクトとアプリケーションについての理解を進めるセッション（ <a class="reference external" href="http://www.ueblog.org/blog/">上村さん</a> ）」の二つでしたが、松原さんのセッションの復習前か復習後に <a class="reference external" href="http://djangoproject.jp/doc/ja/1.0/">公式のチュートリアル</a> を流れに沿ってやってみた方がよいと思います。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">「Djangoのプロジェクトとアプリケーションについての補足」</p>
+<p>まったくDjangoをさわっていなかったかたのために補足しておきます（公式チュートリアルと上村さんの資料をこなせば理解できることですが）。</p>
+<p>DjangoのWebサイト開発には、「サイト単位のプロジェクト」と「機能を持ったアプリケーション」が登場します。</p>
+<p>「サイト単位のプロジェクト」は主にサイトの設定を受け持ちます。データベース等のプロジェクト毎にするl設定と、どのアプリケーションを利用するかの設定、国際化を利用するかどうかの設定等様々です。</p>
+<p>「機能を持ったアプリケーション」はある領域に特化した機能の実装を受け持ちます。データをデータベースから取り出したり、操作したりといった機能です。アプリケーションによっては、データベースを扱わずブラウザからの入力値を改変するだけのものもあります。</p>
+<p>Djangoには標準でユーザ管理やセッション管理といったアプリケーションが付属しており、プロジェクトを開始した時点でいくつかのアプリケーションがプロジェクトに設定されます。</p>
+<p>実は、標準で付属しているアプリケーションと独自に開発するアプリケーションの間には何の差異もありません。つまり、ありがちな機能に関してはアプリケーションをプロジェクトで使う設定をするだけで再利用ができるのです。</p>
+<p>と、ここで重要になってくるのは「機能は同じでも見た目は変えたい」という欲求にどう対処するのか？ということです。</p>
+<p>Djangoは「アプリケーションの直下にあるtemplatesというディレクトリをテンプレートの探索起点にする」というテンプレートローダがあらかじめプロジェクトに設定されています。プロジェクトにはもう一つ、プロジェクトの設定ファイル(settings.py)のTEMPLATE_DIRSというタプルに設定されたディレクトリも探索の起点とするというテンプレートローダも設定されています。djangoはテンプレートを探す時、設定された順にテンプレートローダを使い、最初に発見したテンプレートを利用します。</p>
+<p>上村さんがサンプルにしたpinaxは、各アプリケーション毎にはtemplatesディレクトリが無く、pinaxとしての見た目がプロジェクト直下のtemplatesディレクトリに格納されています。pinaxのサンプルプロジェクトcompleteの直下のtemplatesディレクトリには各アプリケーション用のテンプレートが格納されています。ですから、「complateに入っているアプリケーションをbasicにコピーしただけでは、テンプレートが見つからずにエラーとなる」のです。</p>
+<p>ちなみに、アプリケーションは必ずしもプロジェクトの下に置く必要はなく、Djangoのプロジェクトを実行しているPythonから見つかる場所にあれば動作します。コードベース1つで、複数のプロジェクトから見た目を変えて利用するといったことも可能です。</p>
+</li>
+<li><p class="first">OSXへのPIL(Python Image Library）のインストール方法</p>
+<p>私はmac portsを使わないので、次の方法でインストールを行っています。</p>
+<p><a class="reference external" href="http://ethan.tira-thompson.com/Mac%20OS%20X%20Ports.html">Ethan Tira-Thompsonさんのページ</a> からlibpngとlibjpegのUniversalインストーラをダウンロードしてインストールします。</p>
+<p><a class="reference external" href="http://www.pythonware.com/products/pil/">PILのページ</a> からソースコードをダウンロード、展開して sudo python setup.py install する。</p>
+</li>
+</ul>
+<p>ちなみに、2009年2月17日にDjangoの入門本「DjangoXPython」が技術評論社から出版されるので、購入すると良いと思います。というか、是非買ってください。よろしくお願いします。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2009/01/06/python_groups_in_japan/index.html">日本のローカルPythonグループ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2009/01/21/more_tags/index.html">タグは管理しない</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

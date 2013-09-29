@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Realm認証のカスタマイズ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-07-12 09:37:48</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/07/12/107/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/07/12/107/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Realm認証のカスタマイズ</h1>
+    <p>J2EEではアプリケーションサーバにビルトインされた認証のアルゴリズムがあります。</p>
+<p>例えばtomcatにはダイアログベース（レスポンスコード403をブラウザに返す）ものとフォームベース（ユーザ・パスワードの入力画面を返す）ものが用意されています。</p>
+<p>ただし、あるURIに対して参照する権限を有しているかどうかという種類の認証アルゴリズムなので、そのままでは利用できない局面が存在します。</p>
+<p>一つの認証文字列（ユーザ・パスワードの組み合わせ）で、複数の権限グループあるいは一つの権限グループに複数の立場で属している場合には、デフォルトのままでは対処不能です。</p>
+<p>そこで、認証後に複数の権限グループや立場から任意のものを一つ選択してもらう画面を用意することにしました。</p>
+<p>が、J2EEにビルトインの認証機能の場合は、フォームの画面が返された後に認証に通ると、直前のリクエストデータが再ポストされます。</p>
+<p>httpの仕様的に、 <strong>一度レスポンスが返された後にはリクエストデータは消えてしまっている</strong> はずです。</p>
+<p>どのようにすれば良いのかと、tomcatと <a class="reference external" href="http://securityfilter.sourceforge.net/">SerurityFilter</a> をのぞいてみました。</p>
+<ul>
+<li><p class="first">tomcatでの実装</p>
+<p><strong>org.apache.catalina.authenticator.FormAuthenticator</strong> で認証処理やリクエストの保存・復元を行っていました。</p>
+<p>これをいじってしまうと、認証メカニズム自体も変更しないと変なことになってしまいそうです。</p>
+</li>
+<li><p class="first">SecurityFilterでの実装</p>
+<p><strong>org.securityfilter.filter.SecurityFilter</strong> で認証処理やリクエストの保存・復元を行っていました。</p>
+<p>ただ、ServletAPI2.3のFilterを使用して実装されているので、J2EEの認証を残したまま特殊な処理を実装するのに便利そうです。</p>
+<p>結局、上記の２種類の実装ともリクエストURIとリクエストデータの保存にはHttpSessionを使用していました。ということは作業中にセッションが切れて、再ログインする前に再びセッションが切れた場合には作業データは失われるということか。</p>
+<p>ま、思いつく通りの内容だったといえましょうか。。。</p>
+</li>
+</ul>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/07/08/106/index.html">ドメインのキャラクタ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/07/14/108/index.html">今週のサクサクパーサー</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

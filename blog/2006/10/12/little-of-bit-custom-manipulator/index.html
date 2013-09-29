@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>ちょこっとだけカスタムなマニピュレータ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-10-12 00:36:32</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/10/12/little-of-bit-custom-manipulator/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/10/12/little-of-bit-custom-manipulator/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>ちょこっとだけカスタムなマニピュレータ</h1>
+    <p>ブログに「質問と答え」という仕組みを導入しました。せっかくなので仕組みを公開してみます (django.contrib.Commentは使用していませんので注意してください)。</p>
+<div class="section" id="id1">
+<h2>まず始めに、「質問と答え」とはなにか？</h2>
+<p><strong>コメントスパムよけ</strong> です。</p>
+<p>ブログのエントリ毎に「そのエントリにコメントする人ならわかるであろう質問と答え」を設定し、機械的なコメントスパムを防ごうと導入したものです。</p>
+<p>エントリ毎に設定することによって、様々なエントリに対応できるはずです(英語のエントリなら英語でとか)。</p>
+<p>しかしながら、もしかしたら質問と答えを導入しないエントリもあるかもしれません。短いとか質問を思いつかないとかいろいろな理由で。なのでかならずバリデートするものではありません。</p>
+<p>ここまででコメントの登録に必要なmanipulatorを整理してみましょう。</p>
+<blockquote>
+<ul>
+<li><p class="first">コメントのModel定義にある必須項目や最大長、URLをバリデートする</p>
+</li>
+<li><p class="first">コメントが登録されようとしているエントリに「質問」が設定されていたら入力された「答え」とエントリに設定してある「答え」が一致しているかをバリデートする</p>
+</li>
+<li><p class="first">manipulator.save(data)で保存するカスタムマニピュレータ？</p>
+<p>面倒です。Modelに記述したものをもう一度記述し直す気にはなりません。</p>
+<p>なので、動的に生成してみる。</p>
+<pre><code class="language-python">#さきにバリデータを作成します。
+#本来のバリデータは第一引数にselfがきますが・・
+def is_valid_answer(data, form) :
+    #formには事前にvalid_answerを追加しておきます
+    if form.get('valid_answer').upper() != data.upper() :
+        raise validators.ValidationError, _('Your answer is not correct. Try it again!')
+
+def add_comment(request, year, month, day, code) :
+    #通常通りAddManipulatorを生成します。
+    manipulator = Comment.AddManipulator()
+    entry = getEntry(year, month, day, code)
+    if request.method == 'POST' :
+        new_data = request.POST.copy()
+        #入力データに無理矢理データを追加します
+        new_data.update({'entry': entry.id, 'valid_answer': entry.answer})
+        #もし「質問」がエントリに設定されていたら・・・
+        if entry.riddle :
+            #manipulatorに無理矢理フィールドを追加します！
+            manipulator.fields += [forms.TextField(_('answer'), maxlength=50, is_required=True, validator_list=[is_valid_answer])]
+    #あとは通常通り
+    errors = manipulator.get_validation_errors(new_data)
+    if not errors :
+        manipulator.do_html2python(new_data)
+        manipulator.save(new_data)
+        entry.comment_count += 1
+        entry.save()
+        return HttpResponseRedirect('somewhere')
+    else :
+        errors = new_data = {}
+    #GETやバリデーションエラーがあった場合にはコメント入力画面に戻します
+    form = forms.FormWrapper(manipulator, new_data, errors)
+    return render_to_response('djablog/comment_form.html', {'form': form, 'object': entry})</code></pre></li>
+</ul>
+</blockquote>
+<p>あれ？意外に簡単？ ＃manipulatorって近々大幅に変更されるかもしれませんが。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/10/09/renewal/index.html">リニューアル</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/10/16/ps3-sonic/index.html">PS3ほしぃー</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

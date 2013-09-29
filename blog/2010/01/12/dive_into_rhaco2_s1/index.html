@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>rhaco2を学習 その１</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2010-01-12 00:51:59</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2010/01/12/dive_into_rhaco2_s1/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2010/01/12/dive_into_rhaco2_s1/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>rhaco2を学習 その１</h1>
+    <ul class="simple">
+<li>環境：OSX 10.6.2</li>
+<li>setupにはOSX標準のPHP 5.3.0 (cli)を利用</li>
+<li>動作環境: MAMP1.8.4のPHP5.2.11を利用</li>
+</ul>
+<div class="section" id="rhaco2">
+<h2>rhaco2をインストールして、ついでにサンプルアプリケーションも導入してみる。</h2>
+<p>rhaco2のインストールは簡単なんだけど、入力に関するメタ情報がないので補足します。</p>
+<p>1.インストーラのダウンロード</p>
+<blockquote>
+<p>まず、setup.phpというものをダウンロードします。これは本家のトップに書いてあるままで良いでしょう。</p>
+<p>rhaco2作者がOSXを使っているため、OSXで簡単に入れられるようにcurlで取得するコマンドが書かれています。</p>
+<pre><code class="language-bash">$ curl -LO http://rhaco.googlecode.com/files/setup.php</code></pre><p>単にURLにブラウザにアクセスして持ってきてもかまいません。</p>
+</blockquote>
+<p>2.インストーラの実行＋サンプルアプリケーションのインストール</p>
+<blockquote>
+<p>インストーラを実行しますが、rhaco2のインストールだけを行うという行為は見当たりません。</p>
+<p>今から何かを作る、ないしはサンプルアプリのインストールを行うことが前提となっています。</p>
+<p>サンプルアプリケーションを全部インストールし、かつ、rhaco2自体はひとつだけいれたいと思います。</p>
+<p>2010/01/08の時点では、以下のサンプルアプリケーションがあるようです( <a class="reference external" href="http://rhaco.org/docs/app/rhaco.org">http://rhaco.org/docs/app/rhaco.org</a> に一覧がある)。</p>
+<table border="1" class="docutils rounded">
+<caption>Sample Applications</caption>
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">アプリケーションパス</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>org.rhaco.sample.calc</td>
+<td>簡単な計算アプリ。入力を受け取って、処理をしてテンプレートに出すサンプル。</td>
+</tr>
+<tr><td>org.rhaco.sample.hello_world</td>
+<td>単にテンプレートをそのまま出力するサンプル。</td>
+</tr>
+<tr><td>org.rhaco.sample.hello_xml</td>
+<td>pathinfoというxmlでURLとflow（アクション的なもの）の関連付けをしているサンプル。XML出力のサンプルではない。</td>
+</tr>
+<tr><td>org.rhaco.sample.invoke</td>
+<td>指定した処理とその出力を次の処理に渡していくアプリケーションのサンプル</td>
+</tr>
+<tr><td>org.rhaco.sample.openid</td>
+<td>openidのサンプル</td>
+</tr>
+<tr><td>org.rhaco.sample.parse_and_paginate</td>
+<td>Feed ParserとPaginaterのサンプル</td>
+</tr>
+<tr><td>org.rhaco.sample.rtextends</td>
+<td>テンプレート継承のサンプル</td>
+</tr>
+</tbody>
+</table>
+<p>ここからは、以下のディレクトリ構成にする前提で記述します。</p>
+<table border="1" class="docutils rounded">
+<caption>学習用ディレクトリ</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">パス</th>
+<th class="head">目的</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>/Users/makoto/Code/rhaco2std</td>
+<td>学習用ディレクトリ</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/core</td>
+<td>rhaco2のcoreインストールディレクトリ</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps</td>
+<td>MAMP-ApacheのDocumentルート</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps/calc</td>
+<td>サンプル</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps/hello_world</td>
+<td>サンプル</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps/hello_xml</td>
+<td>サンプル</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps/invoke</td>
+<td>サンプル</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps/openid</td>
+<td>サンプル</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps/parse_and_paginate</td>
+<td>サンプル</td>
+</tr>
+<tr><td>/Users/makoto/Code/rhaco2std/apps/rtextends</td>
+<td>サンプル</td>
+</tr>
+</tbody>
+</table>
+<p>a.学習用ディレクトリとMAMP-Apacheのドキュメントルートディレクトリを作成し、MAMPのドキュメントルートを変更します（MAMP→環境設定→Apache→Document Root）。</p>
+<p>b.サンプルディレクトリを作成し、各ディレクトリにsetup.phpをコピーします。</p>
+<blockquote>
+setup.phpのある場所を起点としようとする節があるので、すべてのサンプルディレクトリにコピーをします。</blockquote>
+<p>c.サンプルをインストールします。</p>
+<blockquote>
+<p>各サンプルアプリケーションのディレクトリで、setup.phpを実行します。</p>
+<p>最初に聞かれるcoreの場所をrhaco2のcoreインストールディレクトリにします。あとは、変更なしでいいでしょう。</p>
+</blockquote>
+<pre><code class="language-bash">$ php setup.php -install org.rhaco.sample.calc
+core path[/Users/makoto/Code/rhaco2std/apps/calc/core/]: /Users/makoto/Code/rhaco2std/core
+install application:
+application url [http://localhost/calc]:
+working directory [/Users/makoto/Code/rhaco2std/apps/calc/work/]:</code></pre><p>インストールするサンプルアプリケーションを変更して、他のサンプルアプリケーションについても <strong>サンプルアプリケーションのディレクトリで</strong> 同様に実行します。</p>
+<p>coreはもし指定したディレクトリに存在すれば二度目からはスルーされるようです。</p>
+</blockquote>
+<p>3.インストールしたサンプルを実行してみる。</p>
+<blockquote>
+<p>ブラウザで <a class="reference external" href="http://localhost:8888/">http://localhost:8888/</a> を開くと、サンプルアプリケーションのディレクトリが一覧されます（Apacheのディレクトリインデックスね）。</p>
+<p>一覧をポチっとクリックすると各サンプルアプリケーションが実行されます。</p>
+</blockquote>
+<p>続いてサンプルアプリケーションの中身を覗いてみます。</p>
+</div>
+<div class="section" id="id1">
+<h2>サンプルアプリケーションの中身を覗いてみる</h2>
+<div class="section" id="org-rhaco-sample-calc">
+<h3>org.rhaco.sample.calc</h3>
+<p>calcアプリケーションはこんなファイル構成です。</p>
+<pre class="literal-block">
+├── __settings__.php
+├── index.php
+├── resources
+│   └── templates
+│       └── display.html
+└── setup.php
+</pre>
+<ul>
+<li><p class="first">index.php</p>
+<p>アプリケーションのスクリプトですね。</p>
+<pre><code class="language-c-like">require dirname(__FILE__)."/__settings__.php";</code></pre><p>冒頭で同階層にある <em>__settings__.php</em> をrequireしています。</p>
+<p>rhaco2の機能のみを使っているので、これ以外にはrequireしていませんね。
+では、 <em>__settings__.php</em> をみてみましょう。</p>
+<ul>
+<li><p class="first">__settings__.php</p>
+<p>このファイルには直にファイルパスが記述されています。
+開発環境ごとに、また本番環境でも別のファイルとして必要ですので、構成管理の対象外にしておいた方が無難でしょう。</p>
+<pre><code class="language-c-like">require_once("/Users/makoto/Code/rhaco2std/core/jump.php");
+App::config_path(__FILE__,"http://localhost/calc/","/Users/makoto/Code/rhaco2std/apps/calc/work/");</code></pre><p><strong>jump.php</strong> をrequireし、アプリケーションのルートパス（渡してるのはファイルパスですが、内部でディレクトリに変換されています）・アプリケーションの基点URLとワークディレクトリの情報をAppに設定しています。</p>
+<p>このAppクラスはjump.phpで <a class="reference external" href="http://php.net/manual/ja/function.spl-autoload-register.php">spl_autoload_register</a> に登録している <strong>autoload_handler</strong> でフォールバックされているクラスです。
+<strong>__settings__.php</strong> さえ読み込んでおけば、rhaco2の基本的なクラスは未定義で利用できます。</p>
+<p>rhaco2のクラス実装を確認した場合には、 <strong>core/jump.php</strong> のswitch文からクラスファイルの場所をたどればよいでしょう。</p>
+</li>
+</ul>
+<p>続けてindex.phpを見ていきましょう。</p>
+<pre><code class="language-c-like">$flow = new Flow();
+$result = "";
+
+if($flow-&gt;is_vars("calc")){
+    $arg1 = $flow-&gt;in_vars("arg1",0);
+    $arg2 = $flow-&gt;in_vars("arg2",0);
+
+    switch($flow-&gt;in_vars("calc")){
+            case "add": $result = $arg1 + $arg2; break;
+            case "subtract": $result = $arg1 - $arg2; break;
+            case "multiply": $result = $arg1 * $arg2; break;
+            case "divide": $result = $arg1 / $arg2; break;
+    }
+}
+$flow-&gt;vars("result",$result);
+$flow-&gt;output("display.html");</code></pre><p>このFLowを使うのが基本のようです。Request処理とResponse処理をまかないます。</p>
+<p><em>$flow-&gt;is_vars</em> は、リクエストに指定の名前で値が渡されているか確認します。</p>
+<p><em>$flow-&gt;in_vars</em> は、リクエストから同名で送信されてきた値を取り出します。第二引数はおそらくデフォルト値でしょう。</p>
+<p><em>$flow-&gt;vars</em> は、第一引数の名前で、第二引数の値をコンテキストに詰めます。</p>
+<p><em>$flow-&gt;output</em> は、指定のテンプレートをレンダリングして結果を出力します。
+この時テンプレートファイルを探索するディレクトリは、base_template_pathがFlowにセットされていない場合には、 <em>アプリケーションルート/resources/templates</em> になるようです。</p>
+<p>さらに <em>display.html</em> も見てしまいます。</p>
+<pre><code class="language-markup">&lt;html&gt;
+&lt;body&gt;
+&lt;form rt:ref="true"&gt;
+ARG1: &lt;input type="text" name="arg1" /&gt;
+ARG2: &lt;input type="text" name="arg2" /&gt;
+
+&lt;input type="submit" name="calc" value="add" /&gt;
+&lt;input type="submit" name="calc" value="subtract" /&gt;
+&lt;input type="submit" name="calc" value="multiply" /&gt;
+&lt;input type="submit" name="calc" value="divide" /&gt;
+
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;br/&gt;
+
+&lt;rt:if param="{$result}"&gt;
+        Result: {$t.html($result)}
+&lt;/rt:if&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>formタグに <strong>rt:ref</strong> という見慣れないアトリビュートがあります。 <strong>rt:</strong> がrhaco2のテンプレートタグ機能のようです。このrt:refは、コンテキストに同名で値が入っていると自動フィルするための設定です。サンプルではformタグに設定されていますが、個別のinputタグに設定もできます。</p>
+<p><em>rt:if</em> でコンテキストにresultという名前で値が設定されているかを確認し、値があった場合には <strong>$t.html</strong> でエスケープして出力しています（出力は {$keyname} ですね）。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="org-rhaco-sample-hello-xml">
+<h3>org.rhaco.sample.hello_xml</h3>
+<p>このサンプルは動作させるためにもうひと作業必要です。hello_xmlディレクトリに移動して次のコマンドを実行します。</p>
+<pre class="literal-block">
+$ php setup.php -write_htaccess hello_xml
+</pre>
+<p>hello_xmlの部分は、サンプルをインストールしたディレクトリ名にしています。</p>
+<p>この作業を行うと、 <strong>.htaccess</strong> が生成されます。</p>
+<ul>
+<li><p class="first">.htaccess</p>
+<pre><code class="language-bash">RewriteEngine On
+RewriteBase /hello_xml
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)$ index.php/$1?%{QUERY_STRING} [L]</code></pre><p>hello_xmlは、RewriteBaseに使われていますね。今回のディレクトリ構成の場合は上記のようになるだけで、実際に開発する場合にはディレクトリ構成はいろいろなパターンが有るでしょう。</p>
+<p>これで、 <a class="reference external" href="http://localhost:8888/hello_xml/hello">http://localhost:8888/hello_xml/hello</a> でアクセス出来るようになります。</p>
+</li>
+<li><p class="first">index.php</p>
+<p>.htaccessでふられているindex.phpを見てみましょう。</p>
+<pre><code class="language-markup">&lt;?php require dirname(__FILE__)."/__settings__.php"; app(); ?&gt;
+&lt;app name="hello" summary="pathinfoを使ったxmlのサンプル"&gt;
+    &lt;description&gt;
+            http://〜/test へアクセスするとマッピングされた処理を実行します
+            -write_htaccess [path]で.htaccessを作成できます
+    &lt;/description&gt;
+    &lt;handler&gt;
+            &lt;map url="/hello" class="FlowSampleHello" method="hello" template="display.html" summary="ハローワールド" name="hello_world" /&gt;
+    &lt;/handler&gt;
+&lt;/app&gt;</code></pre><p>calcのindex.phpとはかなり違いますね。</p>
+<p>__settings__.phpをrequireしたあと、 <strong>app();</strong> が実行されています。</p>
+<p>app()は、 <em>core/__funcs__.php</em> に定義されている関数で、引数 <em>path</em> があれば指定されたpathのファイルからアプリケーションのxmlを、今回のように引数がなければ実行されているファイル自信に記述されているアプリケーションXMLを Flowでloadします。</p>
+<p>続く行はアプリケーションXMLと呼ばれるXMLです。今回は、/helloというURLで呼ばれた際にどの <em>Flowを継承したクラス</em> の <em>メソッド</em> を実行するかを定義しています。</p>
+<p>このサンプルでは単純にべた書きのURLですが、実際には正規表現でURLの一部を実行するメソッドに渡したりできるはずです。</p>
+<p>classに定義されているクラスは <em>アプリケーションルート/lib</em> ディレクトリの中にあります。クラスの中身は今まで見てきたものと代わりはないのでスルーします。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="org-rhaco-sample-invoke">
+<h3>org.rhaco.sample.invoke</h3>
+<p>指定した処理を次々に実行していくサンプルです。簡単に言えばPlaggerを汎用的な考えにしたもの？でしょうか。このサンプルではフィードを対象にしていますが、処理の結果を次から次へと渡していくという概念のもののようです。</p>
+<ul>
+<li><p class="first">index.php</p>
+<pre><code class="language-markup">&lt;?php require dirname(__FILE__)."/__settings__.php"; app(); ?&gt;
+&lt;app name="feed reader" summary="sample"&gt;
+    &lt;invoke class="org.rhaco.net.xml.Feed" method="do_read"&gt;
+            &lt;arg value="http://ameblo.jp/nakagawa-shoko/" /&gt;
+            &lt;arg value="http://ameblo.jp/kurori1985/" /&gt;
+    &lt;/invoke&gt;
+    &lt;invoke class="org.rhaco.net.xml.FeedConverter" method="strip_tags" /&gt;
+    &lt;invoke method="output" /&gt;
+&lt;/app&gt;</code></pre><p><strong>invoke</strong> タグでクラスと実行するメソッドを指定しています。同タグに <strong>arg</strong> タグがあり、対象のURLが設定されています。おそらく、ブログのURLからFeedを探し出して取ってくるクラスなのでしょう。</p>
+<p>次のinvokeタグにはargの設定がありません。実際にFeedConverterクラスを確認してみると、AtomというFeedを抽象化したクラスのインスタンスを受け取るようになっています。きっと、一つ目のinvokeの結果がここに渡されてきますね。</p>
+<p>最後のinvokeにはクラスさえ指定されていません。クラスの指定がない場合には、直前のinvokeの結果の型に対してmethod呼び出しが行われるようです。</p>
+</li>
+</ul>
+<p>org.rhaco.sample.parse_and_paginate（ページネータ） と org.rhaco.sample.rtextends（テンプレート継承）へ続く…と思う。</p>
+</div>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2010/01/08/tree_on_osx/index.html">OSXにtreeコマンド入れるメモ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2010/03/03/textmate_toggle_camel_snake_case/index.html">TextMateでCamelCaseとsnake_caseを変換する</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

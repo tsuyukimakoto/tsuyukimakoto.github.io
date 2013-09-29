@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Djangoのスキーママイグレーションアプリ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-05-06 18:28:38</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/05/06/django-dbmigration/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/05/06/django-dbmigration/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Djangoのスキーママイグレーションアプリ</h1>
+    <p><a class="reference external" href="http://django.g.hatena.ne.jp/perezvon/20070505/1178375518">perezvonさんも言っている</a> けど、Railsのスキーママイグレーションツールは結構羨ましかったりする。</p>
+<p>ただ、RailsのmigrationはRubyっぽく？書くものなので、大幅なスキーマの変更には耐えられないという話も聞いたことがある。</p>
+<p>Djangoも <a class="reference external" href="http://code.djangoproject.com/wiki/SchemaEvolution">スキーマエボリューションブランチ</a> という「スキーマ変更時にデータベースを変更する仕組みを実装する試み」が行われているけれど、今のところまだ完成には遠いとのこと。</p>
+<p>そんなときに、 <a class="reference external" href="http://www.aswmc.com/dbmigration/">DbMigration</a> ってのが登場(1週間以上たってるけど)。</p>
+<p>今のところ勝手アプリなんだけど、django.contribに入れてmanage.pyで実行できることを <a class="reference external" href="http://groups.google.com/group/django-developers/browse_thread/thread/c6583043c9d9f347/2965279ab957ea2b">もくろんでいる</a> みたい。</p>
+<p>なにが気に入ったかって、 <strong>基本はSQLによるALTER</strong> で、データの移行や調整は <strong>Djangoのモデルを使ったPythonスクリプト</strong> を定義するってとこ。</p>
+<p>SQLを考慮してないフローに無理矢理SQLを入れてぐちゃぐちゃになるってパターンに陥らないもんね。</p>
+<p><strong>実際問題としてはSQL抜きじゃ無理</strong> なんだよ。ってか、マイグレーションくらいSQL書けばいいじゃん。ObjectBrowswer ER使ったって大抵うまくいかないんだから(Viewの生成順序とかでこけるから手で編集してるよ。なぜか制約を2度つけようとしたりもするね)。</p>
+<p>それから、どこまで実行したかをデータベースに保存するっぽいところも気に入った。どこまでやったのかを忘れるんだな、結構。</p>
+<p>開発環境・テスト環境・本番環境にブランチとか受け入れテスト中とかが混ざってくると。</p>
+<p>なので、これはぜひ試してみようと思う。うむ。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/06/hot-water-to-cup-udon-and-django-admin/index.html">カップうどんにお湯を入れてからブックマーク管理アプリを作り出す</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/07/django-wiki-after-ordering-pizza/index.html">ピザを注文してからwikiアプリを作り出しちゃう</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

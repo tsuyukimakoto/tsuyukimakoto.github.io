@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>カップうどんにお湯を入れてからブックマーク管理アプリを作り出す</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-05-06 17:48:33</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/05/06/hot-water-to-cup-udon-and-django-admin/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/05/06/hot-water-to-cup-udon-and-django-admin/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>カップうどんにお湯を入れてからブックマーク管理アプリを作り出す</h1>
+    <p>4分以内にDjangoのDRYなところとAdminの一部を見せちゃうよ( <a class="reference external" href="http://stage6.divx.com/user/everes/video/1218434/rapid-develop-bookmark-application-using-django-admin-">Stage6にもアップしてるよ</a> )。</p>
+<p>2年くらい前に、RailsのScaffoldとかそれをまねたフレームワークの宣伝で「n分でブックマークアプリ」っていうのがあったわけさ。</p>
+<p>でも、あれってバリデーションも無いし、現実的に使うものではなかったよね。</p>
+<p>まぁ、これも現実的に使うものではないけれど、現実的なフレームワークの機能ってやつを見せられると思った訳さ。</p>
+<p>カップうどんにお湯を入れてからでも間に合うかもしれないよ。 <strong>カップヌードルじゃ、のびちゃう</strong> かもよ！</p>
+<p>このスクリーンキャストで作ってるものは説明しないけど、Djangoに含まれるものが学べるかもよ。</p>
+<ol class="arabic simple">
+<li>Djangoはデータベースの情報を動的リバースするなんてDRYに反することはしない。</li>
+</ol>
+<blockquote>
+だって、例のやつはデータベースにある方情報とか無視しちゃうでしょ。試しに、n分スクリーンキャストで作ったブックマークアプリにDBの制限を超えた文字列を渡してみなよ。じゃじゃーん、例外発生。でしょ？</blockquote>
+<ol class="arabic simple" start="2">
+<li>DjangoのAdminは一覧に表示する項目も、検索対象にするフィールドも簡単に指定できるよ。日付の絞り込みもできちゃうから試してみて</li>
+<li>いきなり(書きもしない)テスト用のファイルやディレクトリなんて生成しないよ。もちろん、テスト機構もビルトインされてるけど、大量のファイル生成でげんなりする必要なんて無いんだ</li>
+<li>ビルトインのほとんどの機能は日本語化されてるよ。もちろん、Pythonらしく整備されたドキュメントも <a class="reference external" href="http://michilu.com/django/doc-ja/index/">日本語訳が遅延無く公開されてる</a> よ。</li>
+</ol>
+<p>うまく再生できない人は直に <a class="reference external" href="rtsp://streaming.everes.net/streaming.everes.net/udon-bm-no-xcode.mov">rtsp://streaming.everes.net/streaming.everes.net/udon-bm-no-xcode.mov</a> をクリックするか、 <a class="reference external" href="http://stage6.divx.com/user/everes/video/1218434/rapid-develop-bookmark-application-using-django-admin-">Stage6で</a> 見てください。</p>
+<p>公開動画がQuickTimeなのは、 <strong>画質がいい</strong> 、 <strong>DreamhostならStreamingできる</strong> から。妥協してStage6にもあげているのはやっぱり画質がいいから。Youtubeとかはネタ動画にはいいけど、細かい文字を読まなきゃいけない場合にはやめてほしい。つか、100MBまでとか10分までとかあり得ない。Stage6なら2GBまであげられるよ。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/06/django-on-osx-no-xcode/index.html">カップ麺にお湯を入れてからOSXにDjangoをインストールしだす</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/06/django-dbmigration/index.html">Djangoのスキーママイグレーションアプリ</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

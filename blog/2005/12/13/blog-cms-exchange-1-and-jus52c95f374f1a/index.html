@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Blog/CMS Exchange 1 and JUS勉強会</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-12-13 10:22:46</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/12/13/blog-cms-exchange-1-and-jus52c95f374f1a/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/12/13/blog-cms-exchange-1-and-jus52c95f374f1a/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Blog/CMS Exchange 1 and JUS勉強会</h1>
+    <p>２日続けて勉強会へ。技術系の集まりに参加するのは先月初めてだったので、いろいろ刺激になっていい。</p>
+<p>Zope/Ploneをわかっていないので、とっかかりワードとしてメモ。</p>
+<div class="section" id="blog-cms-exchange-1">
+<h2>Blog/CMS Exchange 1</h2>
+<p>COREBlog2と連携をとるProductの作成に関わる <a class="reference external" href="http://清水川.jp">清水川さん</a> によるレクチャー</p>
+<blockquote>
+<ul class="simple">
+<li>PloneはsortableなTableを持っている</li>
+<li>portal_cssにプロパティとして「動的にマージするcss」を設定可能（今までHEADタグに直に書いてました(--;）</li>
+<li>pngはPlone標準で（PIL無しで）リサイズできる（ziplib?は必要）</li>
+<li>skinはファイルシステム上にある。debug-modeなら即座に変更が反映される。</li>
+<li>version.txtを書き換えると、Ploneのアプリケーション追加削除画面でアップグレードが出来る</li>
+<li>ATContentTypesはschemaがキモ</li>
+<li>portal_typeの名前はグローバルなので、いい加減には出来ない</li>
+<li>suppl_viewsで表示形式の切り替え設定が可能</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id1">
+<h2>懇親会</h2>
+<blockquote>
+<ul class="simple">
+<li>Ploneをポータルとして使用する場合、アクティブユーザは1000人くらいが限界か？</li>
+<li>たかのりさんは会社の若いのに技術を教えているらしい</li>
+<li>Zopeの仕事は以外とあるらしい</li>
+<li>柴田さんからメールをいただいていたらしい（無くした・・）</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="jus">
+<h2>JUS勉強会</h2>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="http://coreblog.org/ats/">柴田さん</a> によるCMS概論、規模の大きなシステムでPloneを使用する際のチップス、COREBlog2の紹介</li>
+<li>CMSにおけるMVCのCはワークフローだ（感動）</li>
+<li>Zopeのスレッドは64位までにしておいた方がよい（ある程度ハードにより回避可）</li>
+<li>常に研究・調査を行うこと</li>
+<li>庭に花が咲いたといったようなブログを書いて欲しい人がいる</li>
+<li>ポータルとして使用しない場合は、Add portal memberのAcuireチェックをはずしManagerのみに権限を与えること！</li>
+<li>中神さんの <a class="reference external" href="http://www005.upp.so-net.ne.jp/nakagami/Memo/PloneMemo.html">Ploneカスタマイズメモ</a></li>
+<li>portal_*を学べ。portal_catalogをまず使ってみよう</li>
+<li><a class="reference external" href="http://coreblog.org/camp/2005s/program/RichDocumentJa/">RichDocument How To</a> を読もう</li>
+<li>プレースフルは難しいのでユーザによってはプレースレスにしてみたり</li>
+<li>おおきなものを逃していた（私事。メールは大事にね）</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id2">
+<h2>懇親会</h2>
+<blockquote>
+<ul class="simple">
+<li>欠席（嫁の体調が・・・）</li>
+</ul>
+</blockquote>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/12/11/smtpunit/index.html">SmtpUnit</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/12/13/ie898b3066307f30663063304f308a/index.html">IEで見てみてびっくり</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

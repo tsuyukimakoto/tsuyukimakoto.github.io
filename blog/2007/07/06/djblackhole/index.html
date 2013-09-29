@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>ブラックホールSMTPD再び</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-07-06 01:31:05</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/07/06/djblackhole/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/07/06/djblackhole/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>ブラックホールSMTPD再び</h1>
+    <p>テスト時に何でも飲み込んでくれるSMTPサーバが欲しいと思ったことないですか？</p>
+<p>これはそんなSMTPサーバです。</p>
+<p>ノットテステッドなステータスですが、興味があったら試してみてください。</p>
+<p>興味がある人がいたら、使ってみてコメントください。もう少しきちんとします :)</p>
+<div class="section" id="id1">
+<h2>必要なもの</h2>
+<p>手抜きでsetを使っているため、Pythonの2.4以上が必要です。</p>
+<p>また、unicodeブランチマージ後のDjango最新svn版が必要です。7/5以降にsvn(HEAD)からチェックアウトしたものであれば動くはずです。</p>
+<p>利用するデータベースは変更できますが、sqlite3を使うように設定してあります。</p>
+</div>
+<div class="section" id="id2">
+<h2>特徴</h2>
+<p>受け付けたメールをデータベースに保存します。</p>
+<p>受けたメールは、Djangoの管理インターフェースを使って内容を確認できます。</p>
+<p>生ヘッダとデコード後のヘッダ、生ボディとデコード後のボディ、サブジェクト等がみられるため、デバッグに利用できます。ただし現在は、OSXのMail.appのように複数の添付ファイルの間に本文を挟めるようなメールの形式の場合、最後の本文しか保存されません。</p>
+<p>実際に送信するメールアドレスを設定できます。</p>
+<p>ほとんどのメールアドレスはテスト用のダミーアドレスとして、開発メンバーにだけ送信ということができます。</p>
+<p>リレーする本物のSMTPサーバをBlackHoleSmtpd.pyに記述しなければなりません。メールアドレスの設定はDjangoの管理インターフェースからできますが、現時点ではブラックホールSMTPサーバの再起動が必要です。</p>
+<p>添付ファイルの確認ができます。</p>
+<p>添付ファイルはメールのidが付与されてattachディレクトリに保存されます。管理インターフェースからじかに開けます。</p>
+</div>
+<div class="section" id="id3">
+<h2>簡単な使い方</h2>
+<p>zipファイルを展開後、djblackholeディレクトリ内でsyncdbしてデータベースを作成します。忘れずに管理者ユーザを作成してください。</p>
+<pre><code class="language-bash">  $ python manage.py syncdb</code></pre><p>Djangoを起動します。</p>
+<pre><code class="language-bash">  $ python manage.py runserver</code></pre><p>スクリプトからDjangoのモデルを利用しますので、もう一枚シェルを開き、同じディレクトリで環境変数を設定します。</p>
+<pre><code class="language-python">  export DJANGO_SETTINGS_MODULE=settings</code></pre><p>SMTPサーバを起動します。SMTPプロトコルを利用するのでroot権限が必要です。</p>
+<pre><code class="language-bash">  $ sudo python BlackHoleSmtpd.py</code></pre><p>localhostの25番でSMTPサーバが、localhostの8000番でメールの状況が確認できます。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/07/05/django-unicode-branch-merged/index.html">Django開発版にunicodeブランチがマージされました</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/07/10/reblog/index.html">reblog.rhaco.org</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

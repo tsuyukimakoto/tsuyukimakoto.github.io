@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>じゃゔぁじゃの第三回チキチキ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-08-11 02:26:44</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/08/11/java-ja-tikitiki-3-wicket/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/08/11/java-ja-tikitiki-3-wicket/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>じゃゔぁじゃの第三回チキチキ</h1>
+    <p>このエントリは、 <a class="reference external" href="http://www.456bereastreet.com/about/">Roger Johansson</a> のエントリを私( <a class="reference external" href="http://www.everes.net/about/">露木</a> )が乱暴に訳したものです。元エントリには1日経たないうちに100以上のコメントがついています。</p>
+<p>Django界隈のウェブデザイナに汚染されている私としてはフロントエンドに関わる人が「アクセシビリティ、HTML、CSS、JavaScript、テンプレート化」を行うべきだと思っています。</p>
+<p>しかし、実際のところウェブデザイナという職種にある人がどういうことを行うのか、責任範囲はどこかについて、(フレームワークに興味を持つプログラマとして)非常に気しています。</p>
+<p>また、 <a class="reference external" href="http://d.hatena.ne.jp/amachang/">id:amachang</a> による一連の問題提起にも感化されるところが有ってこの記事が気になったのかもしれません。</p>
+<div class="section" id="are-we-designers-or-developers">
+<h2><a class="reference external" href="http://www.456bereastreet.com/archive/200708/are_we_designers_or_developers/">Are we designers or developers</a> の拙い訳</h2>
+<p>俺は自分自身のことを「デベロッパ / デザイナ / 臨時ライタ」と書くことが有る。何してる人って誰かに聞かれると答えに困るし、実際混乱している。</p>
+<p>ウェブデザイナ？ウェブデベロッパ？ウェブプログラマ？どれかなのかどれでもないのか？マジでシンプルに答えられない。</p>
+<p>答えは誰がいつ何のために聞いてきたか、状況で変わる。Webの仕事っていうことも有るしWebサイト作ってるということもある。嘘じゃないんだけど本当のことは言ってないよね。端的に答えられたら良いのにね。</p>
+<p>グラフィックデザインに関することは最近してないけど、自分のことをデザイナだと思ってるんだ。よくデザイン＝グラフィックデザインと間違えられるんだけど、デザインてのは物事をうまくいくようにすることもいうんだ。俺がしてるのはそういうことだからきっとデザイナと名乗るべきなんだろうな。</p>
+<p>だけどどうも俺にとってウェブデザイナっていう説明は、ドットコムバブル時代の経験から酷く汚れたものになってしまったんだ。大手のエージェンシーが人が必要ってだけで雇った大量のスキルがない人々を思い出させるんだよね。それからDreamweaverとかGoLiveのクラック版のWYSIWYGモードを使ってサイト構築をしているホビィストも連想しちゃうんだ。だから自分自身をウェブデザイナって呼ぶのにはすごい抵抗があるんだよ。</p>
+<p>反対にウェブデベロッパって呼び名も使ってきた。問題はウェブデベロッパってのを俺が全然やらないバックエンドプログラミングする人のことだと思う人が多いってこと。ウェブデザイナよりプロっぽく聞こえるのにね。</p>
+<p>他にはどんなのが有ったっけ？ユーザインターフェースプログラマ、フロントエンドデベロッパ、ユーザエクスペリエンスアーキテクト(ユーザエクスペリエンスっていうフレーズにはアレルギーがあるなぁ？沢山有るけど、ウェブ業界で働いていない人に俺が何をしているか理解してもらえるようなやつは無い。</p>
+<p>何が問題なんだっけ？たいていの場合は問題ないんだよね。でも、美容師さんとかお隣さんとかに仕事を説明するときにちょっと格好悪いんだよね。ウェブで働いてます、ウェブサイト作ってますってのは仕事っぽいんだけど、グラフィックデザインをしてたりプログラミングしてたりする場合にはそんな風にはいわないよね。</p>
+<p>グラフィックデザインじゃなくって主にHTML、CSS、JavaScriptとアクセシビリティを仕事にしている人に聞きたいことが二つあるんだ。</p>
+<ol class="arabic simple">
+<li>自分のことをデザイナと見なしてる？それともデベロッパ？</li>
+<li>自分のことをデザイナと呼んでる？それともデベロッパ？</li>
+</ol>
+<p>考えが有ったら、気軽に答えてくれよ。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/08/09/are_we_designers_or_developers/index.html">俺等はデザイナ？ それともデベロッパ？</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/08/13/tokyo-it-local/index.html">半蔵門のIT技術者集え！</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

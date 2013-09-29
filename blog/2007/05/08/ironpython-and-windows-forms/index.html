@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>IronPythonでWindows.Formを使えるようになりたい。</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-05-08 19:55:34</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/05/08/ironpython-and-windows-forms/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/05/08/ironpython-and-windows-forms/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>IronPythonでWindows.Formを使えるようになりたい。</h1>
+    <p>ちょっと学びたいので、簡単なところをやってみた。</p>
+<p>PythonWorkshop the Edgeで荒井さんのプレゼンに感動していらいかな？</p>
+<p>荒井さんの出してる <a class="reference external" href="http://www.amazon.co.jp/gp/product/479733939X?ie=UTF8&amp;tag=everes-22&amp;linkCode=as2&amp;camp=247&amp;creative=1211&amp;creativeASIN=479733939X">IronPythonの世界</a></p>
+<img alt="http://www.assoc-amazon.jp/e/ir?t=everes-22&amp;l=as2&amp;o=9&amp;a=479733939X" src="http://www.assoc-amazon.jp/e/ir?t=everes-22&amp;l=as2&amp;o=9&amp;a=479733939X" />
+<p>が欲しい(注、アサマシ)。</p>
+<div class="section" id="ironpython">
+<h2>IronPythonのインストール</h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://www.microsoft.com/japan/msdn/netframework/downloads/">.net framework SDK2.0</a> をダウンロードしてインストールする。</li>
+<li><a class="reference external" href="http://www.codeplex.com/Wiki/View.aspx?ProjectName=IronPython">IronPython1.1</a> をダウンロードして適当なところにおく</li>
+<li>Tutorial/winforms.pyを読み込めるような場所におく。</li>
+</ol>
+<blockquote>
+＃ipyを実行するカレントにおいておけば大丈夫</blockquote>
+<p>Pythonの標準ライブラリを使う場合には、CPython2.4系をインストールして、IronPython/Lib/site.pyでCPythonのライブラリを読み込まなきゃいけないみたい。</p>
+<p>CPython2.5系と組み合わせて使う場合は、IronPythonのPython2.5系実装であるIronPython2.0を使わなきゃいけないみたい。</p>
+<p>IronPython2.0はまだα。</p>
+<p>IronPythonのシェルは、IronPythonを展開したディレクトリにあるipyをコマンドプロンプトから実行すればいいのかな。</p>
+<p><a class="reference external" href="http://foma-zakki.cocolog-nifty.com/zakki/2006/07/_python_vs2005__8766.html">VisualStudioとの統合もできるらしい</a> けど、自前で持ってるVisualStudioはVisualStudio.net Professionalというかなり古いやつだから無理だろうなぁ。Standard版でいいからアップグレードで入手しようかなぁ。つか、家にウィンドウズネーゾ(ライセンスは5個くらい持ってるけど、メディアやらライセンスの紙やらを無くしたorz)。むぅ</p>
+</div>
+<div class="section" id="id1">
+<h2>とにかくウィンドウを出してみる</h2>
+<p>まずは、.netをIronPythonから使えるようにする。clrというモジュールをインポートするらしい。</p>
+<pre><code class="language-python">  import clr</code></pre><p>clrでSystem.Windows.Forms / System.Drawing / IronPythonをインポートできるようにし、それからループを始めるっていう一連の処理が書いてある winforms.py をインポートする。</p>
+<pre><code class="language-python">  import winforms</code></pre></div>
+<div class="section" id="net">
+<h2>.netフレームワークコンポーネントの利用の仕方</h2>
+<p>clrにコンポーネントを登録する</p>
+<pre><code class="language-python">  clr.AddReferenceByPartialName("System.Windows.Forms")</code></pre><p>上記登録でインポートが可能になる</p>
+<pre><code class="language-python">  from System.Windows.Forms import Form, Button</code></pre><ul class="simple">
+<li>簡単なフォームにボタンを表示してみる</li>
+</ul>
+<pre><code class="language-python">  &gt;&gt;&gt; import clr
+  &gt;&gt;&gt; import winforms
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; clr.AddReferenceByPartialName("System.Windows.Forms")
+  &gt;&gt;&gt; clr.AddReferenceByPartialName("System.Drawing")
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; from System.Drawing import Point
+  &gt;&gt;&gt; from System.Windows.Forms import Form, Button
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; f = Form()
+  &gt;&gt;&gt; f.Text = 'Simple Window'
+  &gt;&gt;&gt; f.Show()
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; b1 = Button()
+  &gt;&gt;&gt; b1.Text = 'button1'
+  &gt;&gt;&gt; b2 = Button()
+  &gt;&gt;&gt; b2.Text = 'button2'
+  &gt;&gt;&gt; b3 = Button()
+  &gt;&gt;&gt; b3.Text = 'button3'
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; f.Controls.Add(b1)
+  &gt;&gt;&gt; f.Controls.Add(b2)
+  &gt;&gt;&gt; f.Controls.Add(b3)
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; b2.Location = Point(b1.Width, 0)
+  &gt;&gt;&gt; b3.Location = Point(b1.Width + b2.Width, 0)</code></pre><p><strong>やりながらボタンが追加されたり移動していったりして面白い。</strong></p>
+<p>こんな感じのウィンドウが出る。</p>
+<img alt="IronPythonで初めてのWindows.Form" src="http://art8.photozou.jp/pub/478/1478/photo/3189965.png" />
+</div>
+<div class="section" id="id2">
+<h2>クラスにしてイベントを扱ってみる</h2>
+<pre><code class="language-python">  &gt;&gt;&gt; import clr
+  &gt;&gt;&gt; import winforms
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; clr.AddReferenceByPartialName("System.Windows.Forms")
+  &gt;&gt;&gt; clr.AddReferenceByPartialName("System.Drawing")
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; from System.Drawing import Point
+  &gt;&gt;&gt; from System.Windows.Forms import Form, Button, MessageBox
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; class TestForm(Form):
+  &gt;&gt;&gt;     def __init__(self):
+  &gt;&gt;&gt;         self.Text = 'TestForm'
+  &gt;&gt;&gt;         self.b1 = Button()
+  &gt;&gt;&gt;         self.b1.Text = 'CPython'
+  &gt;&gt;&gt;         self.b2 = Button()
+  &gt;&gt;&gt;         self.b2.Text = 'Django'
+  &gt;&gt;&gt;         self.b3 = Button()
+  &gt;&gt;&gt;         self.b3.Text = 'IronPython'
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;         self.b1.Location = Point(0,0)
+  &gt;&gt;&gt;         self.b2.Location = Point(self.b1.Width,0)
+  &gt;&gt;&gt;         self.b3.Location = Point(self.b1.Width + self.b2.Width,0)
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;         self.Controls.Add(self.b1)
+  &gt;&gt;&gt;         self.Controls.Add(self.b2)
+  &gt;&gt;&gt;         self.Controls.Add(self.b3)
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; f = TestForm()
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; def button_clicked(sender, event):
+  &gt;&gt;&gt;     MessageBox.Show(sender.Text)
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; f.b1.Click += button_clicked
+  &gt;&gt;&gt; f.b2.Click += button_clicked
+  &gt;&gt;&gt; f.b3.Click += button_clicked
+
+ボタンをクリックすると、メッセージボックスが表示される。
+
+.. image:: http://art8.photozou.jp/pub/478/1478/photo/3189966.png
+  :alt: 押されたボタンのテキストが表示される</code></pre><p>ボタンをフォームに追加するのを忘れたりしても、f.Controls.Add(f.b1)とかやれば追加できて便利:).</p>
+<p>Netフレームワークのコンポーネントを学びたいので、だれか <a class="reference external" href="http://www.amazon.co.jp/gp/product/1590594398?ie=UTF8&amp;tag=everes-22&amp;linkCode=as2&amp;camp=247&amp;creative=1211&amp;creativeASIN=1590594398">Pro .NET 2.0 Windows Forms and Custom Controls in C# (Expert's Voice in .Net)</a></p>
+<img alt="http://www.assoc-amazon.jp/e/ir?t=everes-22&amp;l=as2&amp;o=9&amp;a=1590594398" src="http://www.assoc-amazon.jp/e/ir?t=everes-22&amp;l=as2&amp;o=9&amp;a=1590594398" />
+<p>を買ってプレゼントしてください(注：アサマシ)。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/07/django-wiki-after-ordering-pizza/index.html">ピザを注文してからwikiアプリを作り出しちゃう</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/09/fizzbuzz/index.html">なげー</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

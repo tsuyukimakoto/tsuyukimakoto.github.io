@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>DjangoのViewをテストする</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-09-03 23:46:07</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/09/03/django-view-testing/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/09/03/django-view-testing/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>DjangoのViewをテストする</h1>
+    <p><strong>最近追加されたテスティングフレームワークを試したみた。</strong></p>
+<p>Djangoは基本的にはPython由来のdoctestやunittestを用いてテストを行う。最近追加されたテスティングフレームワークは、アプリケーションの直下にあるmodels.pyやtests.pyを自動的にAllテストしてくれるというもの＋Viewのテストを行う疑似ブラウザともいえるClientというクラス。</p>
+<p>Railsと同じく、Djangoもテストの前にテスト用データベース・テーブルを生成し、初期データを流し込み(fixtureは現在実装中)、テストを行い、テスト用データベースを破棄するという流れ。おいおい、そんな流れは業務系とか既存データベース使うアプリにはできんぞ、せめてビューとかシノニムとかに気づいてくれよー。</p>
+<p>とか思いつつ。(現実的には、デフォルトのTEST_RUNNER設定であるdjango.test.simple.run_testsをそのままは利用せずに、ちょっと振る舞いをかえたTEST_RUNNERを利用することになるんだろうな。Djangoは素直にコードが書いてあるから自作も簡単だろう。)</p>
+<div class="section" id="doctest">
+<h2>doctest</h2>
+<p>きっとモデルやマネージャに対して有効な気がするテスト記述方式。つか、面白い。</p>
+<pre><code class="language-bash">  $ manage.py test --settings=djengel.custom_settings</code></pre><p>とすると、テストが実施される。</p>
+<p>このテストは、費目クラスの削除や表示フラグオフに対するテスト。削除も表示フラグオフも同じ動作になる。削除してもデータが消されないという肝心のテストが無いな・・。</p>
+<pre><code class="language-python">  class ExpenseItemManager(models.Manager) :
+      """費目モデルのマネージャ。デフォルトのQuerysetに、非表示は取得しない、という条件を付与している。
+      """
+      def get_query_set(self) :
+          return super(ExpenseItemManager,
+          self).get_query_set().filter(visible=True)
+
+  class ExpenseItem(models.Model) :
+      """費目を表すモデル。
+
+      デフォルト動作の変更をいくつか実装してある。
+
+          - デフォルトのdeleteを上書き
+          - デフォルトのマネージャの上書き
+          - カスタムマネージャの追加。
+      &gt;&gt;&gt; invisItem = ExpenseItem.objects.create(name="Test
+      Invisible", max_amount=4000, food_cost=False, visible=True)
+      &gt;&gt;&gt; delItem   = ExpenseItem.objects.create(name="Test Delete", max_amount=4000, food_cost=False, visible=True)
+      &gt;&gt;&gt; before = ExpenseItem.objects.all()
+      &gt;&gt;&gt; invisItem in before
+      True
+      &gt;&gt;&gt; delItem in before
+      True
+      &gt;&gt;&gt; invisItem.visible=False
+      &gt;&gt;&gt; invisItem.save()
+      &gt;&gt;&gt; delItem.delete()
+      &gt;&gt;&gt; after = ExpenseItem.objects.all()
+      &gt;&gt;&gt; invisItem in after
+      False
+      &gt;&gt;&gt; delItem in after
+      False
+      """
+      name = models.CharField(_('Expense Item Name'), blank=False,
+      maxlength=30)
+      max_amount = models.IntegerField(_('Max Amount'),
+      blank=False, default=0, help_text=_('Max amount per month.'))
+      food_cost = models.BooleanField(_('Food Cost Flag'),
+      default=False, help_text=_('weather food cost or not'))
+      visible = models.BooleanField(_('Visible Flag'),
+      default=True, help_text=_('if expense item is invisible, you can\'t
+      edit anymore.'))
+      objects = ExpenseItemManager() #デフォルトのマネージャをカスタムマネージャに変更
+      summary_objects = ExpenseItemSummaryManager() #サマリー用のマネージャを登録
+
+      class Admin :
+          list_display = ("name", "max_amount", "visible",
+          "food_cost")
+          ordering = ['id']
+
+      class Meta :
+          verbose_name = _('Expense Item')
+          verbose_name_plural = _('Expense Items')
+
+      def __str__(self) :
+          """オブジェクトの人間可読表現
+          """
+          return self.name
+
+      def delete(self) :
+          """費目を物理削除すると関連する出費も含めて削除されてしまうため、モデルを利用しての削除はできないようにしてある。              代わりに、削除を呼ぶと「表示フラグ」をオフにするようにし、同時にマネージャをカスタムマネージャとし、デフォルトのQuerysetに「表示フラグ」オンという条件を入れるようにした。これにより、費目を管理画面から削除すると、「削除した費目を管理画面で編集できない」「削除した費目は出費の追加画面に候補として出てこない」という動作を実現している。             """
+          self.visible = False
+          self.save()</code></pre></div>
+<div class="section" id="unittest">
+<h2>unittest</h2>
+<p>同様のテストをunittestを使って記述するとこうなる。まぁ、普通。testメソッドで例外が発生してもきちんとtearDownが走る。</p>
+<pre><code class="language-python">  import unittest
+
+  from djengel.squander.models import ExpenseItem
+
+  class ExpenseItemTest(unittest.TestCase) :
+
+      def setUp(self) :
+          self.invisItem =
+          ExpenseItem.objects.create(name="Test Invisible",
+          max_amount=4000, food_cost=False, visible=True)
+          self.delItem   =
+          ExpenseItem.objects.create(name="Test Delete"   ,
+          max_amount=4000, food_cost=False, visible=True)
+
+      def tearDown(self) :
+          pass
+
+      def test_normal(self) :
+          before = ExpenseItem.objects.all()
+          assert self.invisItem in before
+          assert self.delItem in before
+
+      def test_delete(self) :
+          self.delItem.delete()
+          after = ExpenseItem.objects.all()
+          assert self.delItem not in after
+
+      def test_invisible(self) :
+          self.invisItem.visible=False
+          self.invisItem.save()
+          after = ExpenseItem.objects.all()
+          assert self.invisItem not in after</code></pre></div>
+<div class="section" id="view">
+<h2>Viewのテスト</h2>
+<p>普段業務で使っているJavaでは、特定のリクエストをした際に、HttpServletRequestに何が保存されているかを確認している。FlexからたたくJavaの場合は単にリターンをチェックしている。</p>
+<p>Viewテストで行いたいのは、この程度。可能か？</p>
+<p>結論から言えば、余裕でまかなえる。以下のテストのtest_loginを見てもらうと、responseからcontextを取り出すためにおかしなコードを挟んでいることに気づくと思う。</p>
+<p>このテストでリクエストを出しているpathは、権限チェックが含まれるviewなので、ログインしていない状態でリクエストを出すと</p>
+<ol class="arabic simple">
+<li>ログイン画面にリダイレクトされる</li>
+<li>ログイン画面からClient.loginでログイン用のViewにPostされログインを行う</li>
+<li>test_loginでアクセスしようとしていたViewの結果がかえる</li>
+</ol>
+<p>のでresponseが3回疑似ブラウザに渡されている。</p>
+<p>response.contextはこの3回の結果がリストとなって格納されている。contextにアクセスできるので、Viewで行った処理が正常かどうかを追うことができる(しかもリダイレクトされることまで追うことができる)。</p>
+<p>ちなみに、Viewのテストにテストサーバの起動は不要。WSGIを使って疑似的(実は疑似ではない？)にリクエストを処理している。かなりたくさんの情報が取り出せる(responseの内容を表示してみれば何が入っているのかすぐわかる)ので、十分テスト可能。</p>
+<pre><code class="language-python">  import unittest
+
+  from djengel.squander.models import ExpenseItem
+
+  from django.test.client import Client
+  from django.contrib.auth.models import User, Permission
+
+  class SquanderViewTest(unittest.TestCase) :
+      def setUp(self) :
+          self.client = Client()
+          self.user = User.objects.create_user('mam', '',
+          'mampass')
+          view_permission =
+          Permission.objects.get(codename__exact='can_view')
+          self.user.user_permissions = [view_permission]
+
+      def tearDown(self) :
+          self.user.delete()
+
+      def test_login(self) :
+          respon =
+          self.client.login('/djengel/summary/2006/08/','mam', 'mampass')
+          last_response = respon.context[len(respon.context) -
+          1]
+          assert '2006/07/' == last_response.get('prev_month',
+          False)
+          print last_response.__dict__
+
+      def test_login_failed(self) :
+          assert not
+          self.client.login('/djengel/summary/2006/08/','dad', 'mampass')</code></pre></div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/08/28/ll-ring-django/index.html">LLRingのDjango製アプリ（フライング）</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/09/08/rails-pagination/index.html">RailsのPagination</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

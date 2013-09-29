@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>rhaco0.93用の簡易チュートリアル</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-10-31 03:23:32</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/10/31/rhaco-0-93-small-tutorial/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/10/31/rhaco-0-93-small-tutorial/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>rhaco0.93用の簡易チュートリアル</h1>
+    <p>Django勉強会 Disc1の打ち合わせ時に、phpのフレームワーク使うんならrhacoだよ、と言いまくってしまったので、簡単な使い方説明をします。</p>
+<blockquote>
+<p>2007/02/15 追記</p>
+<p>現場の若いのが、<a class="reference external" href="http://www.venten.net/?eid=584515">Rhaco1.0.1用に書き直しました</a>。</p>
+</blockquote>
+<div class="section" id="rhaco">
+<h2>rhacoの利点等</h2>
+<p>どうやらphpのフレームワークの場合、あまりO/R等はメジャーではないようです。</p>
+<blockquote>
+→ rhacoにはバリデータ込みのO/Rマッパーがあります。</blockquote>
+<p>どうやらphpのフレームワークはPear等の別ライブラリが必要なことが多いようです。</p>
+<blockquote>
+→ rhacoは他のライブラリを必要としません(djangoみたい！)。mb_系は入っていると便利ですが。</blockquote>
+<p>どうやらphpのフレームワークはTemplateのextendsができないようです。</p>
+<blockquote>
+→ rhacoはブロックという単位のincludeと、ブロックという単位のextendsに対応しています(extendsは0.93から)。</blockquote>
+<p>どうやらphpのフレームワークは、phpであるにもかかわらずshellの利用が必要な場合があるようです。</p>
+<blockquote>
+→ rhacoはブラウザとテキストエディタがあれば開発できます(TrueStudio推奨)。</blockquote>
+</div>
+<div class="section" id="id1">
+<h2>開発の進め方</h2>
+<p><a class="reference external" href="http://www.rhaco.org/">rhacoのページ</a> からダウンロードリンク(Quick Link →
+release)を辿って、rhacoの最新版をダウンロードします(sourceforge)。
+(その際、goesbyというサンプルアプリケーションもダウンロードすると、使い方のサンプルになります。goesbyはhttp://www.goesby.c
+om/で動作しているソーシャルブックマークアプリケーションです)</p>
+<p>ダウンロードしたrhaco.zipを解凍し、rhacoディレクトリをapacheが読み込み可能な場所に配置します。
+Document rootより下に置く必要はありません(今回の例ではapacheの直下におきました)。</p>
+<p>Document rootの下にプロジェクト用のディレクトリを作成します(root直下で使いたい場合は不要)。</p>
+<p>rhacoディレクトリの直下にある**setup.php**を、プロジェクト用のディレクトリの中にコピーします。</p>
+<img alt="setup.phpのコピー" src="http://photozou.jp/pub/478/1478/photo/1673913.png?m=1162232061" />
+<p>それでは、setup.phpを表示してみましょう。
+rhacoのpathを入力する用に要求されます。
+rhacoを配置したディレクトリを指定してください。</p>
+<img alt="rhacoのpathを設定する" src="http://photozou.jp/pub/478/1478/photo/1673914.png?m=1162232149" />
+<p>「設定ボタン」をクリックすると、追加入力画面へ遷移します。
+テンプレートのキャッシュ等いろいろな設定がありますが、今回は一番したの囲み「アプリケーション」にある「サンプルアプリケーション」にだけチェックを入れて「生
+成する」ボタンをクリックしてください(権限がありませんというメッセージが表示されたら、apacheがプロジェクトディレクトリに書き込み可能な権限を付与して
+ください)。</p>
+<img alt="サンプルアプリケーションにチェックを入れる" src="http://photozou.jp/pub/478/1478/photo/1673915.png?m=1162232201" />
+<p>プロジェクトディレクトリの中身を見てください。setup.php以外にファイルやディレクトリが生成されているはずです。
+setupディレクトリの中には、project.xmlというファイルがあります。</p>
+<img alt="生成されたディレクトリ" src="http://photozou.jp/pub/478/1478/photo/1673916.png?m=1162232292" />
+<p>このファイルにプロジェクトに関する内容を設定します。
+サンプルアプリケーションとして、index.phpというファイルができています。
+index.phpをブラウザで呼び出してみてください。入力フィールドが並んでいるはずです。
+値を入力してサブミットすると、同じ画面に戻ってくるというだけのものですが、入力した値を保持しているはずです(0.93はcheckboxとradioの動作が
+おかしい？)。
+これは、index.phpとresources/templates/index.htmlで動作しています。</p>
+<p>次に、setup/project.xmlをいじってみましょう。下記のように記述してください。(もし利用するデータベースにアプリケーションから接続するデータ
+ベースユーザを作成していない場合には作成しておいてください)</p>
+<pre><code class="language-markup">  &lt;project rhacovar="0.9.3"&gt;
+    &lt;database name="test"&gt;
+      &lt;table name="bbs"&gt;
+        &lt;column name="id" type="serial" /&gt;
+        &lt;column name="name" type="string"
+        size="20" require="true" /&gt;
+        &lt;column name="comment" type="string"
+        size="100" /&gt;
+      &lt;/table&gt;
+    &lt;/database&gt;
+  &lt;/project&gt;</code></pre><p>再びsetup.phpをブラウザで開いてください。今度は中間あたりにデータベースの設定が増えているはずです。</p>
+<img alt="データベースの設定" src="http://photozou.jp/pub/478/1478/photo/1673922.png?m=1162232391" />
+<p>利用するデータベースを選択し、データベース接続ユーザやパスワード等を埋め、テーブル作成にチェックを入れて「生成する」ボタンをクリックしてください(テーブル接頭語は一つのデータベースで複数のアプリケーションを動作可能とするための便利機能です)。</p>
+<p>library/dataディレクトリにたくさんのファイルができているはずです。O/Rで利用するクラス群です。</p>
+<img alt="O/Rのファイル群が生成される" src="http://photozou.jp/pub/478/1478/photo/1673923.png?m=1162232443" />
+<p>index.php/index.htmlをそれぞれ次のように修正してください。</p>
+<pre><code class="language-c-like">  &lt;?php
+  require_once("./__init__.php");
+  Rhaco::import("tag.HtmlParser");
+  Rhaco::import("network.http.Request");
+  Rhaco::import("database.data.Criteria");
+
+
+  Rhaco::importLibrary("DbUtilTest.php");
+  Rhaco::importLibrary("data.Bbs");
+
+
+  $request    = new Request();
+  $htmlParser = new HtmlParser();
+
+  $dbUtil = DbUtilTest::instance();
+
+  if($request-&gt;isPost()) {
+    if(false == $dbUtil-&gt;insert($request-&gt;toObject(new Bbs()))) {
+      $htmlParser-&gt;setVariable($request-&gt;getVariable());
+    }
+  }
+  $object_list = $dbUtil-&gt;select(new Bbs(), new Criteria());
+
+  $htmlParser-&gt;setVariable("object_list",$object_list);
+
+  $htmlParser-&gt;write("index.html");
+
+  ?&gt;</code></pre><pre><code class="language-markup">  &lt;html&gt;
+  &lt;head&gt;
+      &lt;title&gt;index&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;form method="post"&gt;
+      name:&lt;input type="text" name="name" reference="true" /&gt;&lt;br /&gt;
+      comment:&lt;textarea name="comment" reference="true"&gt;&lt;/textarea&gt;
+      &lt;input type="submit" value="submit" /&gt;
+  &lt;/form&gt;
+  &lt;ul&gt;
+  &lt;rt:loop param="object_list" var="msg"&gt;
+    &lt;li&gt;{$formatter.escape($msg.name)} :&lt;br /&gt;
+    {$formatter.escape($msg.comment)}&lt;/li&gt;
+  &lt;/rt:loop&gt;
+  &lt;/ul&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;</code></pre><p>では、index.phpを表示してみましょう。
+入力フォームがありますので、何も入力せずに「submit」ボタンをクリックしてみましょう。
+何もおきませんよね。では、comment欄にだけ文字を入力して「submit」ボタンをクリックしてみましょう。入力がのこったまま元に戻ってきましたよね？</p>
+<p>これは、project.xmlに設定したrequired=&quot;true&quot;が効いているため、バリデータに止められてもとのページに戻ってきたのです。本来であれば、各入力フォーム毎にエラーメッセージの表示を行うのですが、やり方を忘れてしまったのではしょりました :)</p>
+<p>では、nameとcommentに値を入力して「submit」ボタンをクリックしてください。メッセージが表示されましたね？操作を繰り返すとどんどん増えていきます。</p>
+<img alt="complete" src="http://photozou.jp/pub/478/1478/photo/1673924.png?m=1162232497" />
+<p>今回はページング等の実装はしませんでしたが、countやoffset、limit、も容易に扱えるので(SQL文はたいていの場合書く必要はありません。unionまでO/Rで扱えますよ)、goesbyのソースを眺めたり、 <a class="reference external" href="http://groups.google.com/group/rhaco-ja">rhac-jaメーリングリスト</a> に質問をしたりしてrhacoを楽しんでみてください。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/10/28/search-engine-ads/index.html">検索広告</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/11/09/django_etude_disc_1/index.html">Django勉強会 Disc1でしたいこといろいろ</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>ipython notebook で DBのデータを可視化する（簡単）</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2013-08-24 13:09:24</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2013/08/24/python_pandas_and_sql/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2013/08/24/python_pandas_and_sql/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>ipython notebook で DBのデータを可視化する（簡単）</h1>
+    <p><a class="reference external" href="http://www.tsuyukimakoto.com/blog/2013/07/11/data_scientist_with_python/">Data Scientist になろう</a> で紹介した通り、 Python の科学技術系ライブラリを使うのが非常に簡単になっています。
+なんせ、GUIインストーラでほとんど必要なライブラリが入ってしまうのですから。</p>
+<p>Python を使う強みは csv や tsv といったデータの準備段階からすべて Python でできる（シチュエーションが多い）ところにあるようなので、今回は MySQL からデータを取り出してそのままプロットしてみました。</p>
+<p>IPython Notebookは、ブラウザに打ち込んだコードを次々に評価でき、リアルタイムにプロットした画像が表示されるので非常に面白いです（通常のインタラクティブシェルでやるとプロットしたウィンドウが別に開き、ウィンドウを閉じるまでインタラクティブシェルがロックされたりして哀しいんですが）。</p>
+<img alt="https://dl.dropboxusercontent.com/u/382460/blog/ipython_notebook.png" src="https://dl.dropboxusercontent.com/u/382460/blog/ipython_notebook.png" />
+<p>余談ですが、世の中の誰かが R と比較していて、それによると Python の方が 2倍高速に動作したりする、らしいです。ソースは忘れました。</p>
+<p>さて、 Python3.3 から MySQL を使うために、 pymysql3 をインストールしておいてください。パーフェクトPythonを買っていればおそらくライブラリのインストールには強くなっていることでしょうが、念のため。pymysqlはpure pythonなのでmysqlのヘッダファイルとか不要です。ヘビーに使わない場合に重宝しています。</p>
+<p><a class="reference external" href="http://www.tsuyukimakoto.com/blog/2013/07/11/data_scientist_with_python/">Data Scientist になろう</a> に出てきた <strong>bin</strong> ディレクトリに pip がありますので、以下のように実行します。anacondaをインストールした先によっては管理者権限が必要かもしれません（コンソールを管理者権限で開いたり、 sudo したりは OS によって異なる）</p>
+<pre><code class="language-bash">$ ./pip install pymysql3</code></pre><p>サンプルデータのSQLは <a class="reference external" href="https://gist.github.com/tsuyukimakoto/6325960">こんな感じ（Gist）</a> です。手抜きです。</p>
+<p>（実行環境）</p>
+<pre><code class="language-bash">  import sys;print(sys.version)
+  #3.3.2 |Anaconda 1.6.1 (x86_64)| (default, May 17 2013, 11:37:53)
+  #[GCC 4.0.1 (Apple Inc. build 5493)]</code></pre><p>必要なモジュールやらを import します。結局 numpy は生では使いませんでしたが…</p>
+<pre><code class="language-python">  import pandas as pd
+  from pandas.io import sql
+  import numpy as np
+  import pylab as plt
+  import pymysql</code></pre><p><strong>データベースからデータを抽出する</strong></p>
+<p>sql.frame_queryは、sqlとconnectionとsqlへバインドする変数の配列を受け取って、DataFrameを返す。今回は条件が無いので引数は2つ。</p>
+<pre><code class="language-python">  con = pymysql.connect(host='192.168.215.128', user='panda', passwd='weakpassword', db='pandasample')
+  df = sql.frame_query('''select sbj.title as title, stdnt.gender as gender, scr.point as point
+                          from subject sbj, student stdnt, scores scr
+                          where sbj.id = scr.subject_id and scr.student_id = stdnt.id;''', con)</code></pre><p>genderごとのDataFrameを作る。</p>
+<pre><code class="language-python">  men = df[df['gender'] == 1]
+  women = df[df['gender'] == 2]</code></pre><p>男女の得点を、それぞれの箱ひげ図を出力してみます。</p>
+<pre><code class="language-python">  plt.xlabel("Gender")
+  plt.ylabel("Score")
+  ax = plt.gca()
+  plt.setp(ax, xticklabels=["Men", "Women"])
+  plt.boxplot([men['point'], women['point']])</code></pre><p>サンプルデータを40+ランダムで最大100となるように生成したので、あまり面白くない分布になってしまっています。</p>
+<img alt="https://dl.dropboxusercontent.com/u/382460/blog/boxplot_1.png" src="https://dl.dropboxusercontent.com/u/382460/blog/boxplot_1.png" />
+<p>男女の得点をさらに教科で抽出してみます。</p>
+<p>menだけを評価（実行）してみたり、men['title'] == 'science']だけを評価してみればDataFrameのデータ抽出の雰囲気がわかるので、やっていると良いでしょう。</p>
+<pre><code class="language-python">  men_sience = men[men["title"] == 'science']
+  women_sience = women[women["title"] == 'science']
+
+  plt.xlabel("Gender")
+  plt.ylabel("Score")
+  ax = plt.gca()
+  plt.setp(ax, xticklabels=["Men", "Women"])
+  plt.boxplot([men_sience['point'], women_sience['point']])</code></pre><img alt="https://dl.dropboxusercontent.com/u/382460/blog/boxplot_2.png" src="https://dl.dropboxusercontent.com/u/382460/blog/boxplot_2.png" />
+<p>無理矢理線にしてみたり</p>
+<pre><code class="language-python">  plt.xlabel("Count")
+  plt.ylabel("Point")
+  plt.plot(men["point"])
+  plt.plot(women["point"])
+  plt.legend(['Men', 'Women'])</code></pre><img alt="https://dl.dropboxusercontent.com/u/382460/blog/plot_1.png" src="https://dl.dropboxusercontent.com/u/382460/blog/plot_1.png" />
+<p>無理矢理ヒストグラムを重ねてみたり</p>
+<pre><code class="language-python">  plt.xlabel("Point")
+  plt.ylabel("Count")
+  plt.hist(men["point"], color="blue")
+  plt.hist(women["point"], color="red")
+  plt.legend(['Men', 'Women'])</code></pre><img alt="https://dl.dropboxusercontent.com/u/382460/blog/hist_1.png" src="https://dl.dropboxusercontent.com/u/382460/blog/hist_1.png" />
+<p>非常に簡単にできます。</p>
+<p>IPython Notebookは、保存したファイルを取り込むこともできます。</p>
+<p><a class="reference external" href="https://dl.dropboxusercontent.com/u/382460/blog/pandas_and_sql_.ipynb">このipynb</a> を保存して、notebookの一覧ページ（ipython3_mac.commandを実行したらブラウザで開くページ）の一覧にドラッグアンドドロップするか、 click hereをクリックして読み込めます。</p>
+<p>あー、便利。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2013/08/10/install_a_leash_plug/index.html">ボディボードにリーシュコードを取り付けた</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/index.html">カメラのカビ対策</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

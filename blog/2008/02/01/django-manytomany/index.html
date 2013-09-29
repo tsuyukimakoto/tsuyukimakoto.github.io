@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>ManyToMany？</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-02-01 00:12:29</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/02/01/django-manytomany/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/02/01/django-manytomany/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>ManyToMany？</h1>
+    <p><a class="reference external" href="http://labs.monospace.jp/monologista/">monologista</a> がオープンソース化されようとしています。</p>
+<p>monologistaは、昨年の5月にpateoさんが作って運用しているつぶやき系のwebアプリケーションです。pateoさんはプログラムも書きますが、本
+職はデザイナさんなのでデザインも素敵です。</p>
+<p>Djangoのtrunkで動くようにしてからオープンソース化するとのことで、Djangoのサンプルとしても、社内とかで使うつぶやきWebアプリとしても、期
+待大なのです。</p>
+<p>今、コードを直しつつブログでノウハウを公開されているところですが、丁度拙作の <a class="reference external" href="http://www.tracka.info/">Tracka</a> でも気になっているタイムライン（自分と、自分がフォローしている人の投稿が一覧されるもの）部分について言及されていたので、少し考えてみました。</p>
+<p>pateoさんは、 <a class="reference external" href="http://blog.monospace.jp/2008/01/31/django_q_twitter_timeline/">タイムラインの生成にQオブジェクトを使って OR を組み立てている</a> ようです。</p>
+<p>実のところ、SQLには文字列の長さ制限がありますので、大量にORをつなぐと実行時にエラーとなってしまいます。と、いいながら現在Trackaも IN を使っているだけなので微妙に長さが伸びに勢いがないだけで同様の問題を抱えています。</p>
+<pre><code class="language-python">  friends = Friend.objects.filter(me__exact=request.user.id).select_related()
+  friends_id = [f.favorit_id for f in friends] + [request.user.id] #手抜き
+  Track.objects.filter(tracker__id__in=friends_id).order_by('-created')</code></pre><p>Trackaでは、あえてManyToManyFieldを使用せずにUserに対してForeignKeyを二つもったモデルを定義しています。DjangoではManyToManyの関連で利用される中間テーブルはPythonコード側から見えないため、ゴリゴリやりたいときのためにそうしています。</p>
+<p>実際のところ、Trackaの場合はこんな感じにすればフォローしている人の数に関わりなく同じSQLになります（まだ検証していないけど…meじゃなくってfavoriteかも…）。</p>
+<pre><code class="language-python">  Track.objects.filter(Q(tracker__id=request.user.id) |
+    Q(tracker__friend__me=request.user.id)).order_by('-created')
+  #trackerはTrack(Postみたいの)を投稿したユーザ
+  #friendはフォロー関係を表す中間テーブル
+  #meは中間テーブルでフォローしているユーザ（つまり自分）</code></pre><p>大規模になると話は変わってくると思いますが、ある程度まではこの位の気の使い方でいいんじゃないかと思います。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/01/31/bmo_spotlight_plugins/index.html">BMOのSpotlightプラグイン作った</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/02/01/silverlight-mook/index.html">SilverLightのムック？</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

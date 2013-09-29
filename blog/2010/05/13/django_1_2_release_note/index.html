@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>django1.2 リリースノート</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2010-05-13 03:05:47</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2010/05/13/django_1_2_release_note/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2010/05/13/django_1_2_release_note/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>django1.2 リリースノート</h1>
+    <p>そろそろDjango1.2が出る。1.0から後方互換性を失うものが多数でるので、1.2のリリースノートをインチキに訳した。なんとなく。</p>
+<p>原文は <a class="reference external" href="http://docs.djangoproject.com/en/dev/releases/1.2/">http://docs.djangoproject.com/en/dev/releases/1.2/</a></p>
+<p>あれ？と思ったら原文をあたってください。
+そもそもリリース前の文章なので、原文も変わってるかもしれない。</p>
+<div class="section" id="id1">
+<h2>1.2で後方互換性がとれていないもの</h2>
+<ul>
+<li><p class="first">CSRF対策</p>
+<p>CSRF対策に大きな変更をしました。詳細は <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ref-contrib-csrf">CSRFドキュメント</a> を参照してください。主に気をつける点は</p>
+<ul class="simple">
+<li>CsrfResponseMiddleware と CsrfMiddleware がdeprecatedとなりDjango1.4で削除されます。テンプレートタグをフォームに追加することにしました。</li>
+<li>すべてのcontribアプリケーションはcsrf_protectデコレータを使用しています。テンプレートにcsrf_tokenテンプレートタグを使わなければなりません。もしcontribアプリケーションでカスタムテンプレートを使用している場合には、テンプレートの修正のために <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ref-csrf-upgrading-notes">UPGRADE INSTRUCTIONS</a> を <strong>必ず読んで</strong> ください。</li>
+<li>CsrfViewMiddlewareはMIDDLEWARE_CLASSESに標準で含まれています。CSRF対策が標準でオンになっているので、ビューはCsrfViewMiddlewareが機能するように書かねばなりません。どうすればよいのかはCSRFのドキュメントにあります。</li>
+<li>CSRFに関するものはすべてcontribからcoreに移動しました。後方互換性のため古い場所からもimportできますが、deprecatedです。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p class="first">ifタグを変更しました</p>
+<p>ifテンプレートタグの新しい機能により、今まで使えていた <strong>and</strong> <strong>or</strong> <strong>not</strong> という変数名が使えなくなりました。今まではキーワードとして扱われていましたが場合によっては機能していました。今後は {% if not %} や {% if and %} といったテンプレートのコードは TemplateSyntaxError を送出します。同様に <strong>in</strong> も新たにキーワードとなり このコンテキストでは有効な変数名ではなくなりました。</p>
+</li>
+<li><p class="first">LazyObject</p>
+<p>LazyObjectは不明な型のオブジェクトを遅延ラップするためにあんドキュメントなユーティリティクラスです。
+Django1.1以前ではイントロスペクションを通常と違う方法で行っていました。get_all_members()というパブリックメソッドを使っていましたが、名前の衝突をしやすく、通常のメソッド __members__ や __dir__() を使うようにしました。もしLazyObjectを使っており、ラッパにget_all_members()を実装している場合には、次のように変更してください。</p>
+<ul class="simple">
+<li>特殊なイントロスペクションの必要がないのであれば（通常の方法で発見できない属性を受け入れるメソッドや、__getattr__()を実装したりしていない場合）は単にget_all_members()メソッドを取り除いてください。</li>
+<li>もし複雑なイントロスペクションが必要な場合にはまずget_all_members()を__dire__()に名前を変更してください。これはPython2.6以降では標準的な方法です。もし、Python2.6未満をサポートしたい場合には次のコードをクラスに追加してください。</li>
+</ul>
+<pre><code class="language-python">__members__ = property(lambda self: self.__dir__())</code></pre></li>
+</ul>
+<ul>
+<li><p class="first">データベースの指定</p>
+<p>Django1.1以前はひとつのデータベースへの接続にいくつかの設定をしていました。Django1.2では複数データベースに対応したので、データベースの設定が変わりました。</p>
+<p>Django1.4までは今までの設定のママ動きます。1.4までは新しい設定に自動的で変換されます。</p>
+<p>古いフォーマットでは DATABASE_ という設定が幾つかありました。こんなものです。</p>
+<pre><code class="language-python">DATABASE_NAME = 'test_db'
+DATABASE_ENGINE = 'postgresql_psycopg2'
+DATABASE_USER = 'myusername'
+DATABASE_PASSWORD = 's3krit'</code></pre><p>今後はDATABASESという名前の辞書になります。辞書の各エントリがひとつのデータベース接続に対応します。 default という名前のものは デフォルトのデータベース接続の設定です。各設定の名前は短くされています。前述のサンプルは次のようにします。</p>
+<pre><code class="language-python">DATABASES = {
+    'default': {
+        'NAME': 'test_db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'USER': 'myusername',
+        'PASSWORD': 's3krit',
+    }
+}</code></pre><table border="1" class="docutils rounded">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head"><p class="first last">Old setting</p>
+</th>
+<th class="head"><p class="first last">New Setting</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><p class="first last">DATABASE_ENGINE</p>
+</td>
+<td><p class="first last">ENGINE</p>
+</td>
+</tr>
+<tr><td><p class="first last">DATABASE_HOST</p>
+</td>
+<td><p class="first last">HOST</p>
+</td>
+</tr>
+<tr><td><p class="first last">DATABASE_NAME</p>
+</td>
+<td><p class="first last">NAME</p>
+</td>
+</tr>
+<tr><td><p class="first last">DATABASE_OPTIONS</p>
+</td>
+<td><p class="first last">OPTIONS</p>
+</td>
+</tr>
+<tr><td><p class="first last">DATABASE_PASSWORD</p>
+</td>
+<td><p class="first last">PASSWORD</p>
+</td>
+</tr>
+<tr><td><p class="first last">DATABASE_PORT</p>
+</td>
+<td><p class="first last">PORT</p>
+</td>
+</tr>
+<tr><td><p class="first last">DATABASE_USER</p>
+</td>
+<td><p class="first last">USER</p>
+</td>
+</tr>
+<tr><td><p class="first last">TEST_DATABASE_CHARSET</p>
+</td>
+<td><p class="first last">TEST_CHARSET</p>
+</td>
+</tr>
+<tr><td><p class="first last">TEST_DATABASE_COLLATION</p>
+</td>
+<td><p class="first last">TEST_COLLATION</p>
+</td>
+</tr>
+<tr><td><p class="first last">TEST_DATABASE_NAME</p>
+</td>
+<td><p class="first last">TEST_NAME</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>DatabaseWrapper()を使って手動でデータベース接続を作った場合にもこの変更が必要です。</p>
+<blockquote>
+<p>この変更に加え、Django1.2はbuild-inのデータベースバックエンドに関する特殊なハンドリングも廃止します。全てのデータベースバックエンドは完全なモジュール名で設定しなければなりません（postgresql_psycopg2のかわりにdjango.db.backends.postgresql_psycopg2のように設定します）。</p>
+</blockquote>
+</li>
+<li><p class="first">modelインスタンスの__dict__</p>
+<p>これまでmodelインスタンスの__dict__はmodelのフィールドに関する属性のみを含んでいました。</p>
+<p>マルチデータベースのサポートにより、Django1.2はのmodelインスタンスは_state属性を持つようになりました。_stateはmodelインスタンスの__dict__に現れますので、__dict__でフィールドのリストを得ている場合には、_state属性をフィルターしなければなりません。</p>
+</li>
+<li><p class="first">フィールドのget_db_pre_*()メソッド</p>
+<p>1.2以前ではカスタムフィールドはPython型の値をデータベース型へ変換するための関数を定義できました。カスタムフィールドはこんな感じでした。</p>
+<pre><code class="language-python">class CustomModelField(models.Field):
+    # ...
+    def get_db_prep_save(self, value):
+        # ...
+    def get_db_prep_value(self, value):
+        # ...
+    def get_db_prep_lookup(self, lookup_type, value):
+        # ...</code></pre><p>1.2では3つのメソッドはシグネチャに変更があり、二つのメソッドが追加されました。</p>
+<pre><code class="language-python">class CustomModelField(models.Field):
+    # ...
+    def get_prep_value(self, value):
+        # ...
+    def get_prep_lookup(self, lookup_type, value):
+        # ...
+    def get_db_prep_save(self, value, connection):
+        # ...
+    def get_db_prep_value(self, value, connection, prepared=False):
+        # ...
+    def get_db_prep_lookup(self, lookup_type, value, connection, prepared=False):
+        # ...</code></pre><p>These changes are required to support multiple databases -- get_db_prep_* can no longer make any assumptions regarding the database for which it is preparing. The connection argument now provides the preparation methods with the specific connection for which the value is being prepared.</p>
+<p>新しい二つのメソッドはデータベース固有のデータ準備が必要なものと区別するために存在します。prepared引数は汎用的な準備を使うべきかどうかを指し示します。prepared=Falseをget_db_prep_*()に渡した場合にはget_prep_*()を呼び出して汎用的なデータの準備をすべきです。</p>
+<p>古い雛形から新しい雛形へコンバートする関数を提供しますが、Django1.4では削除します。あなたのget_db_pre_*()メソッドでデータベースコネクションが不要であればget_db_prep_value()をget_pre_value()へ、get_db_prep_lookup()をget_prep_lookup()へ名前を変更してください。データベース固有の変換が必要なのであればconnection引数を使ってデータベース固有の値を解決する実装をしてください。</p>
+</li>
+<li><p class="first">ステートフルなテンプレートタグ</p>
+<p>レンダリングの状態をノード自身に持たせたテンプレートタグはあたらしい <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/templates/api/#template-loaders">cached template loader</a> を使った場合に問題が発生するかもしれません。</p>
+<p>Djangoに付属しているテンプレートタグはcached loaderとあわせて使っても問題はありませんが、サードパーティ製のテンプレートタグやあなた自身のコードを使っている場合にはタグがスレッドセーフであることを確認してください。
+スレッドセーフについての情報は <a class="reference external" href="http://docs.djangoproject.com/en/dev/howto/custom-template-tags/#template-tag-thread-safety">template tag thread safety considerations</a> を参照してください。</p>
+<p>Djangoのテンプレートタグがスレッドセーフでなかった事に依存して実装した場合にはテンプレートを修正してください。 cycle タグを使っている場合に、特にincludeタグと組み合わせている場合によく影響を受けるでしょう。例えば</p>
+<pre><code class="language-python">{% for object in object_list %}
+    {% include "subtemplate.html" %}
+{% endfor %}</code></pre><p>subtemplate.htmlが</p>
+<pre><code class="language-python">{% cycle 'even' 'odd' %}</code></pre><p>となっていた場合、スレッドセーフでないDjango1.2より前のレンダラの出力は</p>
+<pre><code class="language-python">even odd even odd ...</code></pre><p>スレッドセーフなDjango1.2以降のレンダラの出力は</p>
+<pre><code class="language-python">even even even even ...</code></pre><p>各includeタグのレンダリングは独立したレンダリングになったためです。cycleタグがスレッドセーフでなかった時にはcycleタグの状態が複数の同じincludeで漏れ出していたのです。cycleタグはスレッドセーフになったので、この現象はもう起きないのです。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">Testランナーの終了コード</p>
+<p>Testランナー(tests/runtests.pyとpython manage.py test)の終了コードでは失敗したテストの数を出力しなくなりました。256以上失敗した場合には終了コードとして正しくないためです。Testランナーは成功した場合には0を、失敗した場合には1を返しようになりました。失敗した数はTestランナーの出力の最後にあります。</p>
+</li>
+<li><p class="first">Cookieエンコーディング</p>
+<p>Internet ExplorerとSafari（場合によっては他のブラウザも）のCookieのバグに対処するため、カンマとセミコロンを安全でない文字として扱うようにしました。それぞれ、 054 と 073 にエンコーディングされます。もしカンマやセミコロンをCookieに格納していて、かつクライアントサイドのJavaScriptでCookieのパース、生成をしている場合には後方互換性を失っています。</p>
+</li>
+<li><p class="first">user_passes_test, login_required, permission_required</p>
+<p>django.contrib.auth.decoratorsはlogin_required, permission_required and user_passes_testデコレータを提供していました。これらのデコレータは第一引数にrequestをとる関数でも、第一引数にselfを第二引数にrequestをとるメソッドでも利用可能でした。ですが、この仕組みには欠陥があることがわかりました。限られた状況でしか動かず、動かない場合には非常にデバッグが難しいエラーを引き起こします。</p>
+<p>よって自動で認識する振る舞いをやめ、メソッドに対してこれらのデコレータを利用する場合には django.utils.decorators.method_decorator() を使ってデコレータおをメソッドで動くように明示しなければならないようにしました。このようなコードを</p>
+<pre><code class="language-python">class MyClass(object):
+
+    @login_required
+    def my_view(self, request):
+        pass</code></pre><p>次のように書き換えてください</p>
+<pre><code class="language-python">from django.utils.decorators import method_decorator
+
+class MyClass(object):
+
+    @method_decorator(login_required)
+    def my_view(self, request):
+        pass</code></pre><p>こうしても構いません</p>
+<pre><code class="language-python">from django.utils.decorators import method_decorator
+
+login_required_m = method_decorator(login_required)
+
+class MyClass(object):
+
+    @login_required_m
+    def my_view(self, request):
+        pass</code></pre><p>1.1以降で追加されたデコレータ csrf_protect, cache_control や decorator_from_middleware を使って作られたデコレータに適用してください。</p>
+</li>
+<li><p class="first">ModelForm.is_valid() と ModelForm.errors</p>
+<p>ModelFormの多くのvalidationに関する動作をモデルレベルへ移動しました。結果、最初にModelForm.is_valid()を呼び出した際やModelForm.errorsにアクセスした際、formのvalidationををトリガーしたかに関わらず、同時にモデルがcleanされます。かつてはこの変換はモデルの保存時に行われていました。モデルの変更されていないインスタンスが必要な場合にはコピーをModelFormのコンストラクタに渡してください。</p>
+</li>
+<li><p class="first">MySQLのBooleanField</p>
+<p>以前のDjangoではMySQLのBooleanFieldはTrueかFalseの代わりに1か0を返していました。boolはintのサブクラスなので大抵の場合には問題にならないでしょうが、Django1.2ではきちんとboolで返すようになりました。reprの結果としてBooleanFieldが1か0を出力することを想定している場合にのみ問題となるでしょう。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="deprecated">
+<h2>1.2でdeprecatedとしてマークされたもの</h2>
+<ul>
+<li><p class="first">postgresql database backend</p>
+<p>psycopg1ライブラリは2005年10月から更新されていません。postgresqlデータベースバックエンドはこのライブラリに依存しているのでdeprecatedとしました。</p>
+<p>postgresqlバックエンドを使っている場合には postgresql_psycopg2バックエンドへ移行してください。アップグレードは psycopg2ライブらいをインストールして、DATABASE_ENGINEの設定をpostgresql_psycopg2を読むようにするだけです。</p>
+</li>
+<li><p class="first">CSRF response-rewriting　ミドルウェア</p>
+<p>Postのformを出力する際にCSRFトークンを埋め込むミドルウェアCsrfResponseMiddlewareはテンプレートタグにすることにしたのでdeprecatedとしました。Django1.4で完全に削除されます。CsrfMiddlewareとCsrfResponseMiddleware、CsrfViewMiddlewareも同様にdeprecatedとなりました。</p>
+</li>
+</ul>
+<p>また、CSRFモジュールはcontribからcoreに移動しました。contribからのimportはdeprecatedと成っています。 <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ref-csrf-upgrading-notes">upgrading notes</a> を参照してください。</p>
+<ul>
+<li><p class="first">SMTPConnection</p>
+<p>SMTPConnectionはe-mailバックエンドAPIを利用することにしたのでdeprecatedとしてマークされました。</p>
+<p>古いコードはSMTPConnectionのインスタンスを生成しています。</p>
+<pre><code class="language-python">from django.core.mail import SMTPConnection
+connection = SMTPConnection()
+messages = get_notification_email()
+connection.send_messages(messages)</code></pre><p>今後は get_connection() を予備、汎用メール接続を生成します。</p>
+<pre><code class="language-python">from django.core.mail import get_connection
+connection = get_connection()
+messages = get_notification_email()
+connection.send_messages(messages)</code></pre><p>EMAIL_BACKENDの設定に依存するので、SMTP connectionを返さないかもしれません。
+メール送信に利用するSMTP connectionを明示的にしたい場合にはSMTP connectionを明示的に要求できます。</p>
+<pre><code class="language-python">from django.core.mail import get_connection
+connection = get_connection('django.core.mail.backends.smtp.EmailBackend')
+messages = get_notification_email()
+connection.send_messages(messages)</code></pre><p>SMTPConnectionに追加の引数を渡す必要がある場合にはget_connection()に渡せます。</p>
+<pre><code class="language-python">connection = get_connection('django.core.mail.backends.smtp.EmailBackend', hostname='localhost', port=1234)</code></pre></li>
+<li><p class="first">User Messages API</p>
+<p>ユーザメッセージモデルにメッセージを保存するAPIはdeprecatedとしてマークされました。Django1.4で削除されます。</p>
+<p>以下のようなコードをアップグレードする場合には</p>
+<pre><code class="language-python">user.message_set.create('a message')</code></pre><p>次のようにします</p>
+<pre><code class="language-python">from django.contrib import messages
+messages.add_message(request, messages.INFO, 'a message')</code></pre><p>利用しているところについては</p>
+<pre><code class="language-python">for message in user.get_and_delete_messages():
+    ...</code></pre><p>次のようにします</p>
+<pre><code class="language-python">from django.contrib import messages
+for message in messages.get_messages(request):
+    ...</code></pre><p>より詳しくは <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/messages/#ref-contrib-messages">messages documentation</a> を参照してください。
+すぐにでも新しいAPIを使うようにコードのアップグレードを開始してください。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">日付フォーマットヘルパー</p>
+<p>django.utils.translation.get_date_formats() と django.utils.translation.get_partial_date_formats() はdeprecatedとしてマークされ、 django.utils.formats.get_format() を明示的に呼ぶようになりました。 USE_L10N が True に設定されている場合にはロケールに適し、Falseに設定されている場合にはデフォルトにフォールバックします。</p>
+<p>日付フォーマットを取得するにはこうしていました</p>
+<pre><code class="language-python">from django.utils.translation import get_date_formats
+date_format, datetime_format, time_format = get_date_formats()</code></pre><p>今後は、次のようにします</p>
+<pre><code class="language-python">from django.utils import formats
+date_format = formats.get_format('DATE_FORMAT')
+datetime_format = formats.get_format('DATETIME_FORMAT')
+time_format = formats.get_format('TIME_FORMAT')</code></pre><p>あるいは、直にフォーマットします</p>
+<pre><code class="language-python">from django.utils import formats
+value_formatted = formats.date_format(value, 'DATETIME_FORMAT')</code></pre><p>django.forms.fieldsのものも全体に提供されます。</p>
+<ul class="simple">
+<li>DEFAULT_DATE_INPUT_FORMATS</li>
+<li>DEFAULT_TIME_INPUT_FORMATS</li>
+<li>DEFAULT_DATETIME_INPUT_FORMATS</li>
+</ul>
+<p>明示的にフォーマットを取得するには django.utils.formats.get_format() を使ってください。</p>
+</li>
+<li><p class="first">email_re</p>
+<p>ドキュメントには書かれていませんでしたが、メールアドレスの検証用正規表現 email_re はdjango.form.fieldsからdjango.core.validatorsへ写されました。もし使っている場合にはimport文を修正してください。</p>
+</li>
+<li><p class="first">Feed(django.contrib.syndication.feeds)</p>
+<p>django.contrib.syndication.feeds.Feedクラスはdjango.contrib.syndication.views.Feedクラスに置き換えました。feeds.Feedクラスはdeprecatedとしてマークされ、Django1.4でなくなります。</p>
+<p>新しいクラスはほぼ同一のAPIを持っていますが、ビューとしてインスタンスを使うるようになりました。例えば、古いもののURLconfを見てみましょう。</p>
+<pre><code class="language-python">from django.conf.urls.defaults import *
+from myproject.feeds import LatestEntries, LatestEntriesByCategory
+
+feeds = {
+    'latest': LatestEntries,
+    'categories': LatestEntriesByCategory,
+}
+
+urlpatterns = patterns('',
+    # ...
+    (r'^feeds/(?P&lt;url&gt;.*)/$', 'django.contrib.syndication.views.feed',
+        {'feed_dict': feeds}),
+    # ...
+)</code></pre><p>新しいFeedクラスはビューとして直に配置できます。</p>
+<pre><code class="language-python">from django.conf.urls.defaults import *
+from myproject.feeds import LatestEntries, LatestEntriesByCategory
+
+urlpatterns = patterns('',
+    # ...
+    (r'^feeds/latest/$', LatestEntries()),
+    (r'^feeds/categories/(?P&lt;category_id&gt;\d+)/$', LatestEntriesByCategory()),
+    # ...
+)</code></pre><p>今feed()ビューを使っているのであれば LatestEntries クラスは変更擦る必要はないでしょう（新しいFeedクラスのサブクラスにする以外は）。
+例外としては、feedの説明とタイトルに使うテンプレートをDjangoが自動で導き出している場合です（title_templateとdescription_templateを指定していない場合です）。
+title_templateとdescription_template属性を指定するか、item_title()とitem_description()メソッドを定義するかしなければいけません。</p>
+<p>LatestEntriesByCategoryは特定のカテゴリを表示するためにbitsという引数をとるget_object()メソッドを使います。新しいFeedクラスはget_object()メソッドにrequestとURLからキャプチャした引数をとります。</p>
+<pre><code class="language-python">from django.contrib.syndication.views import Feed
+from django.shortcuts import get_object_or_404
+from myproject.models import Category
+
+class LatestEntriesByCategory(Feed):
+    def get_object(self, request, category_id):
+        return get_object_or_404(Category, id=category_id)
+
+    # ...</code></pre><p>加えてFeedクラスのget_feed()メソッドは違う引数をとるようになりました。Feedクラスを直に使っている場合には影響があるでしょう。
+オプションでurl引数を取っていたのが、別の二つの引数をとるようにかわりました。Feedクラスのget_object()メソッドの戻り値と、requestです。</p>
+<p>Feedクラスは毎回初期化されることはないので、デフォルトでは__init__()メソッドは引数をとらないようになりました。以前はURLからキャプチャしたslugとrequestを取っていました。</p>
+<p><a class="reference external" href="http://www.rssboard.org/rss-profile">RSS best practices</a> にあわせて、RSSフィードは atom:link エレメントを挿入しないようにしました。テストを修正しなければいけないかもしれません。</p>
+<p>より詳細には <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/syndication/#ref-contrib-syndication">syndication framework documentation</a> を参照してください。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">TechnicalメッセージID</p>
+<p>Django1.1までは日付と時刻の表示フォーマットをローカライズするために <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/i18n/#technical-messages">technical message IDs</a> を利用していました。 すべての大文字の国際化文字対象文字列で翻訳ができるようになっていました(DATETIME_FORMATやDATE_FORMAT、TIME_FORMATのようのもの)。
+この仕組みはdeprecatedとしてマークされ、新しい <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/i18n/localization/#format-localization">形式のローカライズ</a> に変更しました。対応する django/conf/locale/&lt;locale name&gt;/ディレクトリにあるformats.pyの情報を用いる仕組みになりました。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">GeoDjango</p>
+<p>マルチデータベースのサポートにより、GeoDjangoデータベース内部が大きく変更されました。大きな後方互換性を失う変更は django.contrib.gis.db.backend モジュールが django.contrib.gis.db.backends にリネームされ、 優秀なな <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/gis/db-api/#spatial-backends">空間データベースバックエンド</a> ができました。
+続いてこの変更で影響を受ける主なAPIについて説明します。</p>
+<ul>
+<li><p class="first">SpatialBackend</p>
+<p>空間データベースバックエンドが分割される前には、空間データベースの能力確認のための抽象オブジェクトとしてdjango.contrib.gis.db.backend.SpatialBackendが提供されていました。SpatialBackendの属性とルーチンはデータベースバックエンドのops属性の一部になりました。</p>
+<p>古いdjango.contrib.gis.db.backendモジュールは後方互換性のためSpatialBackendへのアクセスが可能ですが、これはデフォルトの空間データベースコネクションのopsモジュールへのエイリアスです。</p>
+<p>django.contrib.gis.db.backendのアンドキュメントなモジュールやオブジェクトに依存している場合にはコードを修正する必要があるでしょう。例えば、1.1では動作した次のようなimportは</p>
+<pre><code class="language-python">from django.contrib.gis.db.backend.postgis import PostGISAdaptor</code></pre><p>次のように変更が必要です</p>
+<pre><code class="language-python">from django.db import connection
+PostGISAdaptor = connection.ops.Adapter</code></pre></li>
+<li><p class="first">SpatialRefSys と GeometryColumns モデル</p>
+<p>前までのGeoDjangoではdjango.contrib.gis.db.modelsにSpatialRefSysとGeometryColumnsのモデルが有り、各々OGC空間メタデータテーブルのspatial_ref_sysとgeometry_columnsにクエリを発行していました。</p>
+<p>このエイリアスはまだ提供されますが、デフォルトのデータベース小ネックションで、デフォルトのコネクションが空間データベースバックエンドをサポートしている場合のみです。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">OGC空間メタデータテーブルの構造は空間データベースごとに異なるため、SpatialRefSysとGeometryColumnsモデルはgisアプリケーション名に関連付けされません。以下の例のようにget_modelsメソッドを呼び出してもモデルは返りません。</p>
+</div>
+<pre><code class="language-python">  &gt;&gt;&gt; from django.db.models import get_app, get_models
+  &gt;&gt;&gt; get_models(get_app('gis'))
+  []</code></pre><p>空間データベースの正しいSpatialRefSysとGeometryColumnsを得るには、空間バックエンドの提供するメソッドを使います。</p>
+<pre><code class="language-python">&gt;&gt;&gt; from django.db import connections
+&gt;&gt;&gt; SpatialRefSys = connections['my_spatialite'].ops.spatial_ref_sys()
+&gt;&gt;&gt; GeometryColumns = connections['my_postgis'].ops.geometry_columns()</code></pre><div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">spatial_ref_sys()とgeometry_columns()メソッドを用いて得たモデルを使うとしても、デフォルトコネクション以外を使う場合には正しいデータベースエイリアスを使う必要があります。上記の例のように得たモデルで正しくデータベースを使うには、</p>
+</div>
+<pre><code class="language-python">  sr_qs = SpatialRefSys.objects.using('my_spatialite').filter(...)
+  gc_qs = GeometryColumns.objects.using('my_postgis').filter(...)</code></pre></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p class="first">no言語コード</p>
+<p>Norwegian Bokmålの言語コードはnoを使っていましたが、nbに置き換えます</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>1.2の新機能</h2>
+<ul>
+<li><p class="first">CSRFサポート</p>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ref-contrib-csrf">CSRF攻撃</a> に対する対策を向上しました。この種の攻撃はあなたのウェブサイトにログインしたユーザが悪意のあるサイトを訪れた際に、リンクやフォームのボタン・JavaScriptを用いてあなたのサイトに対する操作を行わせようとするものです。この種の攻撃にあなたのブラウザが他の認証資格でログインさせようとする「ログインCSRF」というものがあり、これもカバーします。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">E-mailバックエンド</p>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/email/#topic-email-backends">Djangoがメールを送る方法を設定</a> できるようになりました。メール送信にSMTPを用いる代わりに設定可能なE-mailバックエンドを選択できるようになりました。もしホスティングプロバイダがサンドボックスやSMTP意外の技術でメールを送るようになっている場合、E-mailバックエンドを作成し、Djangoの標準 <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/email/#topics-email">メール送信メソッド</a> から利用できます。</p>
+<p>メールのデバッグも簡単になります。メールの送信先を <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/email/#topic-email-file-backend">ファイルやコンソール、メモリにするバックエンドを同梱します。全部捨ててしまう</a> ようにさえできます。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">メッセージフレームワーク</p>
+<p>Djangoはクッキーやセッションベースの、非ログインユーザと認証ユーザをサポートするビルトインのものを含む、 <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/messages/#ref-contrib-messages">メッセージフレームワーク</a> を提供します。
+メッセージフレームワークはdeprecatedなユーザメッセージAPIを置き換えます。リクエスト時に一時的にメッセージを保存し、次のリクエストで取り出して表示できます。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">マルチデータベースサポート</p>
+<p>Django1.2ではプロジェクトで <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/multi-db/#topics-db-multi-db">複数のデータベース</a> を使えるようになります。クエリーはQuerySetオブジェクトのusing()メソッドで指定したデータベースに対して発行できます。個々のオブジェクトはsave()を呼び出す際のusing引数でデータベースを指定して保存できます。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">スマートなifタグ</p>
+<p>ifタグをパワフルに改善しました。第一に比較演算子のサポートをしました。もう次のように記述必要はありません。</p>
+<pre><code class="language-python">{% ifnotequal a b %}
+ ...
+{% endifnotequal %}</code></pre><p>こう書けます。</p>
+<pre><code class="language-python">{% if a != b %}
+ ...
+{% endif %}</code></pre><p>ノスタルジーに浸るタイプでない限り{% ifequal %}や{% ifnotequal %}を使う理由はありません。</p>
+<p>演算子はすでにサポートされている and, or と not に加え、 ==, !=, &lt;, &gt;, &lt;=, &gt;=, in と not inをサポートし、Pythonの演算子のように動作します。</p>
+<p>また、filterがif表現で利用できます。</p>
+<pre><code class="language-markup">&lt;div
+  {% if user.email|lower == message.recipient|lower %}
+    class="highlight"
+  {% endif %}
+&gt;{{ message }}&lt;/div&gt;</code></pre></li>
+<li><p class="first">テンプレートキャッシュ</p>
+<p>今までのDjangoではテンプレートをレンダリングする度にディスクからロードしていました。Django1.2では <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/templates/api/#template-loaders">キャッシュテンプレートローダ</a> を用いて一度ロードした結果を続のレンダリングのためにキャッシュできるようになりました。{% extends %}や{% include %}タグを使ってテンプレートを細かく分割している場合には著しいパフォーマンスの向上を図れます。</p>
+<p>副作用として、Djangoテンプレート言語以外のサポートがより簡単になりました。詳しくは <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/templates/api/#topic-template-alternate-language">Djangoテンプレート以外のサポートについて</a> を参照してください。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">fixturesでの自然なキー</p>
+<p>Fixturesで、より <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/serialization/#topics-serialization-natural-keys">自然なキー</a> を使って別のオブジェクトを参照できるようになりました。この取り出し方は通常のプライマリキーを使ったオブジェクト参照の置換えで、可読性の向上とプライマリキーの値が予測不能な場合や分からない場合の問題を解決します。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">BigIntegerField</p>
+<p>64bitのBigIntegerFieldを使えるようになりました。</p>
+</li>
+<li><p class="first">テストの素早い失敗</p>
+<p>test suiteを実行するdjango-admin.pyのtestコマンドとruntests.pyスクリプトが --failfast オプションをサポートしました。このオプションが指定された場合には、テストを続けず、テストに失敗した時点でテストランナーを終了します。加えてCtrl-Cの扱いも向上し、gracefulに終了するようになりました。中断される前までのテストの結果を出力するようになりました。</p>
+</li>
+<li><p class="first">ローカライズの向上</p>
+<p>Djangoの <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/i18n/#topics-i18n">国際化フレームワーク</a> はロケールに従ったフォーマットやフォームの処理ができるように拡張されました。つまり有効にした場合にはテンプレート上の日付や数値が現在のロケールに応じたフォーマットで出力されます。また、フォームのデータもローカライズされたフォーマットでパースします。詳しくは <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/i18n/localization/#format-localization">フォーマットのローカライズ</a> を参照してください。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">ModelAdminのreadonly_fields</p>
+<p>django.contrib.admin.ModelAdmin.readonly_fieldsが編集不可なフィールドとして追加／変更ページのモデルとinlinesで使えるようになり、編集可能なフィールドの横に計算結果を表示できるようになりました。</p>
+</li>
+<li><p class="first">シンタックスハイライトのカスタマイズ</p>
+<p>DJANGO_COLORS環境変数でdjango-admin.pyの提供する <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/django-admin/#syntax-coloring">シンタックスハイライト</a> の変更や無効化ができるようになりました。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">モデルの検証</p>
+<p>モデルのインスタンスは <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/instances/#validating-objects">自身のデータを検証</a> できるようになり、モデルとフォームのフィールドはバリデータのリストを受け付けるようになりました。モデルのバリデーションは明示的に実行しなければならず、モデルインスタンスのsave()メソッドを呼び出しただけではインスタンスのデータの検証は実施されないことに注意してください。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">オブジェクト単位の権限</p>
+<p>オブジェクトごとに権限を指定する下地が追加されました。コアには実装がなく、 django.contrib.auth.models.User で使われるようにカスタム認証バックエンドを実装できます。詳しくは <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/auth/#topics-auth">認証のドキュメント</a> を参照してください。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">匿名ユーザへの権限</p>
+<p>カスタム認証バックエンドで supports_anonymous_user を True にすると、 AnonymousUser は User がしているのと同様にバックエンドで権限をチェックします。これはアプリケーションが操作の可否の確認をを常に認可／認証バックエンドに委譲し、権限の集中管理をする場合に便利です。詳しくは <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/auth/#topics-auth">認証のドキュメント</a> を参照してください。</p>
+</li>
+<li><p class="first">Syndication feedsビュー</p>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/syndication/#ref-contrib-syndication">Syndication feeds</a> をURLconfで直にビューとして利用できます。これでフィードをURLの構造を完全に管理できます。他のビューと同様にrequestオブジェクトが渡されるので、通常のビューでしていることができるようになります。ユーザゴトのアクセスコントロールや、フィードを名前付きURLにしたりできます。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">ユーザ名制限の緩和</p>
+<p>ビルトインUserモデルのusernameフィールドが緩和され、&#64;や+や_や-といった広範囲な文字が使えるようになりました。</p>
+</li>
+<li><p class="first">GeoDjango</p>
+<p>1.2でのGeoDjangoの大きな新機能は複数の空間データベースのサポートです。以下の空間データベースバックエンドが含まれています。</p>
+<ul class="simple">
+<li>django.contrib.gis.db.backends.postgis</li>
+<li>django.contrib.gis.db.backends.mysql</li>
+<li>django.contrib.gis.db.backends.oracle</li>
+<li>django.contrib.gis.db.backends.spatialite</li>
+</ul>
+<p>GeoDjangoは <a class="reference external" href="http://postgis.refractions.net/documentation/manual-1.5/">PostGIS 1.5</a> で追加された機能をサポートしています。  <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/gis/model-api/#geography-type">geography type</a> のサポートと 地理座標系の <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/gis/db-api/#distance-queries">distance queries</a> 可能にしました。</p>
+<p>3D geometryフィールドがサポートされ、GeometryFieldのdimキーワードを3に設定すると有効となります。この機能お一部としてExtent3D集合関数とextent3d()メソッドが追加されました。</p>
+<p>以下のGeoQuerySetメソッドが1.2で追加されました。</p>
+<ul class="simple">
+<li>force_rhr()</li>
+<li>reverse_geom()</li>
+<li>geohash()</li>
+</ul>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/gis/geos/#ref-geos">GEOSインターフェース</a> はプラットフォームで利用可能な場合にはスレッドセーフなCライブラリを使うようになりました。</p>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/gis/gdal/#ref-gdal">GDALインターフェース</a> now allows the user to set a spatial_filter on the features returned when iterating over a Layer.</p>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/gis/#ref-contrib-gis">GeoDjangoのドキュメント</a> はDjangoのドキュメントに含まれるようになりました。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">adminのinline関連オブジェクトのJavaScriptによるアシスト</p>
+<p>JavaScriptの有効なブラウザを使っている場合にadminのinlineオブジェクトを動的に追加、削除できるようになりました。JavaScriptの使えないブラウザの場合は今までと変わりません。</p>
+</li>
+</ul>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2010/05/13/django_1_1_2_release_note/index.html">Django1.1.2 リリースノート</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2010/09/10/django_security_release/index.html">セキュリティ対策のDjango1.2.2が出ています</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

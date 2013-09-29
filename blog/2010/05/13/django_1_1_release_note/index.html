@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Django1.1 リリースノート</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2010-05-13 02:58:21</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2010/05/13/django_1_1_release_note/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2010/05/13/django_1_1_release_note/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Django1.1 リリースノート</h1>
+    <p>そろそろDjango1.2が出る。1.0から後方互換性を失うものが多数でるので、1.1のリリースノートをインチキに訳した。なんとなく。</p>
+<p>原文は <a class="reference external" href="http://docs.djangoproject.com/en/dev/releases/1.1/">http://docs.djangoproject.com/en/dev/releases/1.1/</a></p>
+<p>あれ？と思ったら原文をあたってください。</p>
+<div class="section" id="id1">
+<h2>1.1で後方互換性がとれていないもの</h2>
+<p>DjangoにはAPIの安定についてのポリシーがあります。基本的にはDjango1.0向けに開発したコードはDjango1.1になっても変更無しに動きます。
+が、バグの改修でどうしても後方互換性が失われる事があります。Django1.0とDjango1.1の間にはほんの少しの違いがあります。</p>
+<p>Django1.1にバージョンをあげる前に、下記の変更があなたのコードに影響がないかダブルチェックしてください。もし、影響があるようでしたらコードを修正してください。</p>
+<ul>
+<li><p class="first">制約名が変更されました</p>
+<p>Django1.1では、マシンのワードサイズに影響されずに名前を生成するために、データベースの制約名を生成するメソッドを変更しました。この変更は後方互換性を失っている可能性があります。</p>
+<p>32bitのプラットフォームを使っている場合には違いに気づかないでしょう。</p>
+<p>64bitのプラットフォームを使っている場合には management コマンドの　reset で問題があるかもしれません。この変更の前は64bitプラットフォームでは16文字の digest を制約名に使っていました。</p>
+<pre><code class="language-sql">ALTER TABLE myapp_sometable ADD CONSTRAINT object_id_refs_id_5e8f10c132091d1e FOREIGN KEY ...</code></pre><p>この変更の後では、プラットフォームに関わらず8文字の digest を制約名に使います。</p>
+<pre><code class="language-sql">ALTER TABLE myapp_sometable ADD CONSTRAINT object_id_refs_id_32091d1e FOREIGN KEY ...</code></pre><p>このため、64bitマシンで生成したテーブルに対して management コマンドの reset を実行できない可能性があります。昔生成した制約名が新しく生成される名前にマッチせず、誤ったSQLが生成されるためです。</p>
+<p>64bitで制約が生成されたアプリケーションを reset したい場合には、事前に古い制約を手動で破棄(drop)してからにしてください。</p>
+</li>
+<li><p class="first">テストケースがトランザクション内で実行されるようになりました</p>
+<p>Django1.1では、より良いパフォーマンスがでるよう、トランザクション内でテストが実行されるようになりました。</p>
+<p>既存のテストが、トランザクションの振る舞いをテストする必要がある場合、テスト環境について誤った前提に依存している場合、テストケースに特定の順番が必要な場合には後方互換性を失っています。</p>
+<p>このような場合には、TransactionTestCaseを代わりに使えます。単に新しいロールバックのアプローチでテストケースのエラーを明らかにするだけです。長いテストは正しく書き直さねばなりません。</p>
+</li>
+<li><p class="first">SetRemoteAddrFromForwardedFor ミドルウェアを削除しました</p>
+<p>Django1.0には便利のために django.middleware.http.SetRemoteAddrFromForwardedFor を同梱していました。このミドルウェアはProxyの設定により付与される X-Forwarded-For HTTPヘッダを使って、 REMOTE_ADDR ヘッダを上書きするものでした。</p>
+<p>実際の用途としては信頼性に欠ける仕組みで、たとえドキュメントに書かれていたとしても、Djangoに含まれていることでアプリケーション開発者たちに認証ソースとしてREMOTE_ADDRの値が安全だと思い込ませてしまうことになります。</p>
+<p>直接セキュリティの問題ではありませんが、Django1.1のリリースでこのミドルウェアを削除する事に決めました。DeprecationWorningを出力する以外は何もしないクラスに差し替えてあります。</p>
+<p>もし、このミドルウェアに依存してしまっている場合には次のようにアップグレードしてください</p>
+<ul class="simple">
+<li>処理が削除されるコードを試す</li>
+<li>上流のProxyで正しく動作する事を確認し、場合によってはコードを修正します</li>
+<li>修正したバージョンのSetRemoteAddrFromForwardedForをプロジェクトに導入します</li>
+</ul>
+</li>
+<li><p class="first">アップロードされたファイルの名前はあとからわかります</p>
+<p>Django1.0ではモデルがデータベースに保存される前にディスクに保存されていました。実際のファイル名はデータベースの保存前にわかっ低迷したので、モデルの pre-save シグナルハンドラで参照可能でした。</p>
+<p>Django1.1では、データベースへモデルの保存する際にファイルを保存します。モデルが保存されるまで実際の名前が信頼できません（確定しません）。</p>
+</li>
+<li><p class="first">モデルformsetsの保存が変わりました。</p>
+<p>Django1.1ではBaseModelFormSetがModelForm.save()を呼び出すようになりました。</p>
+<p>モデルのformsetsを__init__で変更している場合や、内部的な_total_form_countや_initial_formsetアトリビュートに依存している場合には後方互換性を失っています。これらのアトリビュートはパブリックメソッドに変更されました。</p>
+</li>
+<li><p class="first">joinフィルターのエスケープが修正されました</p>
+<p>joinフィルターが接続文字列をエスケープしてしまうことがなくなりました。</p>
+<p>接続文字列をエスケープしてしまう特殊な状況においては後方互換性を失っています。 {{ foo|join:&quot;&amp;&quot; }} と書いていた場合には、 {{ foo|join:&quot;&amp;amp;&quot; }} に書き換えてください。</p>
+<p>以前の振る舞いはバグで、ドキュメントに書かれていたこととは正反対でした。</p>
+</li>
+<li><p class="first">redirect_to汎用ビューにpermanent redirects引数を追加しました</p>
+<p>Django1.1では django.views.generic.simple.redirect_to() 汎用ビューに permanent という引数が追加になりました。もし、redirect_toにpermanentという引数を渡してしまっていた場合には、後方互換性が失われています。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>1.1で廃止予定となった機能</h2>
+<p>ひとつの機能が廃止予定としてマークされました。</p>
+<ul>
+<li><p class="first">adminのビューを登録するのに AdminSite.root() を使わないでください</p>
+<p>以下のようなURLconfは</p>
+<pre><code class="language-python">(r'^admin/(.*)', admin.site.root),</code></pre><p>次のように書き換えてください</p>
+<pre><code class="language-python">(r'^admin/', include(admin.site.urls)),</code></pre><p>コードの書き換えはすぐに開始して、廃止予定のコードは削除してください。</p>
+<p>Django1.1ではAdminSite.rootはPendingDeprecationWarningを送出します。この警告はデフォルトでは表示されません。</p>
+<p>Django1.2では、DeprecationWarningに変わります。この警告は派手に表示されます。</p>
+<p>Django1.3では、AdminSite.root()は削除されます。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>1.1の新機能</h2>
+<p>1290のコミットと、1206のバグフィックス、1万行のドキュメントが追加されています。</p>
+<p>1.1の主な新機能は…</p>
+<ul>
+<li><p class="first">ORMの改善</p>
+<p>Object-relational Mapperに大きく二つ、強化を行いました。集合関数のサポートと、query expressionsの追加です。</p>
+<p><strong>集合関数のサポート</strong></p>
+<p>ORMから集合関数SQLを発行できるようになりました。直に集合関数の結果を返すかQuerySetに集合関数の結果を注釈するか選択できます。</p>
+<p>この機能は新しいメソッド QuerySet.aggregate() と QuerySet.annotate() で利用できます。詳細は <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/aggregation/#topics-db-aggregation">the ORM aggregation documentation</a> ドキュメントを参照してください。</p>
+<p><strong>Query Expressions</strong></p>
+<p>Queryが別のフィールドや別の関連するモデルのフィールドを参照できるようになりました。この機能は新しい F オブジェクトで使います。詳細は <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/queries/#query-expressions">documentation for F expressions</a> ドキュメントを参照してください。</p>
+</li>
+<li><p class="first">Modelの改善</p>
+<p>いくつかの機能がモデルに追加されました。</p>
+<p><strong>UNMANAGEDモデル</strong></p>
+<p>モデルのデータベースライフサイクルをDjangoに管理させるかどうかをコントロールできるようになりました。デフォルトはTrueで、Djangoはsyncdbやresetコマンドでデータベースを作ったり削除したりします。これがデータベースのライフサイクルをDjangoが管理するということです。</p>
+<p>もし、Falseに設定すると、このモデルに関してはテーブルの作成や削除を自動で行うことはなくなります。すでに存在するテーブルやデータベースのビューを使っている場合などに便利です。</p>
+<p>より詳細には、 <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/options/#django.db.models.Options.managed">managedオプションのドキュメント</a> を参照してください。</p>
+<p><strong>Proxyモデル</strong></p>
+<p>Proxyモデルを作れるようになりました。Proxyモデルは、既存のモデルに、新しいテーブルと関連付けることなく、Pythonレベルの振る舞いを追加するサブクラスです。新しいモデルは全データを保持する上位のモデルにプロキシーします。</p>
+<p>詳細は <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/models/#proxy-models">proxy models documentation</a> ドキュメントにあります。この昨日はunmanagedモデルと表面的には似ているので、どう違うのかが <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/models/#proxy-vs-unmanaged-models">how proxy models differ from unmanaged models</a> ドキュメントに記載されています。</p>
+<p><strong>Deferredフィールド</strong></p>
+<p>複雑な状況ではものすごく大きなデータを保持するフィールドが含まれているかもしれませんし、Pythonのオブジェクトに変換するコストが大きいといったことがあるかもしれません。特定にフィールドが必要ないとわかっている時にはデータベースから対象のデータを取り出さないようにできます。</p>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/querysets/#queryset-defer">あたらしいquerysetのメソッド</a> defer() と only() を使います。</p>
+</li>
+<li><p class="first">テストの改善</p>
+<p><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/#topics-testing">テスティングフレームワーク</a> にいくつかの機能強化をしました。</p>
+<p><strong>パフォーマンスの向上</strong></p>
+<p>Djangoのテスティングフレームワークを用いて書かれたテストは劇的に早く実行出来るようになりました（多くの場合10倍早くなることもあります）</p>
+<p>django.test.TestCaseを用いたテストでは、テストの最後にデータベースをクリアして再作成していましたが、トランザクションを用いてロールバックすることで、パフォーマンスの向上を達成しました。 詳細とデータベースのサポートに付いての重要な事項は <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/#django.test.TestCase">TestCase</a> ドキュメントと <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/testing/#django.test.TransactionTestCase">TransactionTestCase</a> ドキュメントを参照してください。</p>
+<p><strong>Testクライアントの改善</strong></p>
+<p>テストクライアントに小さいながらも非常に便利な改善を行いました。</p>
+<ul class="simple">
+<li>Client.get() と Client.post() にfollow引数を追加し、自動でリダイレクトに従えるようになりました。リダイレクトの扱いがシンプルになります。</li>
+<li>テンプレートのコンテキストを簡単に参照できるようになりました。 request.context[key] とするだけで参照できます。いままでは、 request.contextにテンプレートの継承チェーンごとのコンテキストがリストになって入っていました。もし必要であれば、今までのモノも使えます。</li>
+</ul>
+</li>
+<li><p class="first">新しいadminの機能</p>
+<p>adminに格好イイ機能をいくつか追加しました。</p>
+<p><strong>一覧での一括編集</strong></p>
+<p>あたらしい <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/admin/#admin-list-editable">list_editable</a> オプションで一覧でフィールドを編集可能になりました。指定したフィールドは一覧でフォームのウィジェットを用いて表示され、一括で保存できます。</p>
+<p><strong>Adminアクション</strong></p>
+<p>モデルのグループに対して一括で処理を行える <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/admin/actions/#ref-contrib-admin-actions">adminアクション</a> を定義できるようになりました。
+ユーザは一覧で選択したオブジェクトに対して一括で処理を行えるようになります。</p>
+<p>一括で削除を行えるアクションを同梱しています。</p>
+</li>
+</ul>
+<ul>
+<li><p class="first">条件によるビューの処理</p>
+<p>EtagやLast-ModifiedといったHTTPヘッダを使った <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/conditional-view-processing/#topics-conditional-processing">conditional view processing</a> のサポートを向上しました。条件の確認によって、ビューの処理を簡単に省略できるようになります。多くのビューで速度と帯域を劇的に改善します。</p>
+</li>
+</ul>
+<ul class="simple">
+<li>URLネームスペース</li>
+</ul>
+<p>　　URLネームスペースの導入で <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/http/urls/#naming-url-patterns">named URL patterns</a> を改善しました。</p>
+<blockquote>
+<p>簡単に言えば、同じアプリケーションの同じURLを、prefixを変えることでURLConfになんどもインクルードできるようになります。URLの衝突なしに、Djangoのadminのような再利用可能なアプリケーションを登録できるということです。</p>
+<p>詳細は <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/http/urls/#topics-http-defining-url-namespaces">the documentation on defining URL namespaces</a> を参照してください。</p>
+</blockquote>
+<ul>
+<li><p class="first">GeoDjango</p>
+<p><a class="reference external" href="http://geodjango.org/">GeoDjango</a> にいくつかの機能が追加されました。</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.gaia-gis.it/spatialite/">SpatiaLite</a> のサポート - 空間バックエンドとしてSQLiteの空間データベースをサポートしました</li>
+<li>地理集合関数(Collect, Extent, MakeLine, Union)と F を追加しました</li>
+<li>GeoQuerySet に collect, geojson, snap_to_grid メソッドを追加しました</li>
+<li>GEOSGeometryオブジェクトに新しい一覧メソッドを追加</li>
+</ul>
+<p>詳細は <a class="reference external" href="http://geodjango.org/docs/">GeoDjango documentation</a> を参照してください。</p>
+</li>
+</ul>
+<ul class="simple">
+<li>その他の改善<ul>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/#ref-contrib-csrf">CSRF対策ミドルウェア</a> を リクエストのチェックを行う CsrfViewMiddleware と、 レスポンスの出力時に処理をする CsrfResponseMiddleware の二つのクラスに分けました。二つの処理を行っていた CsrfMiddleware クラスも後方互換性のために残してありますが、処理に応じて分けられた二つを使ってください。</li>
+<li>reverse() と reverse() を使っている {% url %} のようなコードで、 DjangoのadminのURLが動作するようになりました。ただしadminのURLを include(admin.site.urls) でセットしている時のみです。</li>
+<li>URLconfモジュールの include() 関数にURLパターンのシーケンス(patterns()で生成されるもの）を渡せるようになりました。</li>
+<li>formsのインスタンスに hidden_fields() と visible_fields() という二つのメソッドが追加されました（ <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/forms/#topics-forms-index">the forms overview</a> 参照）。それぞれ hidden のリストを返すものと visible のフィールドを返します。</li>
+<li>redirect_to 汎用ビューにpermanentキーワード引数を渡せるようになりました。 permanent をTrue で渡すと HTTPステータスコード301の permanent redirect を返します。 False の場合には 302 のtemporary redirect を返します。</li>
+<li>DateField と DateTimeField に新たに week_day という条件検索が加わりました。 この種別は1（日曜）から7（土曜）の数値を受け取り、曜日の一致するオブジェクトを返します。詳細は <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups">the full list of lookup types</a> ドキュメントを参照してください。</li>
+<li>{% for %} テンプレートタグに {% empty %}が追加されました。 {% for %}タグに空のリストが渡された場合の句です。 <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/templates/builtins/#ref-templates-builtins">the list of build-in template tags</a> ドキュメントを参照してください。</li>
+<li>管理コマンドのdumpdateに個々のモデル名を渡せるようになりました。特定のモデルのデータだけをエクスポートできます。</li>
+<li>safeseq テンプレートフィルターが追加されました。listに大してsafeと同様に動作するものです。listの各アイテムをsafeにします。</li>
+<li><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/cache/#topics-cache">Cache backends</a> が incr() と decr() コマンドでキャッシュのキーをインクリメント、デクリメントできるようになりました。キャッシュバックエンドがアトミックなインクリメント、デクリメントをサポートしていればこの処理はアトミックに、そして極めて早く動作します。</li>
+<li>REMOTE_USER環境変数を使った認証バックエンドを利用し、 <a class="reference external" href="http://docs.djangoproject.com/en/dev/howto/auth-remote-user/#howto-auth-remote-user">Webサーバへ認証を委譲</a> できるようになりました。</li>
+<li>新しい django.shortcuts.redirect() 関数でオブジェクトやビュー名、URLを渡して簡単にリダイレクトできるようになりました。</li>
+<li>postgresql_psycopg2 バックエンドが <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/databases/#postgresql-notes">PostgreSQLのネイティブオートコミット</a> をサポートしました。PostgreSQLに特有の機能ですが、読み込み先行のアプリケーションではかなりの高速化になるでしょう。</li>
+</ul>
+</li>
+</ul>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2010/04/08/hello_svg/index.html">hello_svg</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2010/05/13/django_1_1_2_release_note/index.html">Django1.1.2 リリースノート</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

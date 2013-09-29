@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Javaの特定パッケージに入ってるClassをとる</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-11-08 19:10:02</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/11/08/java-package/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/11/08/java-package/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Javaの特定パッケージに入ってるClassをとる</h1>
+    <p>Python温泉とかCross Community Conferenceとかのイベント参加した＞＜</p>
+<p>Teeda(S2)記事のムック頂いた＞＜</p>
+<p>とかいろいろ書かなきゃいけない事がスタックしてるんだけど、勢いで書いちゃえ。</p>
+<p>ちょいと仕事でJava縛りになったりする（というかほとんどがそう）ので、JavaでもDjangoとかrhacoとかの気分で書きたいんですわ。</p>
+<p>S2も相当楽にしてくれるんだけど、我々は大したものを作っていないので不要な抽象化とか、Javaの仕様に従ってるがための制限とかが我々を苦しめてくれます :(</p>
+<p>なので、いずれはオレオレっちゃいたいと思ってるんだけど、それについてもいろいろな制限に苦しんじゃってたりします。</p>
+<p>「パッケージ名なんて自由に決めさせる必要ないよねー。」と思って特定パッケージに属しているクラス一覧をとろうと思ったら、パッケージクラスにそんなメソッドが無くって慌てた。</p>
+<p><a class="reference external" href="http://www.lingr.com/room/django-ja">java-ja</a> で聞いたら、「クラスがあって初めてパッケージになるからねぇ」ということを教えてもらえた。</p>
+<p>java-jaは暖かい :)</p>
+<p>で、指定したパッケージ直下のクラス一覧をとるクラスを書いたよ。世の中に数人困っている人がいたので、汚いコードを晒すよ。単にデフォルトのクラスパスとJarの中からパッケージ名がマッチするクラスの名前を返すだけ。</p>
+<p>汎用性とか阿呆らしいと思っているので目的に対してハードコードですが、おおよそのやり方として見れば全く役に立たない事も無いんじゃないかと…。 <strong>ノーテスト！インナークラスとか知らない＞＜</strong></p>
+<pre><code class="language-java">  package org.jarts.core;
+
+  import java.io.BufferedInputStream;
+  import java.io.File;
+  import java.io.FileInputStream;
+  import java.io.FilenameFilter;
+  import java.io.IOException;
+  import java.util.ArrayList;
+  import java.util.LinkedHashMap;
+  import java.util.List;
+  import java.util.Map;
+  import java.util.Set;
+  import java.util.jar.JarInputStream;
+  import java.util.jar.JarEntry;
+
+  public class AppClassLoader extends ClassLoader {
+    static String DIR_SEPARATOR = File.separator;
+    static String PATH_SEPARATOR =
+    System.getProperty("path.separator");
+    static String PACKAGE_SEPARATOR = "\\.";
+
+    static String MODELS_PACKAGE = "models";
+    static String VIEWS_PACKAGE = "views";
+
+    @SuppressWarnings("unchecked")
+    public Map&lt;String, List&lt;Class&gt;&gt; getAppModels(String[]
+    applications) throws IOException, ClassNotFoundException {
+      return getAppClass(applications, MODELS_PACKAGE);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map&lt;String, List&lt;Class&gt;&gt; getAppViews(String[]
+    applications) throws IOException, ClassNotFoundException {
+      return getAppClass(applications, VIEWS_PACKAGE);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public Map&lt;String, List&lt;Class&gt;&gt; getAppClass(String[]
+    applications, String packageSuffix) throws IOException,
+    ClassNotFoundException {
+      Map&lt;String, List&lt;Class&gt;&gt; map = new LinkedHashMap&lt;String,
+      List&lt;Class&gt;&gt;();
+      for(String app: applications) {
+        map.put(app, new ArrayList&lt;Class&gt;());
+      }
+      String pathes = System.getProperty("java.class.path");
+      String[] pathList = pathes.split(PATH_SEPARATOR);
+      for(String path: pathList) {
+        if(path.endsWith(".jar") || path.endsWith(".zip")) {
+          JarInputStream jis = null;
+          try {
+            jis = new JarInputStream(new
+            BufferedInputStream(new FileInputStream(path)));
+            JarEntry entry;
+            while((entry = jis.getNextJarEntry()) != null) {
+              String name = entry.getName();
+              for(String app: applications) {
+                String appmodeldir =
+                app.replaceAll(PACKAGE_SEPARATOR, DIR_SEPARATOR) +
+                DIR_SEPARATOR + packageSuffix;
+                if(name.indexOf(appmodeldir) == 0) {
+                  map.get(app).add(Class.forName(
+                      name
+                      .replaceAll(DIR_SEPARATOR,
+                      PACKAGE_SEPARATOR)
+                      .replaceAll(".class", "")
+                      )
+                    );
+                }
+              }
+            }
+          } finally {
+            if(jis != null) jis.close();
+          }
+        } else {
+          for(String app: applications) {
+            String dir = path + DIR_SEPARATOR +
+            app.replaceAll(PACKAGE_SEPARATOR, DIR_SEPARATOR) +
+            File.separator + packageSuffix;
+            try {
+              File directory = new File(dir);
+              File[] files = directory.listFiles(new
+              ClassFilter(null));
+
+              if(files != null) {
+                for(File f: files) {
+                  map.get(app).add(Class.forName(
+                      f.getPath()
+                      .replaceAll(path +
+                      DIR_SEPARATOR, "")
+                      .replaceAll(DIR_SEPARATOR,
+                      PACKAGE_SEPARATOR)
+                      .replaceAll(".class", "")
+                  ));
+                  System.out.println("found:" + app +
+                  "-&gt;" + f.getPath()
+                      .replaceAll(path +
+                      DIR_SEPARATOR, "")
+                      .replaceAll(DIR_SEPARATOR,
+                      PACKAGE_SEPARATOR)
+                      .replaceAll(".class", ""));
+
+                }
+              }
+            } catch(Exception e) {}
+          }
+        }
+      }
+      return map;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void main(String[] args) throws IOException,
+    ClassNotFoundException {
+      AppClassLoader l = new AppClassLoader();
+      Map&lt;String, List&lt;Class&gt;&gt; modelMap = l.getAppModels(new
+      String[]{"org.jarts.app.sample"});
+      Set&lt;String&gt; appset = modelMap.keySet();
+      for(String app: appset) {
+        List&lt;Class&gt; app_class = modelMap.get(app);
+        for(Class k: app_class) {
+          System.out.println(app);
+          System.out.println("  :" + k);
+        }
+      }
+    }
+  }
+
+  class ClassFilter implements FilenameFilter {
+    String extension = ".class";
+    public ClassFilter(String extension) {
+      if(extension != null) this.extension = extension;
+    }
+    public boolean accept(File dir, String name){
+      return name.toLowerCase().endsWith(extension);
+    }
+  }</code></pre>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/10/31/python-cocoa/index.html">Python Cocoa</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/11/11/insert-zipcode/index.html">郵便番号データ突っ込んでみたよ</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

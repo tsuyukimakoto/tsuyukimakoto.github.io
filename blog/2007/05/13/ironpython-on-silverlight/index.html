@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>OSXでSilverLight上のIronPythonを使って遊ぶ。</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-05-13 18:17:48</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/05/13/ironpython-on-silverlight/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/05/13/ironpython-on-silverlight/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>OSXでSilverLight上のIronPythonを使って遊ぶ。</h1>
+    <div class="section" id="silverlight">
+<h2>SilverLightのインストール</h2>
+<ol class="arabic simple">
+<li>OSX用のSilverlight1.1 Alphaを <a class="reference external" href="http://www.microsoft.com/silverlight/downloads.aspx">ダウンロード</a> &amp;インストールする。</li>
+<li>Silverlight1.1 Alpha SDKを <a class="reference external" href="http://msdn2.microsoft.com/en-us/silverlight/default.aspx">ここ</a> の右側にあるTop Downloadsから辿ってダウンロード。展開する。</li>
+<li>Safariを終了する。</li>
+</ol>
+<p>(追記) <strong>Intel macでないと動作しません</strong> (忘れてた)</p>
+</div>
+<div class="section" id="python">
+<h2>pythonを使うための準備</h2>
+<ol class="arabic simple">
+<li>OSXのApacheに.py / .jsxを認識させる</li>
+</ol>
+<pre><code class="language-markup">  $ sudo vi /private/etc/httpd/mime.types
+  #末尾に追加
+  text/python    py
+  text/jscript    jsx</code></pre><ol class="arabic simple" start="2">
+<li>Apacheを再起動</li>
+<li>ホームディレクトリのサイトディレクトリ内に <strong>sl</strong> のように適当な名前のディレクトリを作成する</li>
+<li>展開しておいたSDKの中にある <strong>Silverlight 1.1 Alpha Samples.zip</strong> を展開し、中のDLRConsoleというディレクトリを <strong>sl</strong> ディレクトリにコピーする</li>
+<li>Safariで <strong>http://localhost/~makoto/sl/DLRConsole/python/index.htm</strong> を開く。makotoは自分のユーザ名に置き換えてください</li>
+</ol>
+<p>続いて、DLRConsole上のPythonを使ってアニメーションを作成しようと思ったのですが、.Net Framework3.0の純粋WPFに頭がやられてしまっていて、少し時間がかかりそうです(Ellipseを継承したクラスが作れないorz)。</p>
+<p>とりあえずは、素敵なスクリーンキャストがあったのでみてみてください。</p>
+<img alt="http://static.everes.net/related/images/DLRConsole.png" src="http://static.everes.net/related/images/DLRConsole.png" />
+<p>驚くことに、コンソールでは4つの言語、Ruby / Python / JScript / VB を同時に使っています。Pythonで作ったファンクションをJScriptから使ったりできちゃいます。</p>
+<p>※DLRConsoleは英語キー配列で入力しなければなりません。また、コンソールは1行ごとにインタプリットされますが、PythonペインやXAMLペインは編集後、コントロール＋エンターで内容が即時反映されます。</p>
+</div>
+<div class="section" id="id1">
+<h2>今、つまっているところ</h2>
+<p>例えば円(Ellipse)を作る場合に、位置指定の仕方がわからない。wpf.setPosition使わなきゃいけないのか？</p>
+<p>それだとXAMLの記述と思考が一致しなくて困る(.Net Framework3.0＋IronPythonだとこんなことはない)。</p>
+<pre><code class="language-python">  py&gt; from wpf import Ellipse
+  py&gt; e = Ellipse()
+  py&gt; e.Width = 10
+  py&gt; e.Height = 10
+  py&gt; e.Canvas.Top = 10
+  System.MissingMemberException: couldn't find member Canvas at in , line 0</code></pre><p>xamlを使えばできるけど、ランダムにたくさん作りたい場合に困る。というかLoadって遅そうなイメージが。。</p>
+<pre><code class="language-python">  py&gt; xaml_ellipse = """
+  py| &lt;Ellipse
+  py| Width="10" Height="10"
+  py| Canvas.Top="10" Canvas.Left="10" /&gt;"""
+  py&gt; x_e = wpf.XamlReader.Load(xaml_ellipse)
+  py&gt; canvas.Children.Add(x_e)</code></pre><!-- _  : http://silverlight.net/learn/learnvideo.aspx?video=126 -->
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/13/tokai-python-workshop01/index.html">東海PythonWorkshop01</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/16/ruby-on-rails-commercial-like-apples/index.html">RubyOnRailsのアップルライクなCM</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

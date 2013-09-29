@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Djangoの日本向けウィジェットを使う</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-03-30 19:24:44</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/03/30/django-localflavor-jp/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/03/30/django-localflavor-jp/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Djangoの日本向けウィジェットを使う</h1>
+    <p>ウィジェットと、国際化文字列の双方が <strong>svnに</strong> 取り込まれたので、紹介します。</p>
+<p>localflavorはdjango.contrib.localflavorパッケージに含まれるもので、Djangoのi18n/l10nに対する取り組みの積極さを表しているとおもいます(adminもアラビア語等右から記述する言語に対応しています)。</p>
+<p>私の作成したパッチの不備から、先日リリースされた0.96というバージョンには含まれておりません。</p>
+<p>まずは、どのようなものなのかのスクリーンショットを見てください。</p>
+<img alt="localflavor-1" src="http://photozou.jp/pub/478/1478/photo/2798598.png" />
+<img alt="localflavor-2" src="http://photozou.jp/pub/478/1478/photo/2798601.png" />
+<p>サンプルは、ユーザ(django.contrib.auto.models.User)に対して、送付先住所を設定するという簡単なものです。</p>
+<p>頻出するであろう「郵便番号の入力チェック」と「都道府県の選択・入力チェック」の再発明せずに済むようになりました。</p>
+<p>モデルのコートは通常と変わらないので、非常に単純です。</p>
+<pre><code class="language-python">  from django.db import models
+  from django.utils.translation import gettext as _
+  from django.contrib.auth.models import User
+
+  # Create your models here.
+  class SendTo(models.Model):
+      zip_code = models.CharField(_('Zip Code'), maxlength=8)
+      prefecture = models.CharField(_('Prefecture'), maxlength=9)
+      street   = models.TextField(_('Street Address and Building'))
+      user = models.ForeignKey(User, verbose_name=_('User'))
+
+      def get_absolute_url(self):
+          return '/flavor/add/'</code></pre><p>次に、viewsを見てみます。</p>
+<pre><code class="language-python">  from django import newforms as forms
+  from django.http import HttpResponse, HttpResponseRedirect
+  from django.template import loader, Context
+
+  from django.contrib.localflavor.jp import forms as jp_forms
+  from flavor.sample.models import SendTo
+
+  #customize form
+  SendToForm = forms.form_for_model(SendTo)
+
+  SendToForm.base_fields['zip_code'] = jp_forms.JPPostalCodeField()
+  SendToForm.base_fields['prefecture'].widget = jp_forms.JPPrefectureSelect()
+
+  def add_send_to(request):
+      if request.method == 'POST':
+          form = SendToForm(request.POST)
+          if form.is_valid() :
+              send_to = form.save()
+              return HttpResponseRedirect(send_to.get_absolute_url())
+      else:
+          form = SendToForm()
+
+      t = loader.get_template('sample/sendto_form.html')
+      c = Context({'form': form,})
+      return HttpResponse(t.render(c))</code></pre><div class="section" id="id1">
+<h2>使い方</h2>
+<ol class="arabic simple">
+<li>日本向けのlocalflavorは <strong>django.contrib.localflavor.jp.forms</strong> に含まれていますので、別名でインポートします。</li>
+<li>フォームをカスタマイズするために、モデルからデフォルトのフォーム( <strong>SendToForm</strong> )を生成します。</li>
+<li>フォームの郵便番号用フィールドを <strong>JPPostalCodeField</strong> に、フォームの郵便番号用フィールドの表示ウィジェットを <strong>JPPrefectureSelect</strong> に変更します。</li>
+<li>あとは、カスタマイズしたSendToFormを利用すれば、サンプルのような見た目になります。</li>
+</ol>
+<p>郵便番号フィールドは、7桁の郵便番号(ハイフンありでも無しでも可)を受けて、ハイフン無しの7桁を返します。</p>
+<p>デフォルトのウィジェットやフィールド(モデル用ではなくフォーム用のもの)がmodelに定義できて欲しいところです。modelのフィールド属性には、オールドフォームズのウィジェット設定がありますので、きっと近い将来設定できるようになるに違いない…。</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/03/27/django-operation-result/index.html">Djangoで稼働しているサービスを少しだけ紹介するよ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/04/01/now-all-is-over/index.html">全ての活動を停止します</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

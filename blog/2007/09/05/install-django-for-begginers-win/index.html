@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>WindowsにDjango最新版を</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-09-05 12:42:20</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/09/05/install-django-for-begginers-win/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/09/05/install-django-for-begginers-win/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>WindowsにDjango最新版を</h1>
+    <p>Djangoのインストールが初心者には難しいという話が各所で出ていますので、WindowsとMac OSXでそれぞれ一番簡単にインストールができる方法を紹介します。</p>
+<p>特に、Djangoをはじめようとすると必ず出てくる「ソースコードリポジトリからsubversionクライアントを利用して最新版を取得して使え」という部分は敷居が高いと思いますので、なんとか別の方法で最新版を取得する方法を模索します。</p>
+<p>まずはじめに、Windowsから。</p>
+<div class="section" id="id1">
+<h2>必要なものをダウンロードしてくる。</h2>
+<p>Python2.5をダウンロードします。</p>
+<p>Pythonというのは、Djangoで開発を行う際に使う言語です。</p>
+<blockquote>
+<a class="reference external" href="http://www.python.org/ftp/python/2.5.1/python-2.5.1.msi">http://www.python.org/ftp/python/2.5.1/python-2.5.1.msi</a> ← これ</blockquote>
+<p>同様にpysqlite2.3.5をダウンロードします。 pysqliteはSQLiteという扱いの簡単なデータベースをPythonから操作するためのライブラリです。Windows版のpysqliteにはSQLi
+teデータベースが同梱されています。</p>
+<blockquote>
+<a class="reference external" href="http://initd.org/pub/software/pysqlite/releases/2.3/2.3.5/pysqlite-2.3.5.win32-py2.5.exe">http://initd.org/pub/software/pysqlite/releases/2.3/2.3.5/pysqlite-2.3.5.win32-py2.5.exe</a> ← これ</blockquote>
+<p>データベースにMySQLを使いたいという人は、pysqliteの代わりに、mysql-pythonをダウンロードしてください。データベースサーバ自体は含まれていません。</p>
+<blockquote>
+<a class="reference external" href="http://nchc.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.win32-py2.5.exe">http://nchc.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.win32-py2.5.exe</a> ← これ</blockquote>
+<p>データベースにPostgreSQLを使いたいという人は、pysqliteの代わりに、psycopg2をダウンロードしてください。データベースサーバ自体は含まれていません。</p>
+<blockquote>
+<a class="reference external" href="http://www.stickpeople.com/projects/python/win-psycopg/psycopg2-2.0.6.win32-py2.5-pg8.2.4-release.exe">http://www.stickpeople.com/projects/python/win-psycopg/psycopg2-2.0.6.win32-py2.5-pg8.2.4-release.exe</a> ← これ</blockquote>
+<p><strong>pysqliteの代わりにMySQLやPostgreSQLの利用を選択した方は、pysqliteのインストール時にファイル名を読み替えてください</strong> 。
+インストール方法は基本的には変わりません。</p>
+<p>続いてDjangoの開発版をダウンロードします。</p>
+<p><a class="reference external" href="http://code.djangoproject.com/browser/django/trunk">ここをクリックして</a> Django本家のTracで最新版のtrunkを表示します。</p>
+<img alt="trunkをzipでダウンロード" src="http://art7.photozou.jp/pub/478/1478/photo/4668763.png" />
+<p>表示したページの下の方に、Zip Archiveというリンクがありますので、クリックしてダウンロードします。</p>
+<p>ダウンロードされたファイルは次の３つです。</p>
+<ol class="arabic simple">
+<li>Python-2.5.1.msi</li>
+<li>pysqlite-2.3.5.win32-py2.5.exe</li>
+<li>django_trunk_rxxxx.zip</li>
+</ol>
+<p>では、順番にインストールを行いましょう。</p>
+</div>
+<div class="section" id="python">
+<h2>Pythonのインストール</h2>
+<p>Python-2.5.1.msiをダブルクリックするとインストーラが起動します。</p>
+<p>セキュリティ警告のダイアログが出たら、発信元が自分が起動したPython-2.5.1.msiであることを確認して実行をクリックします。</p>
+<img alt="install_all_users" src="http://art8.photozou.jp/pub/478/1478/photo/4660905.jpg" />
+<p>&quot;Install for all users&quot; にチェックが入っています。そのまま Next &gt; をクリックします。</p>
+<img alt="install_default_location" src="http://art7.photozou.jp/pub/478/1478/photo/4660934.jpg" />
+<p>C:Python25が選択されているのを確認して Next &gt; をクリックします。</p>
+<img alt="customize_python" src="http://art7.photozou.jp/pub/478/1478/photo/4660955.jpg" />
+<p>Pythonのインストールオプションを選択する画面になりますが、気にせずに Next &gt; をクリックします（セキュリティ警告が出た場合には許可をクリックします）。</p>
+<img alt="install_finished" src="http://art7.photozou.jp/pub/478/1478/photo/4660977.jpg" />
+<p>完了の画面が表示されますので finish をクリックします。</p>
+</div>
+<div class="section" id="pysqlite3">
+<h2>pysqlite3のインストール</h2>
+<p>pysqlite-2.3.5.win32-py2.5.exeをダブルクリックして、インストーラを起動します。</p>
+<p>セキュリティ警告がでたらPythonの場合と同様に発信元が自分が起動したpysqliteであることを確認して実行をクリックします。</p>
+<img alt="pysqlite_installer" src="http://art8.photozou.jp/pub/478/1478/photo/4661002.jpg" />
+<p>インストーラが起動したら Next&gt; をクリックします。</p>
+<img alt="pysqlite_install_location" src="http://art8.photozou.jp/pub/478/1478/photo/4661011.jpg" />
+<p>Pythonをインストールした場所と、pysqliteをインストールする場所が表示されますので Next&gt; をクリックします（Vistaにインストールしている場合はいくつかメッセージが表示されることがありますが気にせずにOKをクリックします）。</p>
+<p>Installが完了したら、OKをクリックします。</p>
+</div>
+<div class="section" id="django">
+<h2>Djangoのインストール</h2>
+<p>django_trunk_rxxxx.zipを展開します。</p>
+<p>展開すると trunk というディレクトリが出てきます。その中の django というディレクトリ を C:¥Python25¥lib¥site-packages というディレクトリの中にコピーします。</p>
+<p>同様に django¥bin の中の py という拡張子のついたファイルを、 C:¥Python25¥Scripts というディレクトリにコピーします。</p>
+</div>
+<div class="section" id="id2">
+<h2>Pythonの設定</h2>
+<p>Python をインストールした時点では、 Python を実行するためのインタプリタがどこにあるのかを Windows が知ることができません。ですから、 Windows に知らせるために環境変数というものを設定します。</p>
+<img alt="controll_panel" src="http://art8.photozou.jp/pub/478/1478/photo/4661035.jpg" />
+<p>Windows ボタン（XPはスタートメニュー）からコントロールパネルを選択します。</p>
+<img alt="controll_panel_system" src="http://art6.photozou.jp/pub/478/1478/photo/4661041.jpg" />
+<p>コントロールパネルのシステムをダブルクリックします。</p>
+<img alt="system" src="http://art8.photozou.jp/pub/478/1478/photo/4661051.jpg" />
+<p>システムダイアログの左側にあるシステムの詳細設定をクリックします。
+許可を求められるので続行をクリックします（WIndows XPの場合は詳細タブ）。</p>
+<img alt="system_detail" src="http://art7.photozou.jp/pub/478/1478/photo/4661084.jpg" />
+<p>環境変数ボタンをクリックします。</p>
+<img alt="path" src="http://art6.photozou.jp/pub/478/1478/photo/4661095.jpg" />
+<p>システム環境変数から、 Path という項目を探し選択して 編集 をクリックします。
+変数値の一番最後に以下の文字列を付け加えます（頭のセミコロンを忘れずに）。</p>
+<pre><code class="language-bash">  ;C:\Python25;C:\Python25\Scripts</code></pre><p>すべてのダイアログを OK をクリックして閉じます。</p>
+<img alt="command" src="http://art8.photozou.jp/pub/478/1478/photo/4661105.jpg" />
+<p>Windowsボタンからすべてのプログラムを選択し、アクセサリの中のコマンドプロンプトを選択します。</p>
+</div>
+<div class="section" id="id3">
+<h2>Djangoがインストールされたかどうかを確認する。</h2>
+<p>コマンドプロンプトで次のように打ち込み、インストールの確認を行います。</p>
+<pre><code class="language-bash">  django-admin.py startproject spam
+  cd spam
+  manage.py startapp egg</code></pre><p>エラーが出なければインストールは完了です。</p>
+<p><strong>最新の日本語ドキュメント</strong> は、 <a class="reference external" href="http://michilu.com/django/doc-ja/index/">こちら</a></p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/09/04/php-interactive-shell/index.html">phshとかphpのインタラクティブシェル</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/09/06/install-django-for-begginers-osx/index.html">Mac OSXにDjango最新版を</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>PyCon APAC 2013 のメモ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2013-09-16 12:05:39</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2013/09/16/pycon_apac_2013/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2013/09/16/pycon_apac_2013/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>PyCon APAC 2013 のメモ</h1>
+    <p>ここ数年、秋の定期イベントとなりつつある Python の国際カンファレンスに今年も行ってきました。</p>
+<p>普段は人の顔が写った写真は公開しないけど、イベント自体が撮影を前もって断っていたのでここに置いてみた <a class="reference external" href="http://www.flickr.com/photos/tsuyukimakoto/sets/72157635561890295/">http://www.flickr.com/photos/tsuyukimakoto/sets/72157635561890295/</a></p>
+<p>去年は担がれてパネルに参加させてもらいましたが、今回は通常のパトロン枠で参加です（ほんの少し余計に参加費払うとすいた受付を通れてパンフにアイコンとURLが乗って参加パスのストラップカラーが違って優越感までモテちゃうお得な参加枠です。費用は学生補助、遠方補助に役立てられるらしいです）。</p>
+<p>以下、ただのメモ
+2013/09/14
+===========================================================================</p>
+<p>台風18号接近中</p>
+<p>各セッションの動画 <a class="reference external" href="http://www.youtube.com/user/PyConJP">http://www.youtube.com/user/PyConJP</a></p>
+<div class="section" id="experimentation-in-porting-the-go-concurrency-model-to-python3">
+<h2>Experimentation in porting the Go concurrency model to Python3</h2>
+<p><a class="reference external" href="http://www.youtube.com/watch?v=jsMDIE0qq3A">http://www.youtube.com/watch?v=jsMDIE0qq3A</a></p>
+<p>goroutinesはshare nothingだし、Pythonにぴったり(GIL)</p>
+<p>Pythonにはビルトインのcoroutineが無い</p>
+<p>offsetってライブラリ？今月出した。</p>
+<blockquote>
+<a class="reference external" href="https://github.com/benoitc/offset">https://github.com/benoitc/offset</a></blockquote>
+<p>python-fibers continulets on pypy</p>
+</div>
+<div class="section" id="python">
+<h2>科学とPython</h2>
+<p><a class="reference external" href="http://www.youtube.com/watch?v=euGmoZadZ5c">http://www.youtube.com/watch?v=euGmoZadZ5c</a></p>
+<p>numpy.linalg.solve(a,b)</p>
+<p>グラフ理論 NetworkX</p>
+<p>ロボット制御 Python Robotics</p>
+<p>数式処理 SAGE</p>
+<p>金融光学 Financial modelling in python</p>
+<p>最適か問題 Mathmatical Optimization and Python</p>
+<p>化学</p>
+<p>生物学 E-cell / BioPython / Pymol / MMTK</p>
+</div>
+<div class="section" id="fabric-for-fun-and-profit">
+<h2>Fabric for fun and profit</h2>
+<p>こっち系のもの</p>
+<ul class="simple">
+<li>Ansible (Server Configuration)</li>
+<li>Invoke (Build Page)</li>
+</ul>
+</div>
+<div class="section" id="how-the-mock-library-helps-me-developing-client-side-applications">
+<h2>How the Mock library helps me developing client-side applications</h2>
+<p>テストで &#64;patch('callable', Mock(return_value=True))とかするとMockで置き換えられる。
+MagicMockってのもある（&#64;patchはこれ）</p>
+<p>__builtins__.openにパッチ当てたり</p>
+<p>side_effect</p>
+<p>外部APIを使うもののテストとかに特に便利っぽい。エラーの戻りをきちんと扱えるかとか。</p>
+</div>
+<div class="section" id="c">
+<h2>実践 C 拡張モジュール開発</h2>
+<p><a class="reference external" href="https://speakerdeck.com/mopemope/shi-jian-c-kuo-zhang-moziyurukai-fa">https://speakerdeck.com/mopemope/shi-jian-c-kuo-zhang-moziyurukai-fa</a></p>
+<p><strong>Rustはやめておけ</strong> <strong>ctypesで十分なことが多い</strong> <strong>pypyは高速だし、それだけでいいかも</strong></p>
+<p>ctypesはインタプリタで実行されるのでそこまで速くない</p>
+<ul>
+<li><p class="first">Cythonは学習コスト高い</p>
+<ul class="simple">
+<li>Cythonの構文とか</li>
+<li>C/API 自体も知らないといけないし</li>
+<li>Cのデバッガだけじゃ駄目</li>
+</ul>
+</li>
+<li><p class="first">PyCFunctionはFrame（Frame自体もPyObject）を生成しない</p>
+<p>これだけで2割くらい速くなることがある</p>
+</li>
+<li><p class="first">valgrind（メモリチェックツール）</p>
+</li>
+<li><p class="first">Python自体を専用にビルドする</p>
+<p>--prefix=hoge --with-pydebug --with-valgrind</p>
+<p>→ メモリプールが無効化されてリーク検出が楽チンになる（debug）</p>
+<p>→ 生存オブジェクトの数とかがインタプリタに表示される</p>
+</li>
+<li><p class="first">coredumpを吐けるように</p>
+<p>$ ulimit -c unlimited</p>
+</li>
+<li><p class="first">setuptools, distributeのインストール</p>
+<p>→ python setup.py develop すると開発ディレクトリがライブラリパスになって楽チン</p>
+</li>
+<li><p class="first">CとPythonのソースは分けた方がいいかも</p>
+<p>→ <a class="reference external" href="https://github.com/mopemope/jega">https://github.com/mopemope/jega</a></p>
+<blockquote>
+<p>→ srcにCいれてプロジェクト名にpython入れたり</p>
+</blockquote>
+</li>
+<li><p class="first">Makefileはいらない。 setup.pyで</p>
+<ul class="simple">
+<li>utility関数書いておく</li>
+</ul>
+</li>
+<li><p class="first">ソースは1機能毎に分ける。ヘッダとソースをついにする。</p>
+</li>
+<li><p class="first">共通のヘッダも。モジュールのメインに対応するソースに書くと良い。</p>
+</li>
+<li><p class="first">命名規則</p>
+</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>構造体 PyObjectの場合は大文字から、その他は _t で終わる</li>
+<li>接頭語<ul>
+<li>モジュール HogeMod_xx</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li>返り値<ul>
+<li>例外の場合には NULL を返す</li>
+<li>None を返す場合には Py_RETURN_NONE マクロ</li>
+<li>通常は int で、エラーのときには負の値</li>
+</ul>
+</li>
+</ul>
+<p>GILを必要に応じて解放したりする</p>
+<pre class="literal-block">
+Py_BEGIN_ALLOW_THREADS
+.. io待ちとか
+Py_END_ALLOW_THREADS
+</pre>
+<ul>
+<li><p class="first">Iterも使える。 PyObject_GetIter PyIter_Next</p>
+</li>
+<li><p class="first">PySequence_Fast 速い（事前にサイズがわかってないといけない）</p>
+</li>
+<li><p class="first">デバッグはDEBUGマクロでログイングした方が楽チンかも</p>
+<p>do{}while(0) はコンパイラが無いことを知ってくれる</p>
+</li>
+<li><p class="first">大きくなってきて拡張を分割したい場合</p>
+<ul class="simple">
+<li>gventの用に分ける（setup.py見たらわかりそう）</li>
+<li>C/APIから動的にモジュールを作る（CのCode）</li>
+</ul>
+</li>
+<li><p class="first">C/APIからモジュールをimportできる（関数はキャッシュしておいた方が良い）</p>
+</li>
+<li><p class="first">はまりやすいやつ GC が走る前にオブジェクトが回収済み</p>
+</li>
+</ul>
+</div>
+<div class="section" id="cython">
+<h2>Cython（シャイソン？サイソン？）による拡張モジュール開発</h2>
+<p><a class="reference external" href="http://www.slideshare.net/atsuoishimoto/introduction-to-cython">http://www.slideshare.net/atsuoishimoto/introduction-to-cython</a></p>
+<p>いろんな人の発音を聞いた感じだとシャイソンって読む？</p>
+<p>拡張モジュールは通常C/C++で開発されたもの。</p>
+<p>お前はPyObject_SetItem()、PyList_SetItem()、PyList_SET_ITEM()の違いを覚えているのか!?</p>
+<p>CythonはPython専用のプログライング言語でコンパイラ</p>
+<ul class="simple">
+<li>Pyrex → Cython</li>
+<li>利用プロジェクト<ul>
+<li>lxml</li>
+<li>Sage www.sagemath.</li>
+<li>SciPy</li>
+<li>PyYAML</li>
+</ul>
+</li>
+</ul>
+<p>PythonのCodeをCythonでコンパイルしたりできる。ジェネレータとか一部非互換。</p>
+<p>属性のcdef、publicをつけるとPythonからも見える</p>
+<p>型宣言もできるけど、ビルド時にエラーにならない条件もある。ただ、宣言しておくとCodeの最適化がされたり、ビルド時にエラーになったりする。</p>
+<p>C側をimportもできる。</p>
+<blockquote>
+cdef extern from &quot;hoge.h&quot;</blockquote>
+<p>標準Cランタイム関数は定義済み。cimportで読み込む。</p>
+<blockquote>
+from libc.math cimport sin</blockquote>
+<p>? OpenMP?（マルチプロセスライブラリ）</p>
+<p>with nogil: GILを解放して動かせる。いっさいPythonのライブラリが使えない。</p>
+<p>c++も使える。</p>
+<p>Cythonソースファイル → cythonコマンド → （Cソースファイルができる） リンクしたりする</p>
+<p>setup.pyで from Cython.Build import cythonaize して sythonaizeでext_modulesにCythonソースファイルを指定すると良い。</p>
+<p>pyximportをimportして、pyximport.install()しておくと、Cythonのモジュールをimportしたときに動的にコンパイルされる（簡単なものだけ）</p>
+<p>newtonでベンチした感じ</p>
+<pre class="literal-block">
+Python : Cython  : Cython（型指定:Early binding）
+36.3msec : 21.7 msec : 2.89msec
+#pure c より少し遅い
+</pre>
+<p>関数呼び出し(takというよくでるやつ)でtak(18,9,0)した感じ</p>
+<pre class="literal-block">
+Python : Cython  : Cython（cdef）
+2.74sec : 1.47sec : 36.9msec
+</pre>
+<p>gdbが使える。あるいはprintfデバッグ。</p>
+</div>
+<div class="section" id="mock">
+<h2>Mock</h2>
+<p>3.3から標準ライブラリ</p>
+<p>石本さんのブログ( <a class="reference external" href="http://www.gembook.org">http://www.gembook.org</a> )を読むといい</p>
+</div>
+<div class="section" id="hoka">
+<h2>hoka</h2>
+<p>ツイートを眺めてて他に気になったもの</p>
+<ul>
+<li><p class="first">boto?</p>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="http://www.slideshare.net/understeer/20130914-py-conapacawspublic">http://www.slideshare.net/understeer/20130914-py-conapacawspublic</a></li>
+<li>PythonのAWS操作ライブラリのbotoはaws sdkの中の人が作っている？Perlはオワコン？</li>
+<li>Python3用のbotoはneoブランチで？</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="party">
+<h2>Party</h2>
+<p>都庁展望台 Tokyo Cafe 202 っていう都庁の南展望台貸し切り！</p>
+<p>喫煙所も1階下の見晴らしのいいところで快適。ご飯もおいしかったし広かったしとても良かった。</p>
+<p>台風接近中だったのでデジイチは持たずに出て、D90と70Dに挟まれて地団駄を踏んだ。「なんでそんなちっちゃいのもってるんですかー」っていじられた。</p>
+<p>この辺にアフィリエイトを張り付けてある忍者ケーブルとか乾燥剤とかを布教活動した <a class="reference external" href="http://www.tsuyukimakoto.com/blog/2013/07/28/i_bought_d7000/">http://www.tsuyukimakoto.com/blog/2013/07/28/i_bought_d7000/</a> <a class="reference external" href="http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/">http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/</a></p>
+<p>プレゼント大会にパーフェクトPythonが3冊出たので番長以外の著者陣5人で前に出た。Rubyに負けて悔しくないのか！買ってー！</p>
+<div class="section" id="id1">
+<h3>2013/09/15</h3>
+<p>台風さらに接近中</p>
+<p>デジイチを持って江の電の駅に着いたらアナウンスが流れてた。運転見合わせ中。無人駅だからアナウンス流れるまでわからず待ってた。</p>
+<p>ついて早々、デジイチ持ってきましたねと突っ込まれる。さんざん愚痴ってたからだ。受付美女とか受付おじさまとかを撮って満足。</p>
+</div>
+</div>
+<div class="section" id="ansible">
+<h2>入門Ansible</h2>
+<p><a class="reference external" href="http://www.slideshare.net/takushimizu/ansible-26200860">http://www.slideshare.net/takushimizu/ansible-26200860</a></p>
+<p><a class="reference external" href="https://github.com/takuan-osho/pyconapac2013-ansible-session">https://github.com/takuan-osho/pyconapac2013-ansible-session</a></p>
+<p>以下を自動化するためのもの</p>
+<ul class="simple">
+<li>構成管理</li>
+<li>アプリのデプロイ</li>
+<li>継続的デリバリー</li>
+</ul>
+<p>自動化できるメリット</p>
+<ul class="simple">
+<li>ミスが減る</li>
+<li>新規構築が速くなる</li>
+<li>実験環境が作りやすい</li>
+<li>複数代、並列に設定できる</li>
+</ul>
+<p>他</p>
+<ul class="simple">
+<li>ベキトウ性</li>
+<li>Battery Included</li>
+<li>Push型（Python2.4がエージェント）</li>
+<li>設定YAML</li>
+</ul>
+<p>ローカルホスト側に必要なもの</p>
+<ul class="simple">
+<li>Python2.6以上</li>
+<li>PyYAML</li>
+<li>Jinja2</li>
+<li>paramiko (おっふぅ…)</li>
+</ul>
+<p>設定対象に必要なもの。</p>
+<ul class="simple">
+<li>Python2.4以上</li>
+<li>jsonモジュール（2.5からはjsonモジュールが標準なので改めていれる必要ない）</li>
+</ul>
+<p>Ansibleはちょっとマジで使うかも。</p>
+<p>Chefとかは、設定対象にエージェントを入れるところに自己矛盾をはらんでいる気がしてしまって辛いんだけど、AnsibleはLinuxにはほぼ間違いなくPython2.4以上が入っていることを前提に、別途エージェントを入れなくていいというPythonならではの利点をうまく活かしている。理想じゃなくって現実を大事にするPythonのプロダクト好きだわー。gcc入ってなくてもPythonは入ってるからね。</p>
+</div>
+<div class="section" id="luigi-the-friendly-pipeline-plumber">
+<h2>Luigi, The Friendly Pipeline Plumber</h2>
+<p>自分が PyCon APAC2013 の CFP に何か面白そうなものは無いかなと探してたときに気になったやつ。結局インストールしかしなかったので、期待して聞いた。</p>
+<p>あの配管工の名前。 <a class="reference external" href="https://github.com/spotify/luigi">https://github.com/spotify/luigi</a></p>
+<p>Spotify が使って/作ってる。</p>
+<p>Hadoopやらのサポートがあるので、上に載せるものだけ書けば良さそう。</p>
+<p>Concepts</p>
+<ul class="simple">
+<li>Target</li>
+<li>Task</li>
+<li>Parameter</li>
+</ul>
+<p>万が一こけても、こけたところの続きからやりやすい</p>
+<ul class="simple">
+<li>input -&gt; Task -&gt; output -&gt; Target</li>
+<li>Target -&gt; input -&gt; Task -&gt; output</li>
+</ul>
+<p>IanさんのgithubにデモのCodeがある <a class="reference external" href="https://github.com/IanLewis/luigi-demo">https://github.com/IanLewis/luigi-demo</a></p>
+<p>いずれ実際に使う日がやってくるか…なぁ</p>
+</div>
+<div class="section" id="let-python-talk-native">
+<h2>Let Python talk native</h2>
+<p>moriyoshi がテンパってるの始めて見た。ls cd ls cd!</p>
+<p>E-cellプロジェクトの経験から話す</p>
+<ul class="simple">
+<li>CAPIはスピードアップ用なら良い</li>
+<li>FFI Foreign Function Interface 言語間のラッパ</li>
+<li>ABI Application Binary Interface</li>
+<li>SWIG / ctyps (libffi-based, runtime FFI) / cffi / Cython / Boost.Python</li>
+</ul>
+<p>用途によるけど SWIG か Boost.Python か？</p>
+<p>mopemope の CAPI の話と、 atsuoishimoto の Cython の話も聞いたので、ドウシタモンカと思っている。</p>
+</div>
+<div class="section" id="id2">
+<h2>集合写真</h2>
+<p>去年の PyCon JP では喫煙所でがっはがっは笑ってたら集合写真終わってて哀しかったので今年はきちんと写った。</p>
+<p><a class="reference external" href="http://apac-2013.pycon.jp/_static/pyconapac2013-group-photo.jpg">http://apac-2013.pycon.jp/_static/pyconapac2013-group-photo.jpg</a></p>
+</div>
+<div class="section" id="more-than-sql-but-less-than-orm">
+<h2>More than SQL, but Less than ORM</h2>
+<p>SQLラブなので気になってた。</p>
+<p><a class="reference external" href="http://www.youtube.com/watch?v=OvET6zojl1A">http://www.youtube.com/watch?v=OvET6zojl1A</a></p>
+<p><a class="reference external" href="http://mosql.mosky.tw">http://mosql.mosky.tw</a></p>
+<p>sqlmapのlevel5、risk3をパスしてる</p>
+<p>breedでpartialな関数作れる</p>
+<p>O/Rちっくなものも簡単なベースクラス書けばできちゃうってデモも。</p>
+<p>基本的にはクエリビルダなんだけど、 select 自体を評価すると面白い。中身見てみよう。</p>
+<p>生SQL良く書くので、ちょっとこれでベース用意しておくのいいかも。どこまでできるのか把握しておこう。</p>
+<p>なんとなく思ってたよりも面白い感じ。セキュリティに関してはDBAPIのライブラリに任せ…と思ったけど文字列でSQL組み立ててた時代の記憶によると mosql に頼っていい気がしてきた。</p>
+</div>
+<div class="section" id="make-better-package-ecosystem">
+<h2>MAKE BETTER PACKAGE ECOSYSTEM</h2>
+<p>設定やら何やらもDRYにソフトウェアを効率よく公開しようぜって話。Abstractをよく読んでおけば良かったかも。
+Herokuの中の人、早口でマシンガン。</p>
+</div>
+<div class="section" id="lt">
+<h2>LT</h2>
+<p>一発目の esehara さんの勢いにやられた。 <strong>GO! OK!</strong></p>
+<p>かなりの人が英語でやってた。</p>
+</div>
+<div class="section" id="id3">
+<h2>hoka</h2>
+<p>ツイートを眺めてて他に気になったもの</p>
+<ul class="simple">
+<li>gurobi 最適化のsolver</li>
+<li>Nodebox</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>楽しかった</h2>
+<p>さらに台風が大接近のなか新宿は工学院大学では sprint が行われているようですが、自分は不参加なので2日間で終了。</p>
+<p>PyCon APAC 2013は、気づけば当日は電車代以外にお金を使わなかった。</p>
+<p>大きな技術系のイベントって、長めの休憩があると自分のコミュ力の無さに絶望したりするんだけど、 PyCon はランチも弁当が用意されていて、食堂に大量のボッチがいるので、ボッチだけの席とかになると絶望も無いし顔見知りができたりするので良い。ボッチだけど話したい人には ymotongpoo が呼びかけを行ってたし、素敵。コーヒーブレイクもあるよ。</p>
+<p>会場提供の工学院大学をはじめ（新宿駅からずっと屋根付きで到着できるので悪天候でもへっちゃら）、スタッフ、スポンサー、スピーカーには感謝いっぱい。</p>
+<p>来年の PyCon APAC は台湾開催らしい。</p>
+<p>そして、来年の PyCon JP の座長は takanory さんになるらしい。来年もよろしくお願いします :-)</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/index.html">カメラのカビ対策</a></li>
+      
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

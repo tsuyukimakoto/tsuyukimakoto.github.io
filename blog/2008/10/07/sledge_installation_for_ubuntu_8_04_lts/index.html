@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Ubuntu 8.04 LTSにSledge1.11を何とか入れたメモ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-10-07 11:45:13</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/10/07/sledge_installation_for_ubuntu_8_04_lts/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/10/07/sledge_installation_for_ubuntu_8_04_lts/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Ubuntu 8.04 LTSにSledge1.11を何とか入れたメモ</h1>
+    <p>さーて、パーラーになるべく、sledgeをインストール。</p>
+<p><a class="reference external" href="http://sl.edge.jp/">sledgeのサイト</a> からDownloadを辿ってtarをもらってくる。バージョンは1.11だった。</p>
+<p>解凍してINSTALLを読むと、必要なものをCPANから入れろって言われる。</p>
+<pre><code class="language-bash">  $ sudo perl -MCPAN -e 'install Bundle::Sledge'</code></pre><p>残念ながら、ftpが通らないのさ。</p>
+<p>CPAN.pmを直にいじってどうのこうのと書いてあるサイトにぶち当たったので（ctl+cでっていう技もあったらしいが、手元ではcpanシェルから抜けてしまってどうにもならず）、CPAN.pmを探す。なんだかみんながあるって書いてる場所にない。</p>
+<p>俺の Ubuntu 8.04 LTS は /usr/share/perl/5.8.8/CPAN.pm にあった。</p>
+<p>Defaultsiteの設定を、書き換えた</p>
+<pre><code class="language-c-like">  $CPAN::Defaultsite ||= "http://ftp.nara.wide.ad.jp/pub/CPAN/";</code></pre><p>改めて、がつがつエンターを連打して進む。</p>
+<p>国を選べといわれるので、仕方なく日本を選んで、サーバを選べと言われるので仕方なくftpのサーバを選ぶ。エンターキーを叩くと、自由にサーバを入れろといわれるので、httpのサイトを指定した。</p>
+<p>その後、しばらくftpのサーバからバカみたいにfetchしようと試みる。何回か失敗するとhttpのサーバにアクセスしてあっという間にとってくるんだけど、次のファイルもまたftpにトライするorz。</p>
+<p>しばらくすると、 cpan のバージョンがうんたらって出るので、一度シェルを止める。~/.cpan/CPAN/MyConfig.pmができているので、urllistの値を編集してしまう。</p>
+<pre><code class="language-c-like">   'urllist' =&gt; [q[http://ftp.nara.wide.ad.jp/pub/CPAN/]],</code></pre><p>もう一度、 sudo perl -MCPAN -e 'install Bundle::Sledge' ってやったらすごい勢いでcpanからモジュール持ってくるよ。</p>
+<p>なんてこといわずに、とりあえずの設定ファイル（~/.cpan/CPAN/MyConfig.pm）をさらしとけば困らないんだろうな。</p>
+<p>多分、所定の場所に置けばそれ以外は変更しないでもチャカチャカ進むようになるんじゃないかな？</p>
+<p>各種Pathは変えてね。Perlの人はこういうゴミが散乱するの困ったりするのかな?</p>
+<pre><code class="language-c-like">  $CPAN::Config = {
+    'build_cache' =&gt; q[100],
+    'build_dir' =&gt; q[/home/everes/.cpan/build],
+    'cache_metadata' =&gt; q[1],
+    'cpan_home' =&gt; q[/home/everes/.cpan],
+    'cpan_version_check' =&gt; q[1],
+    'ftp' =&gt; q[/usr/bin/ftp],
+    'ftp_proxy' =&gt; q[],
+    'getcwd' =&gt; q[cwd],
+    'gpg' =&gt; q[/usr/bin/gpg],
+    'gzip' =&gt; q[/bin/gzip],
+    'histfile' =&gt; q[/home/everes/.cpan/histfile],
+    'histsize' =&gt; q[1000],
+    'http_proxy' =&gt; q[],
+    'inactivity_timeout' =&gt; q[0],
+    'index_expire' =&gt; q[1],
+    'inhibit_startup_message' =&gt; q[0],
+    'keep_source_where' =&gt; q[/home/everes/.cpan/sources],
+    'lynx' =&gt; q[/usr/bin/lynx],
+    'make' =&gt; q[/usr/bin/make],
+    'make_arg' =&gt; q[],
+    'make_install_arg' =&gt; q[],
+    'makepl_arg' =&gt; q[INSTALLDIRS=site],
+    'ncftp' =&gt; q[],
+    'ncftpget' =&gt; q[],
+    'no_proxy' =&gt; q[],
+    'pager' =&gt; q[/usr/bin/less],
+    'prerequisites_policy' =&gt; q[follow],
+    'scan_cache' =&gt; q[atstart],
+    'shell' =&gt; q[/usr/bin/zsh],
+    'tar' =&gt; q[/bin/tar],
+    'term_is_latin' =&gt; q[0],
+    'unzip' =&gt; q[/usr/bin/unzip],
+    'urllist' =&gt; [q[http://ftp.nara.wide.ad.jp/pub/CPAN/]],
+    'wget' =&gt; q[/usr/bin/wget],
+  };
+  1;
+  __END__</code></pre><p><strong>しかーっし！</strong></p>
+<p>まだ戦いは終わっていなかった。</p>
+<p>なんだかモジュールが足りないらしい。</p>
+<pre><code class="language-bash">  perl Makefile.PL
+  Warning: prerequisite Apache::Reload 0 not found.
+  Warning: prerequisite Apache::Request 0 not found.
+  Warning: prerequisite Digest::SHA1 0 not found.
+  Warning: prerequisite Template 0 not found.
+  Writing Makefile for Sledge</code></pre><p>まず、きちんとインストールされてるか確認しろ、ということらしい。</p>
+<pre><code class="language-bash">  $find `perl -e 'print "@INC"'` -name 'Template.pm' -print
+  /usr/local/share/perl/5.8.8/HTML/Template.pm
+  /usr/share/perl5/Debconf/Template.pm
+  find: /usr/local/lib/site_perl: No such file or directory
+  ./opt/Sledge-1.11/blib/lib/Sledge/Template.pm
+  ./opt/Sledge-1.11/lib/Sledge/Template.pm
+  find: ./.cpan/build/Time-HiRes-1.9715: Permission denied
+  ./.cpan/build/Template-Toolkit-2.20/blib/lib/Template.pm
+  ./.cpan/build/Template-Toolkit-2.20/lib/Template.pm
+  ./.cpan/build/HTML-Template-2.9/Template.pm
+  find: ./.cpan/build/HTML-Template-2.9/blib/temp_cache_dir: Permission
+  denied
+  ./.cpan/build/HTML-Template-2.9/blib/lib/HTML/Template.pm</code></pre><p>HTML/Template.pmとかは違うらしい。で、Template-Toolkit???/Template.pmがそれらしいんだけど、.cpan/buildにあるだけだと、インストールが完了していない。</p>
+<p>なんとかいんすとーるを試みて(sudo perl -MCPAN -e 'install Template')も、エラーがいっぱいでて困る。今のところPerlを追える気がしない。</p>
+<p>とりあえず、なんとなく <strong>NO!</strong> で逃げてみた。</p>
+<pre><code class="language-bash">  Do you want to build the XS Stash module? [y] n</code></pre><p>続いて、Digestを入れた。が、SHA1が入らない。。。</p>
+<p>エラーを眺めると、ななだかヘッダファイルが足りないっぽい。ubuntuのパッケージマネージャでlibcrypt11-devをインストール。SHA1も入った。</p>
+<pre><code class="language-bash">  $ sudo perl -MCPAN -e 'install Digest::SHA1'</code></pre><p>Apache::なんとか、はapache1.3系が必要らしいのでパッケージマネージャは使えない（今のubuntuでは、apache1.3は古くて使えないフ
+ラグがたっているらしい）</p>
+<p>apache_1.3.41.tar.gzとmod_perl-1.0-current.tar.gz(1.30)をダウンロードしてきてインストール。</p>
+<p>いきなりECHOがこわれているといわれたので、ちょいちょいと対処</p>
+<pre><code class="language-bash">  $ rm -f /bin/sh
+  $ ln -s /bin/bash /bin/sh</code></pre><p>apacheのインストール</p>
+<pre><code class="language-bash">  $ ./configure --enable-module=so --enable-module=proxy --enable-
+  module=rewrite
+  $ sudo make
+  $ sudo make install</code></pre><p>mod_perlのインストール</p>
+<p>makeでエラーが出た（/usr/bin/ld: cannot find -lperl）ので、パッケージマネージャでlibperl-devを入れた。</p>
+<pre><code class="language-bash">  $ perl Makefile.PL USE_APXS=1 WITH_APXS=/usr/local/apache/bin/apxs
+  EVERYTHING=1
+  $ make
+  $ sudo make install</code></pre><p>さて、再びSledgeのインストールに戻る。Apache::Requestが無いって言われているから、インストールする。httpdとかapxsの場所とかを
+聞かれるたで、/usr/local/apache/binの下の奴を教えてやった。</p>
+<pre><code class="language-bash">  $ sudo perl -MCPAN -e 'install Apache::Request'</code></pre><p>で、だ。やっときた。が！</p>
+<pre><code class="language-bash">  $ perl Makefile.PL
+  Writing Makefile for Sledge
+  $ make
+  $ make test
+  ...
+  Files=44, Tests=212,  3 wallclock secs ( 0.08 usr  0.03 sys +  2.26
+  cusr  0.19 csys =  2.56 CPU)
+  Result: FAIL
+  Failed 8/44 test programs. 4/212 subtests failed.
+  make: *** [test_dynamic] エラー 255</code></pre><p>落ち着いて、テストのログにあるエラーを眺める。
+DBI.pmが無い。Encode/compat.pmが無い。</p>
+<pre><code class="language-bash">  $ sudo perl -MCPAN -e 'install DBI'
+  $ sudo perl -MCPAN -e 'install Encode'
+  $ sudo perl -MCPAN -e 'install Encode::compat'</code></pre><p>あとは、これだけかな？ Can't locate object method &quot;__triggers&quot; via package &quot;Test::Pages&quot; at t/11_hooks.t line 9</p>
+<p><a class="reference external" href="http://blog.livedoor.jp/configuremakeinstall/archives/cat_16051.html">これか！！</a></p>
+<pre><code class="language-bash">  wget http://search.cpan.org/CPAN/authors/id/M/MI/MIYAGAWA/Class-
+  Trigger-0.10.tar.gz
+
+  $ tar xzf Class-Trigger-0.10.tar.gz
+  $ cd Class-Trigger-0.10
+  $ perl Makefile.PL
+  $ make
+  $ make test
+  $ sudo make install</code></pre><p>すると、ついにきた。</p>
+<pre><code class="language-bash">  $ make test
+  ...
+  All tests successful.
+  Files=44, Tests=222,  3 wallclock secs ( 0.08 usr  0.02 sys +  2.40
+  cusr  0.20 csys =  2.70 CPU)
+  Result: PASS
+  $ sudo make install
+  ...
+  Writing /usr/local/lib/perl/5.8.8/auto/Sledge/.packlist
+  Appending installation info to
+  /usr/local/lib/perl/5.8.8/perllocal.pod</code></pre><p>とりあえず、ここまでで勘弁して野郎。</p>
+<p>動くかなぁ</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/10/03/backup_django_app_data/index.html">一応バックアップ</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/10/09/rhaco_hub_site/index.html">rhacoのハブサイトができたよ</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

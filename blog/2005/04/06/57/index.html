@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Flexあれこれ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-04-06 20:53:49</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/04/06/57/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/04/06/57/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Flexあれこれ</h1>
+    <p><strong>getURLとは</strong></p>
+<ul>
+<li><p class="first">ActionScriptからサーバサイドへリクエストを投げて、レスポンスはブラウザで受け取る仕組み。</p>
+<blockquote>
+<p>getURL(url:String, target:String, method:String)</p>
+<p>url:呼び出すURL。相対パスはＯＳとブラウザの組み合わせによって起点が変わる。。。</p>
+<p>target:ブラウザのターゲット。_self, _top, _blank等HTMLと同じように指定</p>
+<p>method:GET,POSTから選択。指定をしないと自動的に選択される。</p>
+</blockquote>
+</li>
+</ul>
+<p>あり得ない実装や、あり得ないブラウザによる違いが。。。</p>
+<ul>
+<li><p class="first">配列をPOSTで渡すと、リクエストにあり得ない文字列が入ってくる！</p>
+<p>本来はPOSTヘッダにカンマ区切りで値が入るはずだが、ActionScriptはカンマ区切りした値をPOSTヘッダに詰めている模様。ヘッダ上ではカンマはエンコードされてしまってヘッダから取り出される値は配列ではなくてカンマ区切りの文字列になってしまう。</p>
+<ul>
+<li><p class="first">へたれ実装が直っても問題がないように、ActionScriptで配列を無理矢理カンマ区切り文字列にし、サーバサイドではActionFormのセッターで配列の長さが１な場合はカンマでsplit。もともとカンマの含まれる値には使用できないが、とりあえずは強制対処。</p>
+<p>※GETを使用には問題ない。getURL(&quot;www.example.com?hoge=a&amp;hoge=b&quot;, &quot;_blank&quot;,&quot;GET&quot;);はうまくいくのだ。</p>
+</li>
+</ul>
+</li>
+<li><p class="first">IEでPOSTデータが送信されない！</p>
+<p>getURLで送られるデータは、気持ち悪いことにActionScriptで定義してある変数全てが対象（たぶん同じスコープが対象だとは思うけど、mx.cor e.Applicationを継承したクラスを作ってgetURLさせてもうまくいかなかった）。</p>
+<pre><code class="language-java">var hogehoge;
+function test() {
+     hogehoge = "fugafuga";
+     getURL("www.example.com", "_blank", "POST");
+}</code></pre><p>こんな感じにするとhogehogeという名前でfugafugaという値はサーバに送信される。</p>
+<p>が、IEで上記コードを実行すると名前も値も送信されない。まぁ、サンプルを見ても上記のようには書いていないのは書いていないのだが、あまりにひどい。ブラウザによって違いがあるってどういうことさ、Macromedia!。HTMLとかわんないじゃん。</p>
+<p>ただしくはこう書く。</p>
+<pre><code class="language-java">var hogehoge:String;
+function test() {
+    hogehoge = "fugafuga";
+    getURL("www.example.com", "_blank", "POST");
+}</code></pre><p>めでたしめでたし（flash嫌い）。</p>
+</li>
+</ul>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/04/03/56/index.html">GIMPShop</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/04/09/58/index.html">flickr</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Django デバッグ用のツールバー</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-09-20 23:30:30</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/09/20/django_debug_toolbar/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/09/20/django_debug_toolbar/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Django デバッグ用のツールバー</h1>
+    <p>Djangoはエラースクリーンが非常に充実しています。デバッグモードで例外が発生すると、エラースタックの各ポイントでの変数の中身や、近辺のソースコードを簡単に見られるようになっています。</p>
+<p>なので、面倒なデバッグ環境の用意や、ソースコード中へのデバッグ出力の埋め込みは殆どせず、無理矢理例外を送出して中身を見たりしていました。</p>
+<p>しかししかししかし、DjangoConでデバッグ用のツールに関する話が出たと言うことで、ちゃかちゃか便利なものを作った人がいます。</p>
+<p><a class="reference external" href="http://rob.cogit8.org/blog/2008/Sep/19/introducing-django-debug-toolbar/">debug_toolbar</a> というDjango用のアプリケーションです。</p>
+<img alt="debug_toolbar" src="http://art3.photozou.jp/pub/478/1478/photo/12984605.png" />
+<p>モード・Djangoのバージョン、実行にかかった時間、Httpヘッダ、Requestの値、SQLのデバッグアウトと実行時間（EXPLAINも表示できる）、キャッシュの状態、レンダリングに利用したテンプレート情報に関するデバッグ情報を参照できます。</p>
+<p>Djangoのテンプレートは、継承できること、検索順によって利用するテンプレートを変えられること、が利点としてあるために、実際に利用しているテンプレートの情報を見られるのは非常に便利だと思います。</p>
+<img alt="used_template" src="http://art9.photozou.jp/pub/478/1478/photo/12984604.png" />
+<p>インストールは非常に簡単で、 <a class="reference external" href="http://github.com/robhudson/django-debug-toolbar/tree/master">githubのプロジェクトページ</a> から、ファイルをダウンロードして、解凍したディレクトリの中のdebug_toolbarディレクトリをPythonパスの通ったところに配置します。</p>
+<p>次にdebug_toolbarを使いたいプロジェクトの settings.py をいじるだけです。</p>
+<p>接続可能なIPアドレスの設定を設定します。</p>
+<pre><code class="language-python">  INTERNAL_IPS = ('127.0.0.1',)</code></pre><p>INSTALLED_APPSに 'debug_toolbar', の追加</p>
+<p>MIDDLEWARE_CLASSESの最後に 'debug_toolbar.middleware.DebugToolbarMiddleware', の追加</p>
+<p>利用する機能の設定</p>
+<pre><code class="language-python">  DEBUG_TOOLBAR_PANELS = (
+      'debug_toolbar.panels.version.VersionDebugPanel',
+      'debug_toolbar.panels.timer.TimerDebugPanel',
+      'debug_toolbar.panels.headers.HeaderDebugPanel',
+      'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+      'debug_toolbar.panels.sql.SQLDebugPanel',
+      'debug_toolbar.panels.cache.CacheDebugPanel',
+      'debug_toolbar.panels.template.TemplateDebugPanel',
+  )</code></pre><p>メニュー自体がプラガブルにできてるっぽいので、自分用のpanelを作ってみても面白いかもしれません。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/09/18/hatena-star-now/index.html">今頃はてなスター</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/09/24/djblogkit_ready_for_django_1_0/index.html">ブログキットをDjango 1.0に対応した</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

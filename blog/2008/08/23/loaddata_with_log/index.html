@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>loaddataでもLogを保存する</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-08-23 03:08:27</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/08/23/loaddata_with_log/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/08/23/loaddata_with_log/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>loaddataでもLogを保存する</h1>
+    <p>空前のwassrブームの中、wassrのdjangoチャンネルにこんな発言がありました。</p>
+<p>「 <a class="reference external" href="http://wassr.jp/channel/django/messages/TQXrb5AWht">ジャンゴ管理画面から、インポートを行った際のログってとれるのかな〜</a> 」</p>
+<p>管理画面にインポートがついた様子はないので、django.core.managementのloaddataかinitial_dataのことかな？だったらログは記録されないから見られないな。と思ったわけです。svn 8466(2008/08/23)</p>
+<p>Djangoの管理画面にあるログは、あくまでも管理画面を使ってのデータ操作についてのみ記録されます。</p>
+<p>実際に記録をとっているのは、django/contrib/admin/options.pyのModelAdmin.log_addition(change,deletion)です。</p>
+<p>コードは単純で、adminのLogEntryモデルをインサートしているだけです。</p>
+<pre><code class="language-python">  from django.contrib.admin.models import LogEntry, ADDITION
+  LogEntry.objects.log_action(
+      user_id         = request.user.pk,
+      content_type_id =
+      ContentType.objects.get_for_model(object).pk,
+      object_id       = object.pk,
+      object_repr     = force_unicode(object),
+      action_flag     = ADDITION
+  )</code></pre><p>せっかくなので、loaddataを拡張してログをとれる仕組みを構築してみました。</p>
+<p>まずは、loaddataでログがとれていないことを確認してみましょう。</p>
+<p>次の設定でdjangoのプロジェクトとアプリケーションを作成しました。</p>
+<blockquote>
+<p>プロジェクト名: load_data_admin_log</p>
+<p>アプリケーション名: sample</p>
+</blockquote>
+<p>settings.pyとurls.pyを修正して、django.contrib.adminが動作するように、またload_data_admin_log.sampleもINSTALLED_APPSに追加して動作するようにしておいてください。</p>
+<p>モデルは超単純にしました。admin.site.registerが怪しいのはご愛敬 :)</p>
+<pre><code class="language-python">モデル(load_data_admin_log/sample/models.py)
+
+  from django.db import models
+  from django.contrib.admin.sites import AlreadyRegistered
+  class TestModel(models.Model):
+      sample_data = models.CharField(max_length=100)
+
+      def __unicode__(self):
+          return self.sample_data[:20]
+
+  from django.contrib import admin
+
+  try:
+      admin.site.register(TestModel)
+  except AlreadyRegistered:
+      pass</code></pre><p>アプリケーションディレクトリの中に、fixturesというディレクトリを作成し、そのなかにfixture用のファイルを作成します。今回はtarget_data.jsonというjsonフォーマットのfixtureを作りました。</p>
+<pre><code class="language-javascript">fixture(load_data_admin_log/sample/fixtures/target_data.json)
+
+  [
+      {
+          "pk": "1",
+          "model": "sample.TestModel",
+          "fields": {
+              "sample_data": "sample data 1"
+          }
+      },
+      {
+          "pk": "2",
+          "model": "sample.TestModel",
+          "fields": {
+              "sample_data": "sample data 2"
+          }
+      },
+      {
+          "pk": "3",
+          "model": "sample.TestModel",
+          "fields": {
+              "sample_data": "sample data 3"
+          }
+      }
+  ]</code></pre><p>fixtureを取り込むには、managementのloadコマンドを利用します。今回の場合はプロジェクトディレクトリで次のように実行します(syncdbを済ませた後ですよ)。</p>
+<pre><code class="language-bash">  ./manage.py loaddata target_data</code></pre><p>すると、3件取り込んだというメッセージが出るはずです。</p>
+<p>管理画面を開いてデータが登録されているか、ログが出ているかを確認してみましょう。</p>
+<p>データは3件あるはずですが、ログは出ていませんね？</p>
+<p>では、manage.pyのコマンドを作成します。</p>
+<p>コマンドとして認識させるためには、アプリケーションの中にmanagement/commandsパッケージを作成します。パッケージとして認識させるためには、 managementディレクトリとcommandsディレクトリの中に__init__.pyを作成します(内容は空でかまわない)。</p>
+<p>次に、commandsディレクトリの中にコマンド.pyという名前のファイルを作成します。今回は、loaddata_with_log.pyというファイルで作成しました。</p>
+<pre><code class="language-python">コマンド(load_data_admin_log/sample/management/commands/loaddata_with_log.py)
+
+  from django.core.management.base import BaseCommand
+  from django.core.management.color import no_style
+  from django.core import management
+  from optparse import make_option
+
+  from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
+  from django.contrib.contenttypes.models import ContentType
+  from django.utils.encoding import force_unicode
+
+  class Command(BaseCommand):
+      option_list = BaseCommand.option_list + (
+          make_option('--username', action='store',
+          dest='username', default=None,
+              help='username.'),
+          make_option('--password', action='store',
+          dest='password', default=None,
+              help='password.'),
+      )
+      help = 'Installs the named fixture(s) in the database with
+      logging.'
+      args = "fixture [fixture ...] --username xxx --password xxx"
+
+      def handle(self, *fixture_labels, **options):
+          from django.contrib.auth import authenticate
+          user = authenticate(username=options.get('username'),
+          password=options.get('password'))
+          if user is not None and user.is_authenticated():
+              from django.db.models import signals
+              from sample.models import TestModel
+              def add_log_data(instance, raw, created,
+              **kwargs):
+                  LogEntry.objects.log_action(
+                      user_id         = user.pk,
+                      content_type_id =
+                      ContentType.objects.get_for_model(instance).pk,
+                      object_id       =
+                      instance.pk,
+                      object_repr     =
+                      force_unicode(instance),
+                      action_flag     = ADDITION if
+                      created else CHANGE
+                  )
+              signals.post_save.connect(add_log_data,
+              sender=TestModel)
+              management.call_command('loaddata',
+              *fixture_labels, **options)
+          else:
+              print 'Authenticate failed.'</code></pre><p>非常にやっつけで汚いコードですが、求めるログの追加はできているはずです。</p>
+<p>対象のモデルが固定なので、このままでは実用にはほど遠いのですが、管理画面を開いてみるとログは追加されていますよね？</p>
+<p>肝は次の3点です。</p>
+<ul class="simple">
+<li>管理画面の操作ログはLogEntry型のデータを追加するだけ</li>
+<li>manage.pyで呼び出すコマンドはプラグイン型になっている</li>
+<li>モデルの保存後のイベントにコールバックを追加できる</li>
+</ul>
+<p>その後のwassrへの書き込みをみると、独自に作ったインポート機能でログをとりたいとのことですから、単にLogEntryを追加してやればいいようですね。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/08/02/wicket_study_01/index.html">第一回wicket勉強会</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/09/04/django_1_0_released/index.html">Django1.0がリリースされた</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

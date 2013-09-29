@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>DBTestCase</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2005-07-18 09:52:22</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2005/07/18/109/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2005/07/18/109/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>DBTestCase</h1>
+    <p>私は普段XP(eXtreme Programming)にて開発を行っています。</p>
+<p>XPでの開発はテストファーストが基本ですが、アプリケーションの中心にデータベースがいるため、テスト作成の大部分はテストデータ準備コードの記述に割り当てられていました。</p>
+<p>モックオブジェクトではデータベースの正しさについてのテストができませんので、何とかして、あるロジックで処理する直前」のデータが必要となるのです。</p>
+<p>テストの要件を満たす準備データの検討に時間がかかるのは仕方ない（それがテストファーストというものでしょ）としても、その考え出したデータの投入ロジック記述に大きく時間がかかってしまっていました。</p>
+<p>＃特にロジックのデータ永続化にORツールを使用しているため、余計に時間がかかります。</p>
+<p>DBTestCaseは、エクセルベースで検討した準備データをDBにインサートし、テスト後にデリートするためのツールです。</p>
+<p>具体的には、テーブルとエクセルのシートを対応させ、インサートは左のシートから（シート内は上から）順にインサートをし、デリートは右のシートから（シート内は下から）順にデリートしていくユーティリティです。</p>
+<p>インサートとデリートで順序が違うのはFKの影響でデータが消せないことを防ぐためです。自分自身を参照しているテーブルでもインサートができればデリートできるはずです。</p>
+<div class="section" id="id1">
+<h2>準備</h2>
+<p><a class="reference external" href="http://sourceforge.jp/projects/dbtestcase">http://sourceforge.jp/projects/dbtestcase</a> からdbTestCase-0.1.2-src.zipをダウンロ ードします。</p>
+<p>#ソース版にもバイナリが含まれているのでせっかくですからソース版をダウンロードします。</p>
+<p>ダウンロードしたファイルを解凍すると、出てきたフォルダの直下に dbTestCase-0.1.2.jar というファイルがあるはずです。</p>
+<p>このjarファイルがDBTestCaseのライブラリになります。</p>
+<p>また、src/libの中にDBTestCaseが必要とするライブラリが入っていますので、各jarにクラスパスを通してください。</p>
+</div>
+<div class="section" id="id2">
+<h2>テーブルの指定の仕方</h2>
+<p>エクセルのシート名をテーブル名と同じにする必要があります。</p>
+<p>全てのシートが順にパースされていきますので、不要なシートは削除しておく必要があります。</p>
+<p>下記のようなエクセルの場合、TABLE_AとTABLE_Bというテーブルに対して処理が行われます。</p>
+</div>
+<div class="section" id="id3">
+<h2>データの設定の仕方</h2>
+<p>テーブルに対応したシートにデータを設定します。</p>
+<p>シートの一行目に左から詰めて（順番は関係ありません）カラム名を設定していきます。</p>
+<p>二行目からはデータの行になります。</p>
+<p>空の行は認められませんが、（一行目を含め）背景色をつけたりコメントを追加したりしても問題ありません。</p>
+<p>＃またオートフィルタ等POIで正しく読めない機能は使用できません。POIに制限されます。</p>
+<p>実際の開発での使用には、「シーケンスを使用せずにデータを設定していくのでテスト環境に関してはシーケンスオブジェクトを1000等から開始し、テストデータは1000未満を設定する」等の取り決めが必要でした。</p>
+</div>
+<div class="section" id="id4">
+<h2>削除キーの指定の仕方</h2>
+<p>カラム名をBOLDにするだけです。</p>
+<p>エクセルのサンプル画像を見てください。</p>
+<p>TABLE_BというシートのA1にCOLUMN_AというBOLD文字列がみえるでしょう。</p>
+<p>このBOLD文字列のカラム名に対して設定されているデータを削除キーとしてデータを削除します。</p>
+</div>
+<div class="section" id="id5">
+<h2>コードの基本</h2>
+<p>net.yher2.junit.db.DBTestCaseというabstractクラスを継承してテストのベースクラスを作成します。</p>
+<p>このクラスは、各データベースや接続テクノロジに対応したjava.sql.Connectionを設定可能なようにabstractクラスになっています。</p>
+<pre><code class="language-java">  package net.everes.junk;
+
+  import java.sql.Connection;
+  import java.sql.SQLException;
+
+  import net.yher2.junit.db.DBTestCase;
+
+  public class DBTestSampleBase extends DBTestCase {
+      protected Connection getConnection() throws SQLException {
+          //ここにデータベースのコネクションを返すロジックを記述。
+          return null;
+      }
+  }</code></pre><p>次に上記クラスを継承した各テストクラスを作成します。</p>
+<p>Classpathのオブジェクトにエクセルへのパスを設定し、prepare/clearに渡すことによってデータのインサート/デリートが行われます。</p>
+<pre><code class="language-java">   package net.everes.junk;
+
+   import net.yher2.commons.io.Classpath;
+
+   /**
+    * 実際のテストクラス
+    * @author makoto
+    *
+    */
+   public class DBTestSampleA extends DBTestSampleBase {
+       private Classpath testDataAPath = null;
+       private Classpath testDataBPath = null;
+
+       /**
+        * 各テストに必要なデータを用意します。
+        */
+       protected void setUp() throws Exception {
+           super.setUp();
+           //クラスパスの通った場所からのエクセルファイルへのパスを設定します。
+           testDataAPath = new Classpath("test/data/TestAData.xls");
+           testDataBPath = new Classpath("test/data/TestBData.xls");
+           prepare(testDataAPath);
+           prepare(testDataBPath);
+       }
+
+       protected void tearDown() throws Exception {
+           super.tearDown();
+
+           clear(testDataBPath);
+           clear(testDataAPath);
+       }
+
+       public void testSampleA() throws Exception {
+           //テストコードを記述
+       }
+   }</code></pre><ul>
+<li><p class="first">特殊な使用例</p>
+<p>業務用のデータベース設計には、インサートやアップデートの際にトリガーで別テーブルにもデータをインサートするようなものがあります。</p>
+<p>そのような場合には、エクセルを複数に分けることで対処することができます。</p>
+<p>インサート用のエクセルと別に、トリガーでインサートされるテーブルのデータを削除するためだけのエクセルを用意し、インサート用のエクセルデータ削除前に利用するのです。</p>
+</li>
+<li><p class="first">junit以外のテクノロジとDBTestCaseを使用する</p>
+<p>net.yher2.junit.db.TestDataManagerを使用します。</p>
+<p>TestDataManagerにjava.sql.Connectionを設定し、DBTestCaseと同様にprepare/clearによってデータのインサート/デリートを行うことができます。</p>
+</li>
+</ul>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2005/07/14/108/index.html">今週のサクサクパーサー</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2005/07/20/110/index.html">なぜ今ソーシャルブックマークか？</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

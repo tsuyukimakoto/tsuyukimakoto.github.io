@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>jBPM2.0 インストール</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2004-11-23 21:48:27</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2004/11/23/17/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2004/11/23/17/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>jBPM2.0 インストール</h1>
+    <ul>
+<li><p class="first">必要なもの</p>
+<ul class="simple">
+<li><a class="reference external" href="http://java.sun.com/j2se/1.4.2/download.html">J2SDK 1.4.2_03</a> （Getting Startedでの指定。真の意味で必要なバージョンは未確認）</li>
+<li><a class="reference external" href="http://ant.apache.org/bindownload.cgi">ant1.6.1</a> （同未確認）</li>
+<li><a class="reference external" href="http://prdownloads.sourceforge.net/jboss/jboss-3.2.5.zip?download">JBoss 3.2.5</a> jboss 3.2.5</li>
+</ul>
+<p>好きなところに展開をして、展開したパスをJBOSS_HOMEとして環境変数に追加するだけ。</p>
+<p>eg. /usr/local/jbossに展開した場合は、JBOSS_HOME=/usr/loca/jbossになる。
+jbpm2.0
+・好きなところに展開する。
+・展開したディレクトリ直下にあるbuild.propertiesを編集（jbpm.homeとant.homeとjboss.homeの設定）。&lt; br&gt;   ・jbpmを解凍したディレクトリでantのconfigure.jboss.3.2.3+タスクを実行（実際のjbossは3.2.5をダウントー ドして設置してあるが、3.2.3以上という意味らしく問題ない）。ファイルがjbossにコピーされるっぽい。</p>
+</li>
+</ul>
+<pre><code class="language-java">  macoto:/usr/local/jbpm makoto$ /usr/local/jboss/bin/run.sh -c jbpm
+ =========================================================================
+
+   JBoss Bootstrap Environment
+
+   JBOSS_HOME: /usr/local/jboss
+
+   JAVA: /System/Library/Frameworks/JavaVM.framework/Home/bin/java
+
+   JAVA_OPTS:  -Dprogram.name=run.sh
+
+   CLASSPATH: /usr/local/jboss/bin/run.jar:/System/Library/Frameworks/JavaVM.framework/Home/lib/tools.jar
+
+ =========================================================================
+
+ 22:07:27,737 INFO  [Server] Starting JBoss (MX MicroKernel)...
+ 22:07:27,743 INFO  [Server] Release ID: JBoss [WonderLand] 3.2.5 (build: CVSTag=JBoss_3_2_5 date=200406251954)
+ 22:07:27,748 INFO  [Server] Home Dir: /usr/local/jboss
+ 22:07:27,750 INFO  [Server] Home URL: file:/usr/local/jboss/
+ 22:07:27,793 INFO  [Server] Library URL: file:/usr/local/jboss/lib/
+ 22:07:27,798 INFO  [Server] Patch URL: null
+ 22:07:27,801 INFO  [Server] Server Name: jbpm
+ 22:07:27,827 INFO  [Server] Server Home Dir: /usr/local/jboss/server/jbpm
+ 22:07:27,830 INFO  [Server] Server Home URL: file:/usr/local/jboss/server/jbpm/
+ 22:07:27,868 INFO  [Server] Server Data Dir: /usr/local/jboss/server/jbpm/data
+ 22:07:27,871 INFO  [Server] Server Temp Dir: /usr/local/jboss/server/jbpm/tmp
+ 22:07:27,874 INFO  [Server] Server Config URL: file:/usr/local/jboss/server/jbpm/conf/
+ 22:07:27,877 INFO  [Server] Server Library URL: file:/usr/local/jboss/server/jbpm/lib/
+ 22:07:27,880 INFO  [Server] Root Deployment Filename: jboss-service.xml
+ 22:07:27,890 INFO  [Server] Starting General Purpose Architecture (GPA)...
+ 22:07:28,897 INFO  [ServerInfo] Java version: 1.4.2_05,Apple Computer, Inc.
+ 22:07:28,900 INFO  [ServerInfo] Java VM: Java HotSpot(TM) Client VM 1.4.2-38,"Apple Computer, Inc."
+ 22:07:28,948 INFO  [ServerInfo] OS-System: Mac OS X 10.3.6,ppc
+ 22:07:29,723 INFO  [Server] Core system initialized
+ 22:07:37,453 INFO  [Log4jService$URLWatchTimerTask] Configuring from URL: resource:log4j.xml
+ 22:07:38,406 INFO  [WebService] Using RMI server codebase: http://macoto.local:8083/
+ 22:07:38,749 INFO  [NamingService] Started jnpPort=1099,
+ rmiPort=1098, backlog=50, bindAddress=/0.0.0.0, Client
+ SocketFactory=null, Server
+ SocketFactory=org.jboss.net.sockets.DefaultSocketFactory@ad093076
+ 22:07:48,659 INFO  [EjbModule] Deploying ClusteredHTTPSession
+ 22:07:49,247 INFO  [EJBDeployer] Deployed:
+ file:/usr/local/jboss/server/jbpm/deploy/jbossha-httpsession.sar/ClusteredHttpSessionEB.jar/
+ 22:07:56,533 INFO  [RARMetaData] Loading JBoss Resource Adapter for JDBC 2 XA drivers
+ 22:07:56,538 INFO  [RARMetaData] Required license terms present. See deployment descriptor.
+ 22:08:00,469 INFO  [ConfiguratorFactory] properties are neither a URL nor a file
+ 22:08:01,298 INFO  [DefaultPartition] Initializing
+ 22:08:01,806 INFO  [UDP] unicast sockets will use interface 192.168.0.30
+ 22:08:01,896 INFO  [UDP] socket information:
+ local_addr=192.168.0.30:49262 (additional data: 17 bytes), mcast_addr=228.1.2.3:45566, bind_addr=/192.168.0.30, ttl=32
+ socket: bound to 192.168.0.30:49262, receive buffer size=150000, send buffer size=65507
+ multicast socket: bound to 192.168.0.30:45566, send buffer size=65507, receive buffer size=150000
+ 22:08:01,910 INFO  [STDOUT]
+ -------------------------------------------------------
+ GMS: address is 192.168.0.30:49262 (additional data: 17 bytes)
+ -------------------------------------------------------
+ 22:08:04,141 INFO  [DefaultPartition] Number of cluster members: 1
+ 22:08:04,144 INFO  [DefaultPartition] Other members: 0
+ 22:08:04,147 INFO  [DefaultPartition] Fetching state (will wait for 60000 milliseconds):
+ 22:08:04,189 INFO  [DefaultPartition] New cluster view (id: 0, delta: 0) : [192.168.0.30:1099]
+ 22:08:04,222 INFO  [DefaultPartition:ReplicantManager] Dead members: 0
+ 22:08:04,939 INFO  [HANamingService] Listening on /0.0.0.0:1100
+ 22:08:04,984 WARN  [HANamingService] Failed to start AutomaticDiscovery
+ java.net.SocketException: bad argument for IP_MULTICAST_IF: address not bound to any interface
+         at java.net.PlainDatagramSocketImpl.socketSetOption(Native Method)
+         at java.net.PlainDatagramSocketImpl.setOption(PlainDatagramSocketImpl.java:260)
+         at java.net.MulticastSocket.setInterface(MulticastSocket.java:418)
+         at
+ org.jboss.ha.jndi.DetachedHANamingService$AutomaticDiscovery.start(DetachedHANamingService.java:437)
+         at
+ org.jboss.ha.jndi.DetachedHANamingService.startService(DetachedHANamingService.java:243)
+         at
+ org.jboss.system.ServiceMBeanSupport.jbossInternalStart(ServiceMBeanSupport.java:271)
+         at
+ org.jboss.system.ServiceMBeanSupport.jbossInternalLifecycle(ServiceMBeanSupport.java:221)
+         at sun.reflect.GeneratedMethodAccessor13.invoke(Unknown Source)
+         at
+ sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+         at java.lang.reflect.Method.invoke(Method.java:324)
+         at org.jboss.mx.server.ReflectedDispatcher.dispatch(ReflectedDispatcher.java:60)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:61)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:53)
+         at org.jboss.mx.server.Invocation.invoke(Invocation.java:86)
+         at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:185)
+         at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:473)
+         at org.jboss.system.ServiceController$ServiceProxy.invoke(ServiceController.java:837)
+         at $Proxy17.start(Unknown Source)
+         at org.jboss.system.ServiceController.start(ServiceController.java:367)
+         at org.jboss.system.ServiceController.start(ServiceController.java:389)
+         at sun.reflect.GeneratedMethodAccessor6.invoke(Unknown Source)
+         at
+ sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+         at java.lang.reflect.Method.invoke(Method.java:324)
+         at org.jboss.mx.server.ReflectedDispatcher.dispatch(ReflectedDispatcher.java:60)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:61)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:53)
+         at org.jboss.mx.server.Invocation.invoke(Invocation.java:86)
+         at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:185)
+         at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:473)
+         at org.jboss.mx.util.MBeanProxyExt.invoke(MBeanProxyExt.java:176)
+         at $Proxy4.start(Unknown Source)
+         at org.jboss.deployment.SARDeployer.start(SARDeployer.java:251)
+         at org.jboss.deployment.MainDeployer.start(MainDeployer.java:836)
+         at org.jboss.deployment.MainDeployer.deploy(MainDeployer.java:645)
+         at org.jboss.deployment.MainDeployer.deploy(MainDeployer.java:608)
+         at sun.reflect.GeneratedMethodAccessor17.invoke(Unknown Source)
+         at
+ sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+         at java.lang.reflect.Method.invoke(Method.java:324)
+         at org.jboss.mx.server.ReflectedDispatcher.dispatch(ReflectedDispatcher.java:60)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:61)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:53)
+         at org.jboss.mx.server.Invocation.invoke(Invocation.java:86)
+         at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:185)
+         at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:473)
+         at org.jboss.mx.util.MBeanProxyExt.invoke(MBeanProxyExt.java:176)
+         at $Proxy7.deploy(Unknown Source)
+         at
+ org.jboss.deployment.scanner.URLDeploymentScanner.deploy(URLDeploymentScanner.java:304)
+         at
+ org.jboss.deployment.scanner.URLDeploymentScanner.scan(URLDeploymentScanner.java:478)
+         at
+ org.jboss.deployment.scanner.AbstractDeploymentScanner$ScannerThread.doScan(AbstractDeploymentScanner.java:201)
+         at
+ org.jboss.deployment.scanner.AbstractDeploymentScanner.startService(AbstractDeploymentScanner.java:274)
+         at
+ org.jboss.system.ServiceMBeanSupport.jbossInternalStart(ServiceMBeanSupport.java:271)
+         at
+ org.jboss.system.ServiceMBeanSupport.jbossInternalLifecycle(ServiceMBeanSupport.java:221)
+         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+         at
+ sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+         at java.lang.reflect.Method.invoke(Method.java:324)
+         at org.jboss.mx.server.ReflectedDispatcher.dispatch(ReflectedDispatcher.java:60)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:61)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:53)
+         at org.jboss.mx.server.Invocation.invoke(Invocation.java:86)
+         at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:185)
+         at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:473)
+         at org.jboss.system.ServiceController$ServiceProxy.invoke(ServiceController.java:837)
+         at $Proxy0.start(Unknown Source)
+         at org.jboss.system.ServiceController.start(ServiceController.java:367)
+         at sun.reflect.GeneratedMethodAccessor6.invoke(Unknown Source)
+         at
+ sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+         at java.lang.reflect.Method.invoke(Method.java:324)
+         at org.jboss.mx.server.ReflectedDispatcher.dispatch(ReflectedDispatcher.java:60)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:61)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:53)
+         at org.jboss.mx.server.Invocation.invoke(Invocation.java:86)
+         at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:185)
+         at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:473)
+         at org.jboss.mx.util.MBeanProxyExt.invoke(MBeanProxyExt.java:176)
+         at $Proxy4.start(Unknown Source)
+         at org.jboss.deployment.SARDeployer.start(SARDeployer.java:251)
+         at org.jboss.deployment.MainDeployer.start(MainDeployer.java:836)
+         at org.jboss.deployment.MainDeployer.deploy(MainDeployer.java:645)
+         at org.jboss.deployment.MainDeployer.deploy(MainDeployer.java:608)
+         at org.jboss.deployment.MainDeployer.deploy(MainDeployer.java:592)
+         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+         at
+ sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+         at java.lang.reflect.Method.invoke(Method.java:324)
+         at org.jboss.mx.server.ReflectedDispatcher.dispatch(ReflectedDispatcher.java:60)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:61)
+         at org.jboss.mx.server.Invocation.dispatch(Invocation.java:53)
+         at org.jboss.mx.server.Invocation.invoke(Invocation.java:86)
+         at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:185)
+         at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:473)
+         at org.jboss.mx.util.MBeanProxyExt.invoke(MBeanProxyExt.java:176)
+         at $Proxy5.deploy(Unknown Source)
+         at org.jboss.system.server.ServerImpl.doStart(ServerImpl.java:407)
+         at org.jboss.system.server.ServerImpl.start(ServerImpl.java:311)
+         at org.jboss.Main.boot(Main.java:145)
+         at org.jboss.Main$1.run(Main.java:399)
+         at java.lang.Thread.run(Thread.java:552)
+ 22:08:10,598 INFO  [interceptors] InterceptorManager started with 0 SIs, 0 CIs and 2 IORIs
+ 22:08:11,314 INFO  [orb] ORB run
+ 22:08:11,971 INFO  [CorbaNamingService] Naming:
+ [IOR:000000000000002B49444C3A6F6D672E6F72672F436F734E616D696E672F4E616D696E67436F6E746578744578743A312E300000000000020000000000000068000102000000000D3139322E3136382E302E333000000DC8000000114A426F73732F4E616D696E672F726F6F74000000000000020000000000000008000000004A414300000000010000001C00000000000100010000000105010001000101090000000105010001000000010000002C0000000000000001000000010000001C00000000000100010000000105010001000101090000000105010001]
+ 22:08:12,084 INFO  [STDOUT] server.properties not found, using command line or default properties
+ 22:08:12,086 INFO  [STDOUT] Opening database: /usr/local/jboss/server/jbpm/data/hypersonic/jbpm
+ 22:08:12,086 INFO  [STDOUT] HSQLDB server 1.7.1 is running
+ 22:08:12,086 INFO  [STDOUT] Use SHUTDOWN to close normally. Use [Ctrl]+[C] to abort abruptly
+ 22:08:12,127 INFO  [STDOUT] Tue Nov 23 22:08:12 JST 2004 Listening for connections ...
+ 22:08:13,093 INFO  [MailService] Mail Service bound to java:/Mail
+ 22:08:45,869 INFO  [Embedded] Catalina naming disabled
+ 22:08:47,596 INFO  [Http11Protocol] Coyote HTTP/1.1??|?[?ghttp-0.0.0.0-8080???????
+ 22:08:47,784 INFO  [Catalina] Initialization processed in 1615 ms
+ 22:08:47,788 INFO  [StandardService] Starting service jboss.web
+ 22:08:47,839 INFO  [StandardEngine] Starting Servlet Engine: Apache Tomcat/5.0.26
+ 22:08:47,863 INFO  [StandardHost] XML validation disabled
+ 22:08:47,957 INFO  [Catalina] Server startup in 171 ms
+ 22:08:48,201 WARN  [DeploymentInfo] Only the root deployment can set the loader repository, ingoring config=null
+ 22:08:48,281 INFO  [TomcatDeployer] deploy, ctxPath=/invoker,
+ warUrl=file:/usr/local/jboss/server/jbpm/deploy/http-invoker.sar/invoker.war/
+ 22:08:50,492 WARN  [DeploymentInfo] Only the root deployment can set the loader repository, ingoring config=null
+ 22:08:50,562 INFO  [TomcatDeployer] deploy, ctxPath=/jboss-net,
+ warUrl=file:/usr/local/jboss/server/jbpm/deploy/jboss-net.sar/jboss-net.war/
+ 22:08:51,106 WARN  [DeploymentInfo] Only the root deployment can set the loader repository, ingoring config=null
+ 22:08:51,272 INFO  [TomcatDeployer] deploy, ctxPath=,
+ warUrl=file:/usr/local/jboss/server/jbpm/deploy/jbossweb-tomcat50.sar/ROOT.war/
+ 22:08:51,926 WARN  [DeploymentInfo] Only the root deployment can set the loader repository, ingoring config=null
+ 22:08:51,989 INFO  [TomcatDeployer] deploy,
+ ctxPath=/jbossmq-httpil,
+ warUrl=file:/usr/local/jboss/server/jbpm/deploy-hasingleton/jms/jbossmq-httpil.sar/jbossmq-httpil.war/
+ 22:08:52,590 INFO  [DefaultDS] Bound connection factory for
+ resource adapter for ConnectionManager
+ 'jboss.jca:service=LocalTxCM,name=DefaultDS to JNDI name
+ 'java:/DefaultDS'
+ 22:08:53,394 INFO  [A] Bound to JNDI name: queue/A
+ 22:08:53,402 INFO  [B] Bound to JNDI name: queue/B
+ 22:08:53,410 INFO  [C] Bound to JNDI name: queue/C
+ 22:08:53,455 INFO  [D] Bound to JNDI name: queue/D
+ 22:08:53,462 INFO  [ex] Bound to JNDI name: queue/ex
+ 22:08:53,823 INFO  [testTopic] Bound to JNDI name: topic/testTopic
+ 22:08:53,841 INFO  [securedTopic] Bound to JNDI name: topic/securedTopic
+ 22:08:53,849 INFO  [testDurableTopic] Bound to JNDI name: topic/testDurableTopic
+ 22:08:53,861 INFO  [testQueue] Bound to JNDI name: queue/testQueue
+ 22:08:55,530 INFO  [OILServerILService] JBossMQ OIL service available at : /0.0.0.0:8090
+ 22:08:55,604 INFO  [OIL2ServerILService] JBossMQ OIL2 service available at : /0.0.0.0:8092
+ 22:08:55,848 INFO  [UILServerILService] JBossMQ UIL service available at : /0.0.0.0:8093
+ 22:08:56,041 INFO  [DLQ] Bound to JNDI name: queue/DLQ
+ 22:08:56,092 INFO  [JbpmDS] Bound connection factory for resource
+ adapter for ConnectionManager 'jboss.jca:service=LocalTxCM,name=JbpmDS
+ to JNDI name 'java:/JbpmDS'
+ 22:08:56,244 INFO  [JmsXA] Bound connection factory for resource
+ adapter for ConnectionManager 'jboss.jca:service=TxCM,name=JmsXA to
+ JNDI name 'java:/JmsXA'
+ 22:08:56,466 INFO  [TomcatDeployer] deploy, ctxPath=/jmx-console,
+ warUrl=file:/usr/local/jboss/server/jbpm/deploy/jmx-console.war/
+ 22:08:57,574 INFO  [TomcatDeployer] deploy, ctxPath=/web-console,
+ warUrl=file:/usr/local/jboss/server/jbpm/tmp/deploy/tmp17179web-console.war/
+ 22:09:00,068 INFO  [Server] JBoss (MX MicroKernel) [3.2.5 (build:
+ CVSTag=JBoss_3_2_5 date=200406251954)] Started in 1m:32s:177ms
+ 22:09:00,103 INFO  [Tomcat5] Saw org.jboss.system.server.started notification, starting connectors
+ 22:09:00,442 INFO  [Http11Protocol] Coyote HTTP/1.1??|?[?g http-0.0.0.0-8080 ??N????
+ 22:09:00,827 INFO  [ChannelSocket] JK2: ajp13 listening on /0.0.0.0:8009
+ 22:09:00,893 INFO  [JkMain] Jk running ID=0 time=0/120  config=null</code></pre><p>なんだかエラーが出てるけど、とりあえず無視。</p>
+<ul class="simple">
+<li>jbpmのdeployをする</li>
+</ul>
+<pre><code class="language-java">   macoto:/usr/local/jbpm/web makoto$ ant deploy
+  Buildfile: build.xml
+
+  build.core:
+
+  compile:
+      [mkdir] Created dir: /usr/local/jbpm/core/target/classes
+      [javac] Compiling 159 source files to /usr/local/jbpm/core/target/classes
+
+
+       [copy] Copying 25 files to /usr/local/jbpm/core/target/classes
+
+  build:
+        [jar] Building jar: /usr/local/jbpm/core/target/jbpm.core.jar
+
+  compile:
+      [mkdir] Created dir: /usr/local/jbpm/web/target/classes
+      [javac] Compiling 29 source files to /usr/local/jbpm/web/target/classes
+
+
+
+  build.process.archives:
+        [jar] Building jar: /usr/local/jbpm/web/target/payraiseprocess.par
+
+  build:
+      [mkdir] Created dir: /usr/local/jbpm/web/target/lib
+        [jar] Building jar: /usr/local/jbpm/web/target/lib/jbpm.web.jar
+        [war] Building war: /usr/local/jbpm/web/target/jbpm.war
+
+  deploy:
+       [copy] Copying 1 file to /usr/local/jboss/server/jbpm/deploy
+
+  BUILD SUCCESSFUL
+  Total time: 30 seconds</code></pre><p>なんだかエラーが出てるけど、とりあえず無視。</p>
+<ul class="simple">
+<li>jbpmのdeployをする</li>
+</ul>
+<pre><code class="language-bash">  macoto:/usr/local/jbpm/web makoto$ ant deploy Buildfile: build.xml
+
+  build.core:
+  compile:
+       [mkdir] Created dir: /usr/local/jbpm/core/target/classes
+       [javac] Compiling 159 source files to /usr/local/jbpm/core/target/classes
+       [copy] Copying 25 files to /usr/local/jbpm/core/target/classes
+  build:
+       [jar] Building jar: /usr/local/jbpm/core/target/jbpm.core.jar
+  compile:
+       [mkdir] Created dir: /usr/local/jbpm/web/target/classes
+       [javac] Compiling 29 source files to /usr/local/jbpm/web/target/classes    build.process.archives:
+       [jar] Building jar: /usr/local/jbpm/web/target/payraiseprocess.par
+  build:
+       [mkdir] Created dir: /usr/local/jbpm/web/target/lib
+       [jar] Building jar: /usr/local/jbpm/web/target/lib/jbpm.web.jar
+       [war] Building war: /usr/local/jbpm/web/target/jbpm.war
+  deploy:
+       [copy] Copying 1 file to /usr/local/jboss/server/jbpm/deploy
+  BUILD SUCCESSFUL Total time: 30 seconds</code></pre><ul>
+<li><p class="first">サンプルをインストールする。</p>
+<p>jbossとともに起動しているHSQLDBにテーブルが作られるらしい。HSQLDBということは再起動するたびにこの作業 は必要？</p>
+</li>
+<li><p class="first">インストールは完了なので、 <a class="reference external" href="http://localhost:8080/jbpm">http://localhost:8080/jbpm</a> に接続してみる。</p>
+<p>サンプルは、稟議の申請のようなもので複数ユーザがそれぞれ権限を持ってフローに対処するというわかりやすいもの。</p>
+</li>
+<li><p class="first">JBPM_HOME/web/target/payraiseprocess.parの中に（.parは.jarなので名前を.zip に換えれば簡単に解凍できる）入っているprocessdefinition.xmlという設定ファイルでフローの遷移を記述している。</p>
+<p>記述は簡易だが、 実際の業務への適用を意識しないとワークフローの頻繁な変更や実務に耐えうるかどうかは評価できない。現時点ではかなり魅力的（期待値込み）</p>
+</li>
+</ul>
+<p>参考)  <a class="reference external" href="http://www.jbpm.org/getting.started.html">jBPM Getting Started</a></p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2004/11/23/16/index.html">オープンソースのワークフローエンジン</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2004/11/24/18/index.html">JIRAを試す</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

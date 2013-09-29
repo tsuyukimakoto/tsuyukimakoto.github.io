@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>郵便番号データ突っ込んでみたよ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-11-11 00:01:57</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/11/11/insert-zipcode/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/11/11/insert-zipcode/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>郵便番号データ突っ込んでみたよ</h1>
+    <p>ちかぢか大量のデータを扱うことになりそうなのと、ちょいと郵便番号データを使ったものをプライベートで作る必要があるのとで、データベースにレコードをインサートするのにかかる時間をはかってみた。</p>
+<p>郵便番号データはたかだか12万件程度しかないので、実際にはどうなるかわからないけど楽しいからやってみただけ。</p>
+<p>実際は位置データを使いたいからPostgreSQLになると思うんだけど、速度を考えるとメモリという選択肢もあるので、SQLiteってどうなのよという気もあってSQLiteも試してみた。</p>
+<p>MySQL？キライ:)</p>
+<p>郵便番号をしまうためのモデルはこんな感じ。郵便番号はユニークにした方がいいんだけど…。</p>
+<pre><code class="language-python">  from django.db import models
+
+  class ZipCode(models.Model):
+      zipcode = models.CharField('Zip Code', max_length=7,
+      db_index=True)
+      prefecture_kana = models.CharField('Prefecture Kana',
+      max_length=20)
+      city_kana = models.CharField('City Kana', max_length=100)
+      town_kana = models.CharField('Town Kana', max_length=100)
+      prefecture = models.CharField('Prefecture', max_length=20)
+      city = models.CharField('City', max_length=100)
+      town = models.CharField('Town', max_length=100)
+
+      def __unicode__(self):
+          return '%s: %s %s %s' % (self.zipcode,
+          self.prefecture, self.city, self.town)</code></pre><p>郵便番号データは、例によって <a class="reference external" href="http://www.post.japanpost.jp/zipcode/download.html">日本郵便</a> の全件なので、半角カナが入ってます。</p>
+<p>なので、 <a class="reference external" href="http://matatabi.homeip.net/blog/setomits/877">setomitsさんの全角半角コンバートモジュール</a> を使ってます。</p>
+<pre><code class="language-python">  import sys, os, csv, time
+  from django.conf import settings
+  from django.db import IntegrityError
+  from greetings.zipcode.models import ZipCode
+
+  try:
+      import zenhan
+  except ImportError:
+      print '''You need zenhan.py .
+  Download zenhan.py and install it.
+  http://matatabi.homeip.net/blog/setomits/877
+  '''
+      sys.exit()
+
+  #
+  #from django.db import connection
+  #cursor = connection.cursor()
+  #cursor.execute('PRAGMA temp_store = MEMORY;')
+  #cursor.execute('PRAGMA synchronous=OFF')
+
+  from django.core.management import call_command
+  call_command('syncdb')
+
+  reader = csv.reader(open(os.path.join(settings.DATA_DIR,
+  'KEN_ALL.CSV'), 'rb'))
+
+  counter = 0
+
+  start = time.clock()
+  for data in reader:
+      try:
+          zipcode = ZipCode(zipcode=data[2],
+                      prefecture_kana=zenhan.h2z(unicode(data[3], 'shift_jis'), zenhan.KANA),
+                      city_kana=zenhan.h2z(unicode(data[4], 'shift_jis'), zenhan.KANA),
+                      town_kana=zenhan.h2z(unicode(data[5], 'shift_jis'), zenhan.KANA),
+                      prefecture=unicode(data[6], 'shift_jis'),
+                      city=unicode(data[7], 'shift_jis'),
+                      town=unicode(data[8], 'shift_jis'))
+          zipcode.save()
+      except IntegrityError: pass
+      counter += 1
+      if counter%1000 == 0:
+          print '%d: %.2f' % (counter, time.clock() - start)
+  print 'end: %.2f' % (time.clock() - start)</code></pre><p>試したのは、 <strong>PostgreSQL</strong> (PostgreX8.2.5)と <strong>SQLite</strong> (3.4.0)。それからデータベースに入れなかった場合とかも試してる。</p>
+<p>実行環境はCoreDuo1.83Ghz/2GB上のleopard+Python2.5.1。</p>
+<p>結果は、以下の通り。</p>
+<img alt="https://dl.dropboxusercontent.com/u/382460/blog/static.everes.net/related/images/chart_20071110.png" src="https://dl.dropboxusercontent.com/u/382460/blog/static.everes.net/related/images/chart_20071110.png" />
+<p>SQLiteは書き込みが遅いらしく、ファイルシステムを使った場合にはPostgreSQLの2.5倍遅い。とりあえず非同期書き込みにしてみたら1.7倍遅いところまで改善。メモリにしたら2倍速くなった :)</p>
+<p>ちなみに、データベースにインサートを行わずに「Djangoのモデルを作るだけ」と「単に変数に入れるだけ」の場合では、12万件で2秒程度しか違いがないようなので、生成コストは無視してよさそう。O/Rを使うこと自体はメリット の方が大きい模様。</p>
+<p>Shift_jisのデータを読み込んでunicodeに変換して半角カナを全角にするってのを省いて、「本当に単に変数に入れるだけ」の場合は12万件で1.09秒だった。マルチバイトうぜー。</p>
+<blockquote>
+<p>2007/11/16 追記</p>
+<p>コメントいただいたので、追試を行いました。</p>
+<p>ワントランザクションにしたところ、SQLiteはほぼメモリと同等のパフォーマンス(+1秒)になり、PostgreSQLについてもSQLiteの1.2倍遅い(+10秒)だけの状態になりました。</p>
+</blockquote>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/11/08/java-package/index.html">Javaの特定パッケージに入ってるClassをとる</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/12/01/winona-ryder/index.html">ウィノナ・ライダー</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

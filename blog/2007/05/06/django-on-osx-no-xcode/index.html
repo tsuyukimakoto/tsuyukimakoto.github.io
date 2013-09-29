@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>カップ麺にお湯を入れてからOSXにDjangoをインストールしだす</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-05-06 00:00:25</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/05/06/django-on-osx-no-xcode/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/05/06/django-on-osx-no-xcode/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>カップ麺にお湯を入れてからOSXにDjangoをインストールしだす</h1>
+    <p>XCodeをインストールしていないOSXでDjangoの開発をできるようにする。 ( <a class="reference external" href="http://stage6.divx.com/user/everes/video/1218419/Install-django-on-OSX-without-XCode-">Stage6にもアップした。divxがいい人はこっちで。</a> )</p>
+<p>カップ麺にお湯を入れてからでも間に合うかもしれないぞ。</p>
+<p>きっと早すぎてよくわからないだろうから、先に解説</p>
+<p>究極的には、Python2.5をインストールして、Djangoをインストールするだけ。あとは便利のいいように直に実行できるようにしているだけ。</p>
+<p>PostgreSQLとかMySQLを使いたい人は、Pythonのダウンロードと同じページにDBAPIのパッケージインストーラがあるからpsycopg2かmysqldbの適当な方をインストールすればいっす。</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://pythonmac.org/packages/py25-fat/index.html">http://pythonmac.org/packages/py25-fat/index.html</a> からpython2.5のディスクイメージをダウンロード</li>
+<li><a class="reference external" href="http://www.djangoproject.com/download/">http://www.djangoproject.com/download/</a> からDjango-0.96.tar.gzをダウンロード</li>
+<li>Python2.5をインストーラでインストール</li>
+<li>/usr/bin/pythonというリンクを削除し、 /Library/Frameworks/Python.framework/Versions/Current/bin/python を /usr/bin/pythonにリンクし直す</li>
+<li>Djangoのtar.gzを展開してできたディレクトリの中で、 python setup.py installをする</li>
+<li>/Library/Frameworks/Python.framework/Versions/Current/lib/python2.5/site-packages/django/bin/django-admin.py に実行権限をつけて、 /usr/bin/django-admin.py にシンボリックリンクする</li>
+<li>適当なディレクトリで django-admin.py を直に実行してヘルプが出ることを確認する</li>
+</ol>
+<p>うまく再生できない人は直に <a class="reference external" href="rtsp://streaming.everes.net/streaming.everes.net/django-on-osx-no-xcode.mov">rtsp://streaming.everes.net/streaming.everes.net/django-on-osx-no-xcode.mov</a> をクリックするか、 <a class="reference external" href="rtsp://streaming.everes.net/streaming.everes.net/django-on-osx-no-xcode.mov">Stage6で</a> 見てください。</p>
+<p>いい加減なスクリーンキャストは、「カップうどんにお湯を入れてからブックマーク管理アプリを作り出す」「ピザを注文してからAdmin無しでWikiを作っちゃう」と続く予定。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/04/28/move-to-magnolia/index.html">ブックマークの表示を変えた</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/05/06/hot-water-to-cup-udon-and-django-admin/index.html">カップうどんにお湯を入れてからブックマーク管理アプリを作り出す</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

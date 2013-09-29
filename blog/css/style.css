@@ -1,0 +1,23 @@
+/*
+We highly recommend you use SASS and write your custom styles in sass/_custom.scss.
+However, this blank file is available if you prefer
+*/
+.logo a { color: #3A64FF; font-size: 80%;}
+.logo a:hover { color: #4B9DFF; }
+/* li p.first { font-size: 120%; font-weight: 800; background-color: #EEE; padding: 0.5em 1em;} */
+li p.first { font-size: 120%; font-weight: 800; border-bottom: groove thin #7af;}
+h1, h2, h3, h4, h5 {
+    font-family: OpenSans, 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+}
+h1 { font-size: 3em; }
+h2 { font-size: 2.0em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.3em; }
+h5 { font-size: 1.0em; }
+h2, h3, h4, h5 {
+    background-color: #FFFCF5;
+}
+
+.linkbox {
+    padding: 2em;
+}

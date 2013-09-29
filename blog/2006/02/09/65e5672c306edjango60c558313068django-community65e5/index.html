@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>日本のDjango情報とDjango Community日本語版について考える</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-02-09 21:14:43</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/02/09/65e5672c306edjango60c558313068django-community65e5/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/02/09/65e5672c306edjango60c558313068django-community65e5/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>日本のDjango情報とDjango Community日本語版について考える</h1>
+    <p>昨日は寝込んでいました。</p>
+<p>インフルエンザか風邪だと思っていましたが、医者に行ったら緊張性肩こりだと言われました。</p>
+<p>きっとvps7が無くなることのショックで緊張しているのでしょう。お薬を出してもらいました（ワラシナファーマシーで品切れと言われました。痛い痛い）。</p>
+<p>実際はおとといの納品日に間に合うかどうかで緊張していたのでしょう。</p>
+<p>で、Djangoについてのアンケートですが、次のような結果になっています。</p>
+<p>機能
+得票数
+日本のDjango情報
+1
+みんなではてぶ
+1
+日本のDjango情報とDjango Community日本語版</p>
+<p>13</p>
+<p>結果からすると「日本のDjango情報」と「Django Community日本語版」の二つがきっと望まれていることでしょう。</p>
+<p>現在考えているのは、</p>
+<p>Pythonについてのリソースを分散させない（かつ現存のリソースを利用させて頂く）パターン</p>
+<ul class="simple">
+<li>Planet Python
+Japanの対象にDjangoについて書いているblogを対象に加えて頂けないか日本Pythonユーザ会にお願いしてみる（Django
+Community日本語版の代わり）</li>
+<li>日本のZope情報にDjangoについてブックマークする有志を加えて頂けないか、atsさんにお願いしてみる（日本のDjango情報の代わり）</li>
+</ul>
+<p>せっかくなので、Djangoで実装してみるパターン</p>
+<ul class="simple">
+<li>Django Projectのaggrigatorのコードを利用してDjango Community日本語版を実装する</li>
+<li>日本のDjango情報は、ブックマークアプリを作成するのではなく有志の「はてぶ」「delicious」のdjangoタグをRSS化したもの
+を、Django Projectのaggrigatorのコードをちょいといじって実装する</li>
+</ul>
+<p>実装するパターンについては、置き場所（＋ドメイン）とDjangoのバージョン（0.91と0.92では違いが大きいので0.92候補のMagicRemoval
+Branchがいいな）と実装する人について検討が必要。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/02/06/3046304930fc-3061308730fc308430fc3063/index.html">うぉー！ちょーやべーっ！</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/02/10/65e5672c306edjango306a30933068304b306b7d613093307f/index.html">日本のDjangoなんとかに絡んでみようと思っている人、連絡請う</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

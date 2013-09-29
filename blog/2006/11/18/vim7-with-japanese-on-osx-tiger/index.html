@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Vim7で日本語入力までの道のり</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-11-18 23:00:15</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/11/18/vim7-with-japanese-on-osx-tiger/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/11/18/vim7-with-japanese-on-osx-tiger/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Vim7で日本語入力までの道のり</h1>
+    <p>TextMateで日本語入力が出来るようになりました。ずっと求めていた機能が使えることになった途端、自分がエディタに求めていたことが分かりました。</p>
+<p>自分が求めていたのは、「ファイルエクスプローラ＋タブ」ではなく、「キーボード操作＋なんでもできる」なのでした。
+そういう意味では <a class="reference external" href="http://aquamacs.org/">Aquamacs</a> はemacsなので何でもできそうです。Aquaなので日本語の入力にも問題なく、テーマもたくさん入っていて好みなのです
+が、subversionを直にエディタから使おうと思うと面倒です。</p>
+<p>もう一つ何でもできそうなエディタとして、最近流行のVim7というものがあります。拡張がPythonで書けるらしいです。ちょっと調べてみると、OSXで日本語
+入力に対応しようとすると結構面倒(XCodeでコンパイルってのもちょっと。エディタなのに)。
+いやいや、あるじゃん。carbonなVim7が。というお話。</p>
+<div class="section" id="osxvim7">
+<h2>OSXでVim7日本語入力環境を作る</h2>
+<p>日本語環境を作る方法は、 <a class="reference external" href="http://www.domo2.net/ri/r.cgi/mac/1133534694/21-n">Mac Vim 再び</a> と <a class="reference external" href="http://www.kawaz.jp/pukiwiki/?vim#cb691f26">ずんWiki - vim</a> のコードです。</p>
+<p><a class="reference external" href="http://macvim.org/OSX/index.php">macvim</a> をダウンロード・展開して、vimをアプリケーションディレクトリに配置。</p>
+<p>~/.vimrcを作成して、以下を記入するだけ。</p>
+<pre><code class="language-c-like">  set enc=utf-8
+  set fenc=utf-8
+  set fencs=utf-8,euc-jp,iso-2022-jp,cp932
+  set ffs=unix
+
+  if &amp;encoding !=# 'utf-8'
+    set encoding=japan
+    set fileencoding=japan
+  endif
+  if has('iconv')
+    let s:enc_euc = 'euc-jp'
+    let s:enc_jis = 'iso-2022-jp'
+    " iconvがeucJP-msに対応しているかをチェック
+    if iconv("¥x87¥x64¥x87¥x6a", 'cp932', 'eucjp-ms') ==#
+    "¥xad¥xc5¥xad¥xcb"
+      let s:enc_euc = 'eucjp-ms'
+      let s:enc_jis = 'iso-2022-jp-3'
+    " iconvがJISX0213に対応しているかをチェック
+    elseif iconv("¥x87¥x64¥x87¥x6a", 'cp932', 'euc-jisx0213') ==#
+    "¥xad¥xc5¥xad¥xcb"
+      let s:enc_euc = 'euc-jisx0213'
+      let s:enc_jis = 'iso-2022-jp-3'
+    endif
+    " fileencodingsを構築
+    if &amp;encoding ==# 'utf-8'
+      let s:fileencodings_default = &amp;fileencodings
+      let &amp;fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+      let &amp;fileencodings = &amp;fileencodings .','.
+      s:fileencodings_default
+      unlet s:fileencodings_default
+    else
+      let &amp;fileencodings = &amp;fileencodings .','. s:enc_jis
+      set fileencodings+=utf-8,ucs-2le,ucs-2
+      if &amp;encoding =~# '^¥(euc-jp¥|euc-jisx0213¥|eucjp-ms¥)$'
+        set fileencodings+=cp932
+        set fileencodings-=euc-jp
+        set fileencodings-=euc-jisx0213
+        set fileencodings-=eucjp-ms
+        let &amp;encoding = s:enc_euc
+        let &amp;fileencoding = s:enc_euc
+      else
+        let &amp;fileencodings = &amp;fileencodings .','. s:enc_euc
+      endif
+    endif
+    " 定数を処分
+    unlet s:enc_euc
+    unlet s:enc_jis
+  endif
+  " □とか○でカーソル位置がずれないようにする
+  set ambiwidth=double</code></pre><p>あれま、簡単。でも文字が汚いし、日本語はちょっと変。</p>
+<p>やっぱりAquamacsかな。。。だれかvc-svn教えて！</p>
+<blockquote>
+<p>追記: <a class="reference external" href="http://www-aos.eps.s.u-tokyo.ac.jp/~takagi/SubversionMemo.html#sec40">Subversion メモ</a> によると、簡単</p>
+<p>Aquamacs/Contents/Resources/site-lispにpsvnというディレクトリを掘って、 <a class="reference external" href="http://www.xsteve.at/prg/emacs/psvn.el">psvn.el</a> を置く。</p>
+<p>~/.emacs.elに以下を記述して、M-x svn-statusとかするだけ</p>
+<pre><code class="language-c-like">;;-----------------------------------------------------------------
+;; psvn.el
+;;-----------------------------------------------------------------
+(require 'psvn)
+
+(define-key svn-status-mode-map "q" 'egg-self-insert-command)
+(define-key svn-status-mode-map "Q" 'svn-status-bury-buffer)
+(define-key svn-status-mode-map "p" 'svn-status-previous-line)
+(define-key svn-status-mode-map "n" 'svn-status-next-line)
+(define-key svn-status-mode-map "&lt;" 'svn-status-examine-parent)
+
+(add-hook 'dired-mode-hook
+          '(lambda ()
+             (require 'dired-x)
+             ;;(define-key dired-mode-map "V" 'cvs-
+             examine)
+             (define-key dired-mode-map "V" 'svn-status)
+             (turn-on-font-lock)
+             ))
+
+(setq svn-status-hide-unmodified t)
+
+(setq process-coding-system-alist
+      (cons '("svn" . euc-jp) process-coding-system-alist))</code></pre></blockquote>
+<p>なかなか素晴らしい:)</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/11/17/django-screencast-in-japanese/index.html">Djangoの日本語スクリーンキャスト(Tropyを作る)</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/11/19/siki-version-the-phantom-of-the-opera/index.html">四季版オペラ座の怪人とIT業界</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

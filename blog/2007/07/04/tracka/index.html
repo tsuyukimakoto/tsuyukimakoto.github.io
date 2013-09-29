@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>trackaはこんな感じ</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-07-04 02:08:27</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/07/04/tracka/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/07/04/tracka/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>trackaはこんな感じ</h1>
+    <p>Python温泉で作りはじめた tracka がだんだんとそれっぽくなってきました。</p>
+<p>1週間以上かかってまだこれかよ、とか言わない &gt; &lt; 基本は夜しか作業できないんだから。</p>
+<p>tumblrのブックマークレットの素敵さに興奮して作り出しましたが、用途的には全然違うものです。</p>
+<div class="section" id="tumblr">
+<h2>tumblr</h2>
+<p>tumblrは、気に入ったものをReblogしまくることで、他の人への撒き餌→Add Friend となり、Dashboardの限定された機能と相まって「いまいちなFriendをremoveせざるを得ない」状況に陥るといった面白さがあります。</p>
+<p>また、一部の人たちは表画面のことを忘れ、感情をあらわにtumblrしているようです。熱狂といってもおかしくないほどの。</p>
+<p>しかし、tumblrはWeb上の気に入ったものをクリップしまくる(画像はtumblrにコピーされる)ものであるため、著作権的問題が出てきます。数時間以内にコンテンツを削除するように要求するメールの発生が明らかになるなど、どの共有系サービスも抱える問題がtumblrにもあります。実際は熱に浮かされていてあまり気にしていない</p>
+</div>
+<div class="section" id="tracka">
+<h2>trackaの用途</h2>
+<p>では、表画面自体を削ってしまってはどうか？</p>
+<p><strong>家族</strong> 内の私的利用に限れるようなアプリケーションがあればよいのではないか？</p>
+<p>つーことで、tracka作ってます。だいたいはキャプチャ画像から想像できる機能を持っています。</p>
+<img alt="マイホーム" src="http://art7.photozou.jp/pub/478/1478/photo/3879302.png" />
+<p>ブックマークレットはプラグインのみで構成されていて、今のところ「画像・Youtube・Stage6・文字列」用のプラグインを作ってあります。ドメイン限定でブックマークレット上に出てくるプラグインとかちょっと楽しんで作りました。</p>
+<p>メディア系のプラグインはクリップ後、対象のファイルをローカルにコピーします(コピー完了前は直リンクで表示)。</p>
+<img alt="ブックマークレット(画像用)" src="http://art6.photozou.jp/pub/478/1478/photo/3879192.png" />
+<img alt="ブックマークレット(stage6用) - tracka" src="http://art6.photozou.jp/pub/478/1478/photo/3879193.png" />
+</div>
+<div class="section" id="id1">
+<h2>困っていること</h2>
+<p>ローカルにコピーするので、ファイルがなくなったりサイトが重かったりといった問題からは解放されますが、Djangoの認証に通っていない場合にはメディアファイルを公開したくないため、でっかいメディアの取り出しに悩んでいます(Stage6のファイルは最大2GB。一度にメモリに読み込んだ日にゃ…)。Djangoはストリームを返せないので…(返せる？)</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/07/02/django-japanese-document/index.html">Djangoの日本語ドキュメント</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/07/05/django-unicode-branch-merged/index.html">Django開発版にunicodeブランチがマージされました</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Scalaのtraitを試す</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2008-06-07 22:57:23</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2008/06/07/scala-trait/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2008/06/07/scala-trait/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>Scalaのtraitを試す</h1>
+    <p>さて、Python温泉ではScalaで動作するLIFTを見てみようと思っていますが、その前にScalaについてもう少し。</p>
+<p>このエントリは、OSX(10.5.3)上のScala version 2.7.1.final (Java HotSpot(TM) Client VM, Java 1.5.0_13)を前提としています。core2duoのマシンが欲しいなぁ…</p>
+<p>Scala勉強会で気になった機能にtraitという機能があります。 traitはclassに対して機能を追加するような使い方をするもので、定義自体はclassに似ています。</p>
+<pre><code class="language-c-like">  trait BehaviorA{
+      def hello(name: String) : String = "BehaviorA::" + name
+  }</code></pre><p>Javaは多重継承を禁じていますので、共通機能を複数持ったクラスを作ろうと思うとclassの継承とinterfaceの実装を組み合わせなければなりません。</p>
+<p>interface自体は実装を持たないため、同じ名前のメソッドを実装していることを保証するに過ぎないもので、しかも何度も同じような実装を記述しなければなりませんでした。 <a class="reference external" href="http://www.everes.net/2006/dec/19/django-multiple-inheritance/">こんなこと</a> をしようとするとJavaは助長なコードを書かざるを得なかったのです。</p>
+<p>traitを使えば、機能の追加はこんな感じに書けます。AnyRefという参照型のボスを継承していますが、ここに本来継承したいクラスがくると考えてください。</p>
+<p>バラバラの機能 BehaviorA と BehaviorB を trait として定義しています。</p>
+<pre><code class="language-c-like">  trait BehaviorA{
+      def hello(name: String) : String = "BehaviorA::hello(" + name
+      + ")"
+  }
+
+  trait BehaviorB {
+      def gooby(name: String) : String = "BehaviorB::gooby(" + name
+      + ")"
+  }
+
+  class MainClass extends AnyRef with BehaviorA with BehaviorB {
+      def test(): String = {
+          return hello(getClass().getName()) + " and " +
+          gooby(getClass().getName())
+      }
+  }
+
+  object Test {
+      def main(args:Array[String]) : Unit = {
+          val mc = new MainClass()
+          println(mc.test())
+      }
+  }</code></pre><p>このscalaコードをコンパイルし、scala Testと実行すると、以下のように出力します。</p>
+<pre><code class="language-c-like">  BehaviorA::hello(MainClass) and BehaviorB::gooby(MainClass)</code></pre><p>実装を持った BehaviorA と BehaviorB の機能を使えるMyClassが出来上がりました。</p>
+<p>でも、ちょっと待ってください。Scalaって実はJavaのバイトコードにコンパイルされるんですよ。Javaって多重継承できませんよね？</p>
+<p>できあがったclassファイルをjadでデコンパイルしてみました。
+デコンパイルされたコードを見て、まず、へぇー、と。なんというかいいですねw</p>
+<p>ちなみに、traitは状態も持てます。また「同名のメソッド等を知らないうちに上書きしてしまうのでは？」という恐れに対しては、メソッド等の上書き時にはきちんとoverride宣言をしないとコンパイルエラーとなるといった細やかな気の使い方で、安全にtraitを使用できるようになっています。</p>
+<p>以下、デコンパイルしたコード</p>
+<pre><code class="language-java">BehaviorA.jad
+
+  import scala.ScalaObject;
+
+  public interface BehaviorA
+      extends ScalaObject
+  {
+
+      public abstract String hello(String s);
+  }</code></pre><pre><code class="language-java">BehaviorA$class.jad
+
+  import scala.StringBuilder;
+
+  public abstract class BehaviorA$class
+  {
+
+              public static void $init$(BehaviorA
+              behaviora)
+              {
+              }
+
+              public static String hello(BehaviorA $this,
+              String name)
+              {
+  /*   2*/        return (new StringBuilder()).append("BehaviorA::hello
+  (").append(name).append(")").toString();
+              }
+  }</code></pre><pre><code class="language-java">BehaviorB.jad
+
+  import scala.ScalaObject;
+
+  public interface BehaviorB
+      extends ScalaObject
+  {
+
+      public abstract String gooby(String s);
+  }</code></pre><pre><code class="language-java">BehaviorB$class.jad
+
+  import scala.StringBuilder;
+
+  public abstract class BehaviorB$class
+  {
+
+              public static void $init$(BehaviorB
+              behaviorb)
+              {
+              }
+
+              public static String gooby(BehaviorB $this,
+              String name)
+              {
+  /*   6*/        return (new StringBuilder()).append("BehaviorB::gooby
+  (").append(name).append(")").toString();
+              }
+  }</code></pre><pre><code class="language-java">MainClass.jad
+
+  import scala.ScalaObject;
+  import scala.StringBuilder;
+
+  public class MainClass
+      implements BehaviorA, BehaviorB, ScalaObject
+  {
+
+              public MainClass()
+              {
+  /*   9*/        BehaviorA.class.$init$(this);
+  /*   9*/        BehaviorB.class.$init$(this);
+              }
+
+              public String test()
+              {
+  /*  11*/        return (new
+  StringBuilder()).append(hello(getClass().getName())).append(" and
+  ").append(gooby(getClass().getName())).toString();
+              }
+
+              public int $tag()
+              {
+  /*   9*/        return scala.ScalaObject.class.$tag(this);
+              }
+
+              public String hello(String x$1)
+              {
+  /*   9*/        return BehaviorA.class.hello(this, x$1);
+              }
+
+              public String gooby(String x$1)
+              {
+  /*   9*/        return BehaviorB.class.gooby(this, x$1);
+              }
+  }</code></pre><pre><code class="language-java">Test$.jad
+
+  import scala.Predef$;
+  import scala.ScalaObject;
+
+  public final class Test$
+      implements ScalaObject
+  {
+
+              public Test$()
+              {
+              }
+
+              public void main(String args[])
+              {
+  /*  17*/        MainClass mc = new MainClass();
+  /*  18*/        Predef$.MODULE$.println(mc.test());
+              }
+
+              public int $tag()
+              {
+  /*  15*/        return scala.ScalaObject.class.$tag(this);
+              }
+
+              public static final Test$ MODULE$ = this;
+
+              static
+              {
+                  new Test$();
+              }
+  }</code></pre><pre><code class="language-java">Test.jad
+
+  public final class Test
+  {
+
+      public static final int $tag()
+      {
+          return Test$.MODULE$.$tag();
+      }
+
+      public static final void main(String args[])
+      {
+          Test$.MODULE$.main(args);
+      }
+  }</code></pre>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2008/06/07/bpstudy-scala/index.html">Scala勉強会に行ってきました</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2008/06/17/django-book/index.html">日本語のDjango本が出ます</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>やっぱりDIの良さがわからない</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2007-03-15 13:55:38</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2007/03/15/java-di-googleguice/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2007/03/15/java-di-googleguice/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>やっぱりDIの良さがわからない</h1>
+    <p>Googleが <a class="reference external" href="http://code.google.com/p/google-guice/">GuiceというDIコンテナをリリース</a> し、 <a class="reference external" href="http://journal.mycom.co.jp/articles/2007/03/14/googleguice/">素早く紹介記事があがった</a> わけだけど、やっぱりDIの良さがわからない。</p>
+<p><strong>はてなで貰ったコメントに突っ込んでみる。</strong></p>
+<p><strong>Yoshioriさん。「AOPいいよ！！トランザクションとか自分で実装するのメンドイよ！！」</strong></p>
+<p>おいら「Djangoでトランザクションスコープをリクエストにしとけばいいんで…」</p>
+<p><strong>nekoraさん 「スクリプト言語で間に合う程度の小規模・低負荷・単純な案件ならばスクリプトで済ませるべきであるという話の一例。時に「動的言語」って何だろ」</strong></p>
+<p>おいら「「動的型付言語でした」。スクリプト言語で間に合わない程度というと、世界数カ所で同時にコミットするような案件位だよね。みんな凄いのやってるねぇ。とはいいながら、確かにへぼを集めてもある程度きちんと書けるのがJavaとかの良さだというのは分かってるぞ。あれ？DIの話関係無いねぇ」</p>
+<p>これはきっと少人数開発しているからということが大きいと思うんだけど、少人数でもDIはいいんだよということを誰かが教えてくれないかなぁ。</p>
+<p>だって、部品をテストするときに「インターフェース定義」「スタブ(モック)作成」という余計な手間と、スタブの代わりになる部品(実装)ができたときに設定を書き換える手間が増える訳じゃん。</p>
+<p>少人数開発(実際は2チーム)で開発をしていれば、だいたい開発スピードもわかってるし、うまくスケジューリングすれば部品待ちってことも殆どないわけで。</p>
+<p>そもそもが動的言語使っちゃえば、設定ファイルとかアノテーション書き換える時間で実装を書き換えられちゃうんだから、DIの必要性を感じたらPythonに乗り換えるタイミングなんじゃないかとか思ってしまう。</p>
+<p>つか、 <strong>Javaやめた方が良いよ</strong> と言う人が最近多い。もっともだと思う。</p>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2007/03/13/django-designer-friendly/index.html">Djangoはデザイナフレンドリー？</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2007/03/20/fuxking-wiki/index.html">俺がwikiを嫌う理由</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

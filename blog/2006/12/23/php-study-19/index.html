@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>第19回PHP勉強会</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+</head>
+<body>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="#">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">About</a></li>
+              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2006-12-23 23:40:41</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a name="fb_share" ></a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/2006/12/23/php-study-19/index.html"></g:plusone><br />
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.tsuyukimakoto.com/2006/12/23/php-study-19/index.html&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=verdana&amp;colorscheme=light&amp;" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px;" allowTransparency="true"></iframe><br />
+    </section>
+    <section class="ten columns">
+    <h1>第19回PHP勉強会</h1>
+    <p><a class="reference external" href="http://events.php.gr.jp/event.php/event_show/12">第19回PHP勉強会</a> にお邪魔してきました。</p>
+<p>なぜ急にPHP勉強会なのかというと、 <a class="reference external" href="http://ethna.jp/">Ethna</a> コミッタの <a class="reference external" href="http://project-p.jp/halt/">halt</a> さんが <a class="reference external" href="http://www.djangoproject.jp">Django</a> の紹介を行うという告知が <a class="reference external" href="http://groups-beta.google.com/group/django-ja">django-jaメーリングリスト</a> に流れたからです。</p>
+<p>嫁の顔色を気にしながら、娘の「行かないでー」攻撃に耐えながら、渋谷はウノウ株式会社へ。</p>
+<p><a class="reference external" href="http://photozou.jp/mypage/top/1478">フォト蔵(お、俺の番号若いw)</a> のAPIをおいしく使う方法とか面白げな話を聞いた後、おもむろにDjangoの紹介が！</p>
+<div class="section" id="django">
+<h2>Djangoについて</h2>
+<p><strong>Djangoに興味を持ったのは、Mauraカワユす</strong> が理由。というのはネタ</p>
+<p>この間EthnaのCSRF対策エントリにトラックバックを打ったのもきっかけにはなったみたいだけど、実際は日本語のPythonドキュメントと、日本語のDjangoドキュメントが充実していたのが足を踏み入れた一番大きな理由だったみたい。ということで、やはり日本Djangoの神は増田さんだ。</p>
+<p>私と同じく、Railsは挫折したとのこと。逆にDjangoに挫折しなかったのは前述のドキュメントに加え、Python自体の読みやすさとか、そもそも内容を追わなくて済むDjangoのドキュメントのおかげだったらしい。</p>
+<p><strong>まとめられたドキュメント重要。</strong></p>
+<p>特にデザイナ向けのドキュメントが存在していることに驚いていた。</p>
+</div>
+<div class="section" id="ethnadjango">
+<h2>EthnaとDjangoの比較について。</h2>
+<p>EthnaにもURLバリデータとかあるみたいで、素敵。</p>
+<p>Pluginが利用できるらしいんだけど、どこに刺さるんだろう。Djangoだとmiddlewareがプラグイン代わりになってるんだけど、middlewareじゃやりにくいこともあるので興味がある。</p>
+<p>URLHandlerっていうURLConfみたいのも搭載されているとのこと。</p>
+<p>haltさんのDjango紹介後、数人からDjangoについて質問を受ける。いきなりインストールをして管理画面を日本語化する方法を聞いたりする人もいて、のりの良さにびっくり。かなりDjangoに興味を持っていただいた模様。haltさんのもくろみとして、「いろんな人がいろんなフレームワークを見て良いところをEthnaにEthnaっぽく取り込む」ということらしい。</p>
+</div>
+<div class="section" id="rhaco">
+<h2>Rhacoについても</h2>
+<p>随所で宣伝をしたけど、ドキュメントが無いんだよねぇ。</p>
+<p>それでもhaltさんは「時間があったら是非触ってみたい」と。</p>
+<p>PHPよく分からないけど、一応 <a class="reference external" href="http://www.rhaco.org/">Rhaco</a> コミッタなのでw、喜ばしい。</p>
+<p>あ、天皇誕生日の今日、 <strong>Rhacoの1.0</strong> と1.0対応のサンプルアプリケーション(www.goesby.comとprhagger)が <cite>リリース</cite> _ されています。</p>
+<p>歴史の関係で、リリースはsourceforge.jpとsourceforge.netで行われていますが、subversionを利用している <a class="reference external" href="http://sourceforge.net/projects/rhaco">sourceforge.net</a> が第一次配布場所ということで。</p>
+<p>不明点は <a class="reference external" href="http://groups-beta.google.com/group/rhaco-ja">rhaco-ja google groups</a> で質問すると、素早く答えるかも</p>
+</div>
+
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2006/12/21/dreamhost-restoration/index.html">DreamHost復旧かも</a></li>
+      <li class="medium info btn icon-right entypo icon-fast-forward"><a href="http://www.tsuyukimakoto.com/blog/2006/12/25/python-hosting-servers/index.html">WebFactionのクリスマスプレゼント</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
