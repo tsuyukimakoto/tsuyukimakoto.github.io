@@ -20,18 +20,32 @@
 <script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
 </head>
 <body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
   <div class="navbar" id="nav_top">
       <div class="row">
           <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
           <h1 class="eight columns logo">
-              <a href="#">
+              <a href="http://www.tsuyukimakoto.com/">
                   <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
               </a>
           </h1>
           <ul class="four columns">
               <li><a href="/blog/">Blog</a></li>
               <li><a href="/about/">About</a></li>
-              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="search input" type="search" name="q" size="10" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form>
+        <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=ja"></script></li>
           </ul>
       </div>
   </div>
@@ -76,6 +90,36 @@
   bd double ROUND_HALF_UP:1
   bd String ROUND_HALF_UP:0</code></pre><p><strong>Python識者が現れる予感</strong> :-)</p>
 
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+            <li class="warning alert"><p class="secondary label">2007-06-06 14:06:57
+              hnw</p>
+              <p>どうも。僕の記事で伝わらなかったとしたら非常に残念ですけど、10進表記で小数点以下第4位を見ていませんか？1000倍して小数点以下第1位を見ないと意味がないですよ？ソースコードも貼ってみたんですけど。<br />
+<br />
+理解しているつもりでもつい10進の常識で考えてしまうのが難しいところですよね。<br />
+<br />
+今まで僕の記事を読んでくださった方には既に伝わっているかと思っていたんですが、なかなか人に物事を伝えるのは難しいものです。このあたりは記事に追記させて頂きます。レスポンスに感謝します。<br />
+<br />
+また、0.49999999999999999はIEEE64bit浮動小数点数だとピッタリ0.5だと思いますよ？</p></li>
+          
+            <li class="warning alert"><p class="secondary label">2007-06-06 14:41:57
+              makoto</p>
+              <p>ごめんなさい。<br />
+思いっきり10進数の世界で読んでます。<br />
+Pythonが0.0225を保持できないことと、0.49999999999999999を四捨五入すると1になってしまうということを(コンピュータの世界からではなく)、人間の世界から見ています。<br />
+が、人間の世界でも0.49999999999999999は四捨五入すると1だよと言われると「ぐぅ」と言います。0.5より小さな数字は四捨五入すると0だという認識しか無いので(ゆとり！？)。<br />
+<br />
+http://www.tokumaru.org/d/?date=20070531</p></li>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/2007/06/06/java-python-round/" data-numposts="5"></div>
     </section>
   </div>
   <div class="navbar pretty" id="nav_bottom">

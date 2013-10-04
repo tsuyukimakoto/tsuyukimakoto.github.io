@@ -20,18 +20,32 @@
 <script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
 </head>
 <body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
   <div class="navbar" id="nav_top">
       <div class="row">
           <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
           <h1 class="eight columns logo">
-              <a href="#">
+              <a href="http://www.tsuyukimakoto.com/">
                   <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
               </a>
           </h1>
           <ul class="four columns">
               <li><a href="/blog/">Blog</a></li>
               <li><a href="/about/">About</a></li>
-              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="search input" type="search" name="q" size="10" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form>
+        <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=ja"></script></li>
           </ul>
       </div>
   </div>
@@ -56,6 +70,17 @@
 <p>そんなコンサル会社はいやです（成果を上げているようなので、現実的にはいいでしょうが）。</p>
 <p>ちなみに、このブログ自体も適当なCMSでことたりますが。。。</p>
 
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/2005/05/20/82/" data-numposts="5"></div>
     </section>
   </div>
   <div class="navbar pretty" id="nav_bottom">

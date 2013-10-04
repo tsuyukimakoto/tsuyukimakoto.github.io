@@ -20,18 +20,32 @@
 <script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
 </head>
 <body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
   <div class="navbar" id="nav_top">
       <div class="row">
           <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
           <h1 class="eight columns logo">
-              <a href="#">
+              <a href="http://www.tsuyukimakoto.com/">
                   <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
               </a>
           </h1>
           <ul class="four columns">
               <li><a href="/blog/">Blog</a></li>
               <li><a href="/about/">About</a></li>
-              <li class="field"><input class="search input" type="search" placeholder="Search" /></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="search input" type="search" name="q" size="10" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form>
+        <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=ja"></script></li>
           </ul>
       </div>
   </div>
@@ -66,6 +80,23 @@
 <p>今、はてなが嫌いな理由は、 <strong>「商売がうまくて妬ましい」</strong> ってことだよ、当然。チッキショー</p>
 <p>あとは、iMacほしい！Wiiほしい！って叫んだのにあたらなかったことも、嫌いな理由である。</p>
 
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+            <li class="warning alert"><p class="secondary label">2007-03-29 23:04:03
+              makoto</p>
+              <p>はてブもはてダもエクスポートできるようになってた！<br />
+安心してはてなを使おう！<br />
+＃俺は商売上手が妬ましいからw、自前でいくよ</p></li>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/2007/02/12/about-hatena/" data-numposts="5"></div>
     </section>
   </div>
   <div class="navbar pretty" id="nav_bottom">
