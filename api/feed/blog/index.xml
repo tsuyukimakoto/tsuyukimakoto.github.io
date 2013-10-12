@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>tsuyuki.makoto</title>
+        <link>http://www.tsuyukimakoto.com</link>
+        <description></description>
+        <language>ja</language>
+        <lastBuildDate>Sat, 12 Oct 2013 17:26:04 -0000</lastBuildDate>
+        <item>
+            <title>TOLOT フォトカレンダー 始まってました</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/10/11/tolot_the_calendar_2014/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Fri, 11 Oct 2013 11:30:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/10/11/tolot_the_calendar_2014/</guid>
+            <category>Blog Entry</category>
+        </item><item>
+            <title>PyCon APAC 2013 のメモ</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/09/16/pycon_apac_2013/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Mon, 16 Sep 2013 03:05:39 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/09/16/pycon_apac_2013/</guid>
+            <category>Blog Entry</category>
+        </item><item>
+            <title>カメラのカビ対策</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sun, 08 Sep 2013 03:25:59 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/</guid>
+            <category>Blog Entry</category>
+        </item><item>
+            <title>ipython notebook で DBのデータを可視化する（簡単）</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/08/24/python_pandas_and_sql/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sat, 24 Aug 2013 04:09:24 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/08/24/python_pandas_and_sql/</guid>
+            <category>Blog Entry</category>
+        </item><item>
+            <title>ボディボードにリーシュコードを取り付けた</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/08/10/install_a_leash_plug/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sat, 10 Aug 2013 05:14:02 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/08/10/install_a_leash_plug/</guid>
+            <category>Blog Entry</category>
+        </item><item>
+            <title>少し前にD7000を購入した</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/07/28/i_bought_d7000/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sun, 28 Jul 2013 09:37:56 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/07/28/i_bought_d7000/</guid>
+            <category>Blog Entry</category>
+        </item><item>
+            <title>Data Scientistになろう！</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/07/11/data_scientist_with_python/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Thu, 11 Jul 2013 14:46:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/07/11/data_scientist_with_python/</guid>
+            <category>Blog Entry</category>
+        </item><item>
+            <title>python -i の魔力</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/06/06/python_with_i_option/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Wed, 05 Jun 2013 15:10:48 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/06/06/python_with_i_option/</guid>
+            <category>Blog Entry</category>
+        </item>
+    </channel>
+</rss>
