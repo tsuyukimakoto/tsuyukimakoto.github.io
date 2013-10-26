@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Mon, 14 Oct 2013 05:21:30 -0000</lastBuildDate>
+        <lastBuildDate>Sat, 26 Oct 2013 14:47:10 -0000</lastBuildDate>
         <item>
+            <title>MavericksのインストールUSBメモリを作る</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/10/26/create_mavericks_installer/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Fri, 25 Oct 2013 22:16:52 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/10/26/create_mavericks_installer/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>第1回鎌倉じゃず祭に行ってきた</title>
             <link>http://www.tsuyukimakoto.com/blog/2013/10/13/kamakura_jazz_fes/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Sun, 28 Jul 2013 09:37:56 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2013/07/28/i_bought_d7000/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>Data Scientistになろう！</title>
-            <link>http://www.tsuyukimakoto.com/blog/2013/07/11/data_scientist_with_python/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Thu, 11 Jul 2013 14:46:00 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2013/07/11/data_scientist_with_python/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
