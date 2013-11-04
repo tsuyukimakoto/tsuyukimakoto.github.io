@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Sat, 26 Oct 2013 14:47:10 -0000</lastBuildDate>
+        <lastBuildDate>Mon, 04 Nov 2013 15:28:50 -0000</lastBuildDate>
         <item>
+            <title>MavericksでのPython3はまりメモ</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/11/05/python3_tips_for_mavericks/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Mon, 04 Nov 2013 15:23:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/11/05/python3_tips_for_mavericks/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>MavericksのインストールUSBメモリを作る</title>
             <link>http://www.tsuyukimakoto.com/blog/2013/10/26/create_mavericks_installer/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Sat, 10 Aug 2013 05:14:02 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2013/08/10/install_a_leash_plug/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>少し前にD7000を購入した</title>
-            <link>http://www.tsuyukimakoto.com/blog/2013/07/28/i_bought_d7000/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Sun, 28 Jul 2013 09:37:56 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2013/07/28/i_bought_d7000/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
