@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Mon, 04 Nov 2013 15:28:50 -0000</lastBuildDate>
+        <lastBuildDate>Sun, 01 Dec 2013 10:16:39 -0000</lastBuildDate>
         <item>
+            <title>スクリプトから生パスワードを追い出す - Python Advent Calendar 2013</title>
+            <link>http://www.tsuyukimakoto.com/blog/2013/12/02/hide_password/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sun, 01 Dec 2013 15:00:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2013/12/02/hide_password/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>MavericksでのPython3はまりメモ</title>
             <link>http://www.tsuyukimakoto.com/blog/2013/11/05/python3_tips_for_mavericks/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Sat, 24 Aug 2013 04:09:24 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2013/08/24/python_pandas_and_sql/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>ボディボードにリーシュコードを取り付けた</title>
-            <link>http://www.tsuyukimakoto.com/blog/2013/08/10/install_a_leash_plug/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Sat, 10 Aug 2013 05:14:02 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2013/08/10/install_a_leash_plug/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
