@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="blackkite" />
+  <meta property="og:title" content="スクリプトから生パスワードを追い出す - Python Advent Calendar 2013 | tsuyuki.makoto" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:image" content="http://2.gravatar.com/avatar/a49edf2521f9e75826c6546c7585f17a" />
+  <meta property="og:url" content="http://www.tsuyukimakoto.com/blog/2013/12/02/hide_password/" />
+  <meta property="og:site_name" content="tsuyuki.makoto" />
+  <meta property="fb:admins" content="535742035" />
+  <title>スクリプトから生パスワードを追い出す - Python Advent Calendar 2013 | tsuyuki.makoto</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.tsuyukimakoto.com/api/feed/core/" />
+</head>
+<body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="http://www.tsuyukimakoto.com/">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/about/">About</a></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="xwide text input" placeholder="Google Custom Search" name="q" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2013-12-02 00:00:00</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2013/12/02/hide_password/"></g:plusone><br />
+      <div class="fb-like" data-layout="box_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </section>
+    <section class="ten columns">
+    <h1>スクリプトから生パスワードを追い出す - Python Advent Calendar 2013</h1>
+    <p>DevOpsですね！CIですね！botですね！</p>
+<p><a class="reference external" href="http://www.adventar.org/calendars/166">Python Advent Calendar 2013</a> の2日目です。</p>
+<div class="section" id="id1">
+<h2>スクリプトにパスワードを書きたくないときのお話。</h2>
+<p>鍵でノーパスワードログインできるなら良いですが、ID/Password渡さないといけない場合もありますよね。</p>
+<blockquote>
+本エントリはOS X 10.9、Python3.3.3rc1で確認しています。</blockquote>
+<div class="section" id="id2">
+<h3>実行時に入力してもらう</h3>
+<p>書きたくないのであれば、入力してもらえば良いですね。</p>
+<p>ビルトイン関数のinputでどうでしょう。</p>
+<pre><code class="language-python">&gt;&gt;&gt; pswd = input('input your passowrd: ') #python2では raw_input でした
+input your passowrd: password</code></pre><p>おっと、入力してるときに丸見えじゃありませんか。</p>
+<p>では、getpassモジュールのgetpass関数を使いましょう。</p>
+<pre><code class="language-python">&gt;&gt;&gt; pswd = getpass('input your password: ')
+input your password:</code></pre><p>ふむ。</p>
+</div>
+<div class="section" id="id3">
+<h3>何度も入力したくない</h3>
+<p>Pitを使ってみましょう。毎回入れてもらうのは自動化できませんからね。</p>
+<blockquote>
+<a class="reference external" href="https://pypi.python.org/pypi/pit/">https://pypi.python.org/pypi/pit/</a></blockquote>
+<p>Python3でも <a class="reference external" href="https://gist.github.com/tsuyukimakoto/7728056">https://gist.github.com/tsuyukimakoto/7728056</a> な感じで動きますね。</p>
+<p>利用する前に、EDITOR環境変数に好きなエディタを入れておきましょう。</p>
+<pre><code class="language-bash">$ export EDITOR='vi'</code></pre><p>必要な情報を得ようとしたときに未設定の場合には、エディタが起動します。保存して終了すると、値が戻ります。</p>
+<pre><code class="language-python">&gt;&gt;&gt; from pit import Pit
+&gt;&gt;&gt; Pit.get('spamname',{'require': {'email':'your email','password':'your password'}})
+{'email': 'mtsuyuki@gmail.com', 'password': 'passwd'}</code></pre><p>プレーンテキストだけど一回入れれば保存されて便利です。消したいときもファイル消すだけですし。 id:Yoshiori がPython3対応してくれないかなー</p>
+</div>
+<div class="section" id="os">
+<h3>OSのパスワード保存機構を利用する</h3>
+<p>OSの機能をラップしてくれます。コマンドラインでも使えます。</p>
+<blockquote>
+<a class="reference external" href="https://pypi.python.org/pypi/keyring">https://pypi.python.org/pypi/keyring</a></blockquote>
+<pre><code class="language-python">&gt;&gt;&gt; import keyring
+&gt;&gt;&gt; keyring.set_password('spamservice', 'tsuyukimakoto', 'passwd')
+&gt;&gt;&gt; keyring.get_password('spamservice', 'tsuyukimakoto')
+'passwd'</code></pre><p>OSXの場合には、keychainに保存されます。なんとなく安心ですね。</p>
+<img alt="https://dl.dropboxusercontent.com/u/382460/blog/20131202_keyring.png" src="https://dl.dropboxusercontent.com/u/382460/blog/20131202_keyring.png" />
+<p>Ubuntuとかでも動くらしいですが、残念なことにGnomeの機能をラップしているのでサーバインストールだと使えないことが多いようです。</p>
+</div>
+<div class="section" id="id4">
+<h3>しっかりした風にする</h3>
+<p>コードを見れば戻せてしまうので、このシチュエーションでは果たして頑張る意味があるのかはなぞですね。</p>
+<blockquote>
+<p><a class="reference external" href="https://pypi.python.org/pypi/pycrypto">https://pypi.python.org/pypi/pycrypto</a></p>
+<p>Python 1.5.2 is not supported. がウケます。頑張り過ぎでしょう。</p>
+</blockquote>
+<p>秘密のkeyとIVで暗号化して</p>
+<pre><code class="language-python">&gt;&gt;&gt; from Crypto.Cipher import AES
+&gt;&gt;&gt; obj = AES.new('16 or 24 or 32 bytes key', AES.MODE_CBC, 'sixteen bytes IV')
+&gt;&gt;&gt; obj.encrypt('my password_____')
+b'\xe1\xc6\x00^\xce\x0c\xb0\rE[\xdc\xba\xbc\xdb\xd9U'</code></pre><p>秘密のkeyとIVで戻す</p>
+<pre><code class="language-python">&gt;&gt;&gt; from Crypto.Cipher import AES
+&gt;&gt;&gt; encrypted = b'\xe1\xc6\x00^\xce\x0c\xb0\rE[\xdc\xba\xbc\xdb\xd9U'
+&gt;&gt;&gt; obj2 = AES.new('16 or 24 or 32 bytes key', AES.MODE_CBC, 'sixteen bytes IV')
+&gt;&gt;&gt; obj2.decrypt(encrypted)
+b'my password_____'</code></pre><p>暗号化する文字列長に制限があるので、うまいこと考えないといけない。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>現実的には？</h2>
+<p>サーバで使う場合には、Pitとpycryptoを組み合わせると幸せかもしれませんね。結局見えるんですが。</p>
+<p>OS側の機能が使えるマシンの場合にはkeyring便利です。</p>
+</div>
+<div class="section" id="id6">
+<h2>明日は？</h2>
+<p><a class="reference external" href="http://www.amazon.co.jp/dp/477415539X/">パーフェクトPython</a> を一緒に書いた <a class="reference external" href="https://twitter.com/shomah4a">しょーま</a> さんです！</p>
+</div>
+
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/blog/2013/12/02/hide_password/" data-numposts="5"></div>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2013/11/05/python3_tips_for_mavericks/">MavericksでのPython3はまりメモ</a></li>
+      
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
