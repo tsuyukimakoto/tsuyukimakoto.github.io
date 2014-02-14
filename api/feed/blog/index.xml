@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Tue, 17 Dec 2013 17:37:46 -0000</lastBuildDate>
+        <lastBuildDate>Fri, 14 Feb 2014 12:43:41 -0000</lastBuildDate>
         <item>
+            <title>kivyでrestructuredtextのeditorを使う</title>
+            <link>http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Fri, 14 Feb 2014 13:00:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>書くことから生まれること</title>
             <link>http://www.tsuyukimakoto.com/blog/2013/12/18/feedback/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Mon, 16 Sep 2013 03:05:39 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2013/09/16/pycon_apac_2013/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>カメラのカビ対策</title>
-            <link>http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Sun, 08 Sep 2013 03:25:59 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2013/09/08/avoid_camera_lens_fungus/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
