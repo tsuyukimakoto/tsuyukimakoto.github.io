@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="blackkite" />
+  <meta property="og:title" content="kivyでrestructuredtextのeditorを使う | tsuyuki.makoto" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:image" content="http://2.gravatar.com/avatar/a49edf2521f9e75826c6546c7585f17a" />
+  <meta property="og:url" content="http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/" />
+  <meta property="og:site_name" content="tsuyuki.makoto" />
+  <meta property="fb:admins" content="535742035" />
+  <title>kivyでrestructuredtextのeditorを使う | tsuyuki.makoto</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.tsuyukimakoto.com/api/feed/core/" />
+</head>
+<body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="http://www.tsuyukimakoto.com/">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/about/">About</a></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="xwide text input" placeholder="Google Custom Search" name="q" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2014-02-14 22:00:00</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/"></g:plusone><br />
+      <div class="fb-like" data-layout="box_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </section>
+    <section class="ten columns">
+    <h1>kivyでrestructuredtextのeditorを使う</h1>
+    <p>kivy v1.8.0 の話。</p>
+<p>まず始めに、現時点ではKivyは日本語の入力できない環境が多いということに注意。</p>
+<p>今回は、Kindle Fire HDX 7インチ で rst を簡単に編集＆プレビューする環境を作るのが目的。</p>
+<div class="section" id="kivy">
+<h2>ローカルへのKivyのインストール</h2>
+<p>WindowsやOSXはインストーラが用意されているので簡単。他の環境についても詳細にインストール方法が書いてあえるのできっと問題ないでしょう。</p>
+<p>この先はOSXでのお話（10.9.1）。</p>
+<p>dmgをマウントしてApplicationフォルダにコピーをするのに加えて、下の方にあるショートカットを追加する的なものもやっておくのが吉。/Applications/Kivy.app/Contents/Resources/script を /usr/local/bin/kivy でシンボリックリンクするだけなので忘れたら自分でやると良い。</p>
+<p>また、dmgをマウントするとexampleというフォルダがあり、その中に RST_Editor というフォルダがあるのでそれを適当な場所にコピーする。今回はホームディレクトリに rstedit という名前でコピーしたという前提。</p>
+</div>
+<div class="section" id="id1">
+<h2>デフォルトフォントを変更する</h2>
+<p>Kivyのデフォルトフォントは当然日本語を前提にしていない。世界中の文字を網羅したら50MB以上のフォントになっちゃうよー、ってことらしい。</p>
+<p>で、日本語のグリフが入ったフォントを無理矢理使うんだけど、環境によって当然日本語フォントが違う（Kindle Fire HDXなら決まってるんだろうけど）。</p>
+<p>面倒を回避するためにIPAのフォントを持ってくる。自分でしか使わないし。</p>
+<p>~/rstedit/fonts/ipaexg.ttf として置く。フォルダ名は何となく決めた。</p>
+<p>続いて、デフォルトフォントを変更する。</p>
+<pre><code class="language-python">~/rstedit/main.py
+
+# import文が終わったあたりに追加する
+from kivy.core.text import LabelBase, DEFAULT_FONT
+LabelBase.register(DEFAULT_FONT, 'fonts/ipaexg.ttf')</code></pre><p>これだけだとliteralブロックの日本語がうまく表示されないので、 kivy.uix.rst にベタに書かれているliteralブロックのフォントを無理矢理変える。DroidSansMono.ttfの指定が2カ所あるけど、構造定義の文字列中だけ変更した。問題があったら両方変えれば良いと思う。</p>
+<pre><code class="language-python">/Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/rst.py
+
+  225c225
+  &lt;         font_name: 'data/fonts/DroidSansMono.ttf'
+  ---
+  &gt;         font_name: 'fonts/ipaexg.ttf'</code></pre><p>あとでapkをビルドするときに必要になるので、pyoにしておく（Kivyにパスの通ったインタプリタを -O オプション付きで起動して import するだけ）。</p>
+<pre><code class="language-bash">$ kivy -O
+Python 2.7.5 (default, Aug 25 2013, 00:04:04)
+[GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; from kivy.uix import rst
+（これでpyoができてるはずなのでインタプリタを抜けていい）</code></pre></div>
+<div class="section" id="docutils">
+<h2>docutilsを同梱する</h2>
+<p>docuitlsのサイトからダウンロードしてきてフォルダの中に入っている docutils フォルダをzipにする。</p>
+<pre><code class="language-bash">$ zip -r docutils.zip ./docutils
+$ mv docutils.zip ~/rstedit/.</code></pre><p>無理矢理 docutils.zip にPYTHONPATHを通す。普段Pythonでインチキする時と同じでらくちん。</p>
+<pre><code class="language-python">~/rstedit/main.py
+
+# import文が終わったあたりに追加する
+sys.path.insert(0, os.path.join(os.getcwd(), 'docutils.zip'))</code></pre></div>
+<div class="section" id="apk">
+<h2>apkのビルド環境を作る</h2>
+<p>いろいろと準備が面倒なので、kivyが配布しているVirtualBoxのイメージ（ Kivy Python for android VM ）を使う。</p>
+<blockquote>
+<a class="reference external" href="http://kivy.org/#download">http://kivy.org/#download</a> ここからたどれる</blockquote>
+<p>VirtualBoxはOSXからアクセスできるようにネットワーク2にブリッジアダプタつけるとらくちん（キーボードの設定とかカエルの面倒だし）。</p>
+<p>ユーザ名 kivy パスワード kivy123 でログインできるので、なにはともあれsshをインストールする。</p>
+<pre><code class="language-bash">$ sudo apt-get install ssh</code></pre><p>環境準備についてはここに書いてあるまま</p>
+<blockquote>
+<a class="reference external" href="http://kivy.org/docs/guide/packaging-android.html">http://kivy.org/docs/guide/packaging-android.html</a></blockquote>
+<pre><code class="language-bash">$ ssh kivy@192.168.0.xx
+...
+$ git clone git://github.com/kivy/python-for-android
+$ cd python-for-android
+$ ./distribute.sh -m "kivy"</code></pre><p>簡単だ。</p>
+</div>
+<div class="section" id="rst-pyo">
+<h2>rst.pyoを差し替えてビルドする</h2>
+<p>日本語対応に無理矢理したモジュールをビルド環境に置く。</p>
+<pre><code class="language-bash">$ scp /Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/rst.pyo kivy@192.168.0.xxx:~/python-for-android/dist/default/private/lib/python2.7/site-packages/kivy/uix/.</code></pre><p>コードをビルド環境に置く。</p>
+<pre><code class="language-bash">$ scp -r -C ~/rstedit kivy@192.168.0.xxx:~/.</code></pre><p>ビルドする</p>
+<pre><code class="language-bash">$ ssh kivy@192.168.0.xxx
+...
+$ cd ~/python-for-android/dist/default
+$ ./build.py --dir ~/rstedit --name "RstEdit" --package com.example.yourdomain.android.restedit --version 0.1 debug</code></pre><p>~/python-for-android/dist/default/bin/RstEdit-0.1-debug.apk ができる。</p>
+</div>
+<div class="section" id="kindle-fire-hdxapk">
+<h2>Kindle Fire HDXにapkをインストールする</h2>
+<p>Kindle Fire HDXはAmazonのストア以外からのapkはインストールできない設定になっている。</p>
+<p>設定→アプリケーション→不明ソースからのアプリをオンにして野良apkをインストールできるようにする。</p>
+<p>これであとはさっきビルドしたapkを読み込めばインストールできる。</p>
+</div>
+<div class="section" id="dropbox">
+<h2>Dropbox経由でやり取りをする</h2>
+<p>ビルドしたものを移すのが便利なので、Dropboxアプリを入れると良いかも。Amazonマーケットには無いので、dropboxのサイトからダウンロードしてインストールする。</p>
+<blockquote>
+<a class="reference external" href="https://www.dropbox.com/android">https://www.dropbox.com/android</a></blockquote>
+</div>
+<div class="section" id="copy-com">
+<h2>Copy.com経由の場合</h2>
+<p>最近 Dropbox より <a class="reference external" href="https://copy.com?r=06078G">Copy.com</a> を使うことが増えているので、 Kindle Fire hdx にCopyアプリを入れた。</p>
+<p>Google Play経由でインストールしたアプリのapkは <a class="reference external" href="https://play.google.com/store/apps/details?id=com.traber.blueappsender">Bluetooth App Sender</a> というアプリを使って Dropbox に置いたりできる。問題は、 Kindle Fire hdx には Google Play は入らないし、電話はもちろん iPhone なので手段が無いこと。</p>
+<p>そこでGenymotionにGoogle Playをインストールしてそこで無料アプリを入手することにした。最近のGenymotionはGoogle Playアプリが同梱されなくなったので <a class="reference external" href="http://tabkul.com/?p=47325">この辺りの方法</a> を参照してインストールすべし。</p>
+<p>他にapkを入手する正当かどうかよくわからない方法もある。ものによってはうまく入手できないし、きちんとGoogle Playの環境を作るのが良いとは思う。</p>
+<blockquote>
+<a class="reference external" href="http://apps.evozi.com/apk-downloader/">http://apps.evozi.com/apk-downloader/</a></blockquote>
+</div>
+
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/" data-numposts="5"></div>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2013/12/18/feedback/">書くことから生まれること</a></li>
+      
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
