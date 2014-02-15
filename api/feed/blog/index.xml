@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Fri, 14 Feb 2014 12:43:41 -0000</lastBuildDate>
+        <lastBuildDate>Sat, 15 Feb 2014 16:35:25 -0000</lastBuildDate>
         <item>
+            <title>ymsr先生</title>
+            <link>http://www.tsuyukimakoto.com/blog/2014/02/16/ymsr/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sat, 15 Feb 2014 16:00:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2014/02/16/ymsr/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>kivyでrestructuredtextのeditorを使う</title>
             <link>http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Fri, 11 Oct 2013 11:30:00 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2013/10/11/tolot_the_calendar_2014/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>PyCon APAC 2013 のメモ</title>
-            <link>http://www.tsuyukimakoto.com/blog/2013/09/16/pycon_apac_2013/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Mon, 16 Sep 2013 03:05:39 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2013/09/16/pycon_apac_2013/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
