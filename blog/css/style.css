@@ -18,6 +18,13 @@ h2, h3, h4, h5 {
     background-color: #FFFCF5;
 }
 
+.topic {
+    margin: 1em;
+}
+.topic-title {
+    background-color: #CCCCCC;
+}
+
 .linkbox {
     padding: 2em;
 }
