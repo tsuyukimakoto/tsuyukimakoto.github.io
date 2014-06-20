@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Mon, 09 Jun 2014 14:03:33 -0000</lastBuildDate>
+        <lastBuildDate>Fri, 20 Jun 2014 14:42:32 -0000</lastBuildDate>
         <item>
+            <title>iPhoneのホーム画面に好きなURLスキーマのアイコンを追加する</title>
+            <link>http://www.tsuyukimakoto.com/blog/2014/06/20/add_url_scheme_icon_to_iphone_home/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Fri, 20 Jun 2014 14:30:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2014/06/20/add_url_scheme_icon_to_iphone_home/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>FabricラッパーのOozappa</title>
             <link>http://www.tsuyukimakoto.com/blog/2014/04/20/oozappa_enhance_fabric/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Fri, 14 Feb 2014 13:00:00 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>書くことから生まれること</title>
-            <link>http://www.tsuyukimakoto.com/blog/2013/12/18/feedback/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Tue, 17 Dec 2013 16:55:00 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2013/12/18/feedback/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
