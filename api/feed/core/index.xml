@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Fri, 20 Jun 2014 14:48:49 -0000</lastBuildDate>
+        <lastBuildDate>Sat, 05 Jul 2014 14:35:13 -0000</lastBuildDate>
         <item>
+            <title>運用道場に行ってきた</title>
+            <link>http://www.tsuyukimakoto.com/blog/2014/07/05/docker_and_consul/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sat, 05 Jul 2014 14:21:22 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2014/07/05/docker_and_consul/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>iPhoneのホーム画面に好きなURLスキームのアイコンを追加する</title>
             <link>http://www.tsuyukimakoto.com/blog/2014/06/20/add_url_scheme_icon_to_iphone_home/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Sat, 15 Feb 2014 16:00:00 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2014/02/16/ymsr/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>kivyでrestructuredtextのeditorを使う</title>
-            <link>http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Fri, 14 Feb 2014 13:00:00 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2014/02/14/kivy_and_kindle_fire_hdx/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
