@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="blackkite" />
+  <meta property="og:title" content="Consulのメモ 2014/07 | tsuyuki.makoto" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:image" content="http://2.gravatar.com/avatar/a49edf2521f9e75826c6546c7585f17a" />
+  <meta property="og:url" content="http://www.tsuyukimakoto.com/blog/2014/07/26/consul/" />
+  <meta property="og:site_name" content="tsuyuki.makoto" />
+  <meta property="fb:admins" content="535742035" />
+  <title>Consulのメモ 2014/07 | tsuyuki.makoto</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.tsuyukimakoto.com/api/feed/core/" />
+</head>
+<body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="http://www.tsuyukimakoto.com/">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/about/">About</a></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="xwide text input" placeholder="Google Custom Search" name="q" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2014-07-26 14:12:10</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2014/07/26/consul/"></g:plusone><br />
+      <div class="fb-like" data-layout="box_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </section>
+    <section class="ten columns">
+    <h1>Consulのメモ 2014/07</h1>
+    <p>メモしてたやつを忘れてたのでポストしておく。</p>
+<p>Dockerでnodeを3つ起動</p>
+<pre><code class="language-bash">$ sudo docker run -i -t --name node1 tsuyukimakoto/consul2 /bin/bash
+$ sudo docker run -i -t --name node2 tsuyukimakoto/consul2 /bin/bash
+$ sudo docker run -i -t --name node3 tsuyukimakoto/consul2 /bin/bash</code></pre><p>それぞれ、/etc/supervisord/conf.d/supervisord.confのnodaemonをtrueにしてバックグラウンドで実行するようにしてconsoleを使えるようにしてsupervisordを起動</p>
+<p>sudo /usr/bin/supervisord -c /etc/supervisor/supervisord.conf</p>
+<div class="section" id="id1">
+<h2>全部サーバで起動する</h2>
+<p>少なくとも3つはサーバが無いと耐障害性がゼロっぽいので、3つのノードを全部サーバであげてみる。</p>
+<p>各nodeのIPはたまたま以下だったと仮定する。</p>
+<blockquote>
+<p>node1: 172.17.0.156</p>
+<p>node2: 172.17.0.157</p>
+<p>node3: 172.17.0.158</p>
+</blockquote>
+<p>1つめだけは <strong>-bootstrap</strong> をつけて起動する。投票せずにリーダーになれる。</p>
+<pre><code class="language-bash"># IPADDR=$(ip addr show eth0 | egrep -o '[0-9]+(\.[0-9]+){3}')
+# consul agent -server -bootstrap -data-dir=/tmp/consul_data -bind=$IPADDR</code></pre><p>残りの2つはサーバだけどbootstrapなしで起動する。</p>
+<pre><code class="language-bash"># IPADDR=$(ip addr show eth0 | egrep -o '[0-9]+(\.[0-9]+){3}')
+# consul agent -server -data-dir=/tmp/consul_data -bind=$IPADDR</code></pre><p>node1からnode2,3のconsulをメンバーとして登録する。node2,3からnode1に対してjoinしても良い</p>
+<pre><code class="language-bash"># consul join 172.17.0.157 172.17.0.158</code></pre><p>node1で状態を確認</p>
+<pre><code class="language-bash"># consul members
+Node          Address            Status  Type    Build  Protocol
+80cf209a4c63  172.17.0.157:8301  alive   server  0.3.0  2
+92b0477469ce  172.17.0.158:8301  alive   server  0.3.0  2
+e98aff1f6684  172.17.0.156:8301  alive   server  0.3.0  2</code></pre></div>
+<div class="section" id="id2">
+<h2>サービスを登録する</h2>
+<p>jsonで定義して、定義ファイルを適当なフォルダに置く。フォルダは agent 起動時に <strong>-config-dir</strong> で指定する。</p>
+<pre><code class="language-javascript">nginx.json
+
+{"service": {"name": "web", "tags": ["nginx"], "port": 80}}</code></pre><p>angentを一旦落として起動し直す（通常の設定変更ならSIGHUPで良いらしい）。</p>
+<pre><code class="language-bash">// node1
+# consul agent -server -bootstrap -data-dir=/tmp/consul_data -bind=$IPADDR -config-dir=/etc/consul/conf.d
+// node2,3
+# consul agent -server -data-dir=/tmp/consul_data -bind=$IPADDR -config-dir=/etc/consul/conf.d</code></pre><p>起動したらnode1からnode2,3のconsulをメンバーとして登録しなおしておく。</p>
+</div>
+<div class="section" id="node">
+<h2>サービスを持っているnodeの一覧を出力する</h2>
+<div class="section" id="dns">
+<h3>DNSサービスのように探せる</h3>
+<pre><code class="language-bash"># dig @127.0.0.1 -p 8600 web.service.consul
+
+; &lt;&lt;&gt;&gt; DiG 9.9.5-3-Ubuntu &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 web.service.consul
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 21835
+;; flags: qr aa rd; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;web.service.consul.    IN  A
+
+;; ANSWER SECTION:
+web.service.consul. 0 IN  A 172.17.0.157
+web.service.consul. 0 IN  A 172.17.0.156
+web.service.consul. 0 IN  A 172.17.0.158
+
+;; Query time: 1 msec
+;; SERVER: 127.0.0.1#8600(127.0.0.1)
+;; WHEN: Sat Jul 12 04:42:05 UTC 2014
+;; MSG SIZE  rcvd: 138</code></pre></div>
+<div class="section" id="http">
+<h3>HTTP経由でも</h3>
+<p>curlでもいいけど結局Pythonから使うと思うので（さらに実際は requests を使うけど）、</p>
+<pre><code class="language-python"># python3
+&gt;&gt;&gt; import http.client
+&gt;&gt;&gt; import json
+&gt;&gt;&gt; from pprint import pprint
+&gt;&gt;&gt; con = http.client.HTTPConnection("localhost", 8500)
+&gt;&gt;&gt; con.request('GET', '/v1/catalog/service/web')
+&gt;&gt;&gt; res = con.getresponse()
+&gt;&gt;&gt; result = json.loads(res.readall().decode('UTF-8'))
+&gt;&gt;&gt; pprint(result)
+[{'Address': '172.17.0.156',
+  'Node': 'e98aff1f6684',
+  'ServiceID': 'web',
+  'ServiceName': 'web',
+  'ServicePort': 80,
+  'ServiceTags': ['nginx']},
+ {'Address': '172.17.0.158',
+  'Node': '92b0477469ce',
+  'ServiceID': 'web',
+  'ServiceName': 'web',
+  'ServicePort': 80,
+  'ServiceTags': ['nginx']},
+ {'Address': '172.17.0.157',
+  'Node': '80cf209a4c63',
+  'ServiceID': 'web',
+  'ServiceName': 'web',
+  'ServicePort': 80,
+  'ServiceTags': ['nginx']}]</code></pre></div>
+</div>
+<div class="section" id="id3">
+<h2>クライアントnodeを追加してみる</h2>
+<p>serverにやったのと同じようにnginxのjsonとか作った後に。</p>
+<pre><code class="language-bash">// node4
+# IPADDR=$(ip addr show eth0 | egrep -o '[0-9]+(\.[0-9]+){3}')
+# consul agent -data-dir=/tmp/consul_data -bind=$IPADDR -config-dir=/etc/consul/conf.d</code></pre><p>せっかくなのでクライアント側からサーバに自分が追加されたことを通知する（node4は172.17.0.159だったとする）。</p>
+<pre><code class="language-bash"># consul join 172.17.0.156</code></pre><p>クライアント側でもサーバ側でもサーバとクライアントが同期される。</p>
+<pre><code class="language-bash"># consul members
+Node          Address            Status  Type    Build  Protocol
+a82f70504c03  172.17.0.159:8301  alive   client  0.3.0  2
+e98aff1f6684  172.17.0.156:8301  alive   server  0.3.0  2
+80cf209a4c63  172.17.0.157:8301  alive   server  0.3.0  2
+92b0477469ce  172.17.0.158:8301  alive   server  0.3.0  2</code></pre></div>
+<div class="section" id="nodeconsul1">
+<h2>試しにサーバnodeのconsulを1つ落としてみる</h2>
+<p>即座にクライアントやサーバにイベントが通知されて…</p>
+<pre><code class="language-bash">2014/07/12 05:10:24 [INFO] serf: EventMemberLeave: 80cf209a4c63 172.17.0.157
+2014/07/12 05:10:24 [INFO] consul: removing server 80cf209a4c63 (Addr: 172.17.0.157:8300) (DC: dc1)</code></pre><p>状態も変わる（leftになってる）。</p>
+<pre><code class="language-bash"># consul members
+Node          Address            Status  Type    Build  Protocol
+80cf209a4c63  172.17.0.157:8301  left    server  0.3.0  2
+92b0477469ce  172.17.0.158:8301  alive   server  0.3.0  2
+a82f70504c03  172.17.0.159:8301  alive   client  0.3.0  2
+e98aff1f6684  172.17.0.156:8301  alive   server  0.3.0  2</code></pre><p>落としたnodeのconsulを起動し直しても状態は復帰しない。再度joinしてあげないといけない。</p>
+</div>
+<div class="section" id="id4">
+<h2>サービス監視</h2>
+<p>サービス監視は、任意のスクリプトを指定間隔で実行してexit codeを確認するタイプと、定期的な通知をもって生存とするタイプの2種類。</p>
+<p>いずれもサービスの定義jsonと同じ場所にjsonで定義しておいておけば良い。</p>
+<p>多分、任意のスクリプトを指定間隔で実行ってのが通常な気がする。サービスだけじゃなくって、リソース監視にも使えそう。</p>
+<pre><code class="language-javascript">{
+    "check": {
+        "id": "nginx_alive",
+        "name": "Check nginx status",
+        "script": "/usr/local/bin/is_nginx_alive.py",
+        "interval": "30s"
+    }
+}</code></pre></div>
+<div class="section" id="webui">
+<h2>WebUI</h2>
+<p>htmlとjavascriptでできたやつがあるらしい。ダウンロードして展開したディレクトリをagent起動時に <strong>-ui-dir</strong> にしていすれば/uiで見られる。</p>
+</div>
+
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/blog/2014/07/26/consul/" data-numposts="5"></div>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2014/07/05/docker_and_consul/">運用道場に行ってきた</a></li>
+      
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
