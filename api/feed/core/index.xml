@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Sat, 26 Jul 2014 05:18:09 -0000</lastBuildDate>
+        <lastBuildDate>Sat, 23 Aug 2014 15:44:16 -0000</lastBuildDate>
         <item>
+            <title>ApertureからLightRoomへ</title>
+            <link>http://www.tsuyukimakoto.com/blog/2014/08/24/aperture_to_lightroom/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sat, 23 Aug 2014 15:30:39 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2014/08/24/aperture_to_lightroom/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>Consulのメモ 2014/07</title>
             <link>http://www.tsuyukimakoto.com/blog/2014/07/26/consul/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Sun, 02 Mar 2014 15:00:00 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2014/03/03/grad_trip_1997/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>たのしいプログラミング Pythonではじめよう！</title>
-            <link>http://www.tsuyukimakoto.com/blog/2014/02/24/python_for_kids_jp/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Sun, 23 Feb 2014 15:00:00 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2014/02/24/python_for_kids_jp/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
