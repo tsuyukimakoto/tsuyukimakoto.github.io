@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Sun, 01 Mar 2015 07:52:39 -0000</lastBuildDate>
+        <lastBuildDate>Sun, 03 May 2015 04:24:45 -0000</lastBuildDate>
         <item>
+            <title>夜光虫とカメラバッグ</title>
+            <link>http://www.tsuyukimakoto.com/blog/2015/05/03/noctiluca_with_vanguard_sydney_2/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sun, 03 May 2015 03:01:07 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2015/05/03/noctiluca_with_vanguard_sydney_2/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>鎌倉goでもくもくと</title>
             <link>http://www.tsuyukimakoto.com/blog/2015/03/01/erulolo_at_kamakurago/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Sun, 20 Apr 2014 11:49:42 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2014/04/20/oozappa_enhance_fabric/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>Webアプリエンジニア養成読本</title>
-            <link>http://www.tsuyukimakoto.com/blog/2014/03/09/web_app_engineer_training/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Sun, 09 Mar 2014 07:00:00 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2014/03/09/web_app_engineer_training/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
