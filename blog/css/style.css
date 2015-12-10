@@ -37,3 +37,8 @@ h2, h3, h4, h5 {
 .footnote .label a {
    color: blue;
 }
+.eye-catch {
+  text-align: center;
+  color: #FF4422;
+  font-size: 2em;
+}
