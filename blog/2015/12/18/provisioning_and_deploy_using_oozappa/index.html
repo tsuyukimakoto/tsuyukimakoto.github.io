@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="blackkite" />
+  <meta property="og:title" content="Oozappaにdeployしようぜ | tsuyuki.makoto" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:image" content="http://2.gravatar.com/avatar/a49edf2521f9e75826c6546c7585f17a" />
+  <meta property="og:url" content="http://www.tsuyukimakoto.com/blog/2015/12/18/provisioning_and_deploy_using_oozappa/" />
+  <meta property="og:site_name" content="tsuyuki.makoto" />
+  <meta property="fb:admins" content="535742035" />
+  <title>Oozappaにdeployしようぜ | tsuyuki.makoto</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.tsuyukimakoto.com/api/feed/core/" />
+</head>
+<body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="http://www.tsuyukimakoto.com/">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/about/">About</a></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="xwide text input" placeholder="Google Custom Search" name="q" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form></li>
+          </ul>
+      </div>
+  </div>
+  <div class="row">
+    <section class="two columns">
+      <li class="success badge">2015-12-18 13:00:00</li><br />
+      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
+      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2015/12/18/provisioning_and_deploy_using_oozappa/"></g:plusone><br />
+      <div class="fb-like" data-layout="box_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </section>
+    <section class="ten columns">
+    <h1>Oozappaにdeployしようぜ</h1>
+    <p>この記事は <a class="reference external" href="http://qiita.com/advent-calendar/2015/python">Python Advent Calendar 2015</a> 18 日目の記事です。</p>
+<div class="section" id="id1">
+<h2>構成管理とデプロイツール</h2>
+<p>構成管理やアプリケーションのデプロイに使うツールは capistrano や fabric のようなsshによるシェルのリモート実行がベースのものと、 Chef や Ansible といったDSLベースでミドルウェアのビルド等ができたり何度繰り返し実行しても同じ状態になる（冪等性というらしいです）ことを目指したものがあります。</p>
+<p>それぞれ特徴がありますが、わたしはPython使いなのでFabricかAnsibleが有力の候補です（ capistrano や Chef は Ruby 製）。</p>
+</div>
+<div class="section" id="ansible-fabric">
+<h2>Ansibleなの？Fabricなの？</h2>
+<p>Ansible、いろいろ良いです。良いのですが、DSLが好きでないのと、今日はCentOS・明日はUbuntu、のようにいろいろな環境にミドルウェアを入れることもないので、とくにそのあたりの抽象化を必要としていません。</p>
+<p>Fabric、shellをリモートで実行しつつPythonの便利機能が使える。良いんです。ただ、徐々にスクリプトが大きくなっていきます。</p>
+</div>
+<div class="section" id="oozappa">
+<h2>大雑把なヤツ ＝ Oozappa</h2>
+<p>Ansibleはロールによってフォルダ構造を作るようになっていて、共通の関数や設定を持てる設計です。</p>
+<p>Fabricはfabfileモジュールかパッケージにタスクを記述します。</p>
+<p>今日は、両方の良いところを大雑把にとりいれた Oozappa というFabricラッパーを紹介します。</p>
+<p><a class="reference external" href="https://github.com/tsuyukimakoto/oozappa">https://github.com/tsuyukimakoto/oozappa</a></p>
+</div>
+<div class="section" id="id2">
+<h2>実際の環境構築やデプロイはどうしてる？</h2>
+<p>イミュータブルインフラストラクチャー的考えでAWSにインスタンスを起動する場合、私は環境構築・デプロイスクリプトを次のようにフェーズに分けます。</p>
+<ul>
+<li><p class="first">Constructionフェーズ</p>
+<blockquote>
+<p>OSのベースAMIからインスタンスを起動し、起動したインスタンスにプロジェクトで共通に使うミドルウェアなどをインストールし、AMIとしてフリーズします。
+各種セキュリティフィックスやミドルウェアのバージョンアップ時にはConstructionフェーズからAMIを作り直します。</p>
+</blockquote>
+</li>
+<li><p class="first">Deploymentフェーズ</p>
+<blockquote>
+<p>Constructionで作成したAMIを用いて、各種ロールのソースコードなどを配備します。ステージング環境やプロダクション環境で違いのある設定ファイルなどはこの時点では配備しません。この段階でソースコードがAMIとしてフリーズされます。</p>
+</blockquote>
+</li>
+<li><p class="first">Releaseフェーズ</p>
+<blockquote>
+<p>Deployフェーズで作成したAMIを用いて、ステージング環境やプロダクション環境にインスタンスを起動します。環境に依存する設定ファイルや、環境によって違うファイルを配備します。重要なのは、ステージング環境を起動したAMIで必要な確認を行った後、同じAMIを用いてプロダクション環境を作ることです。ブルーグリーンデプロイメントを行います（不具合があったらできるだけ容易に前のバージョンのインスタンスに戻せるように進めます）。</p>
+<p>staging.py、production.pyなどに同じ名前のタスクを定義して fabfile/__init__.py にモジュールを import して使うと差異を確認しやすいと思います。</p>
+</blockquote>
+</li>
+<li><p class="first">Adhocフェーズ</p>
+<blockquote>
+<p>リリースされている各環境に対して、Adhocに変更を加えます。本来はDeploymentフェーズから行うべきですが、Hotfix的なものに関してはAdhocに行いたい操作もあります。</p>
+</blockquote>
+</li>
+</ul>
+<p>各フェーズに関してfabfileを分けたいと思うのは、Fabricユーザとしては自然だと思います。しかし、Fabricでfabfileを分けると、共通モジュールの管理に困ります。別の独立したモジュールとしてPYTHONPATHに加え、都度更新がないかを確認しながら使うことになります。</p>
+</div>
+<div class="section" id="ansiblefabric">
+<h2>Ansibleの再発明っぽいストラクチャーをFabricで使う</h2>
+<p>どのフェーズからでも共通で使えるcommonというフォルダを提供。</p>
+<pre class="literal-block">
+.
+├── common
+│&nbsp;&nbsp; ├── __init__.py
+│&nbsp;&nbsp; ├── files
+│&nbsp;&nbsp; ├── functions
+│&nbsp;&nbsp; │&nbsp;&nbsp; ├── common_multiple_fabric_environment.py
+│&nbsp;&nbsp; ├── templates
+│&nbsp;&nbsp; │&nbsp;&nbsp; └── sample_a.txt
+│&nbsp;&nbsp; └── vars.py
+├── construction
+│&nbsp;&nbsp; ├── fabfile
+│&nbsp;&nbsp; │&nbsp;&nbsp; ├── __init__.py
+│&nbsp;&nbsp; ├── templates
+│&nbsp;&nbsp; └── vars.py
+├── deployment
+│&nbsp;&nbsp; ├── fabfile
+│&nbsp;&nbsp; │&nbsp;&nbsp; ├── __init__.py
+│&nbsp;&nbsp; ├── templates
+│&nbsp;&nbsp; └── vars.py
+└── release
+    ├── fabfile
+    │&nbsp;&nbsp; ├── __init__.py
+    │&nbsp;&nbsp; ├── staging.py
+    │&nbsp;&nbsp; ├── production.py
+    ├── templates
+    └── vars.py
+</pre>
+<p>設定ファイルがyamlだとプログラマブルでないので、辞書ライクでありつつドットシンタックスでアクセスできる設定オブジェクトを提供します。設定オブジェクトはcommon/vars.pyをベースとして、各フェーズで追加・上書きできる仕組みにしています。</p>
+<p>jinja2テンプレートをレンダリングしつつ各サーバへアップロードできる機能でも、指定のテンプレートが各フェーズのtemplatesディレクトリを起点に探して発見できない場合にはcommonのtemplatesディレクトリからも探す仕組みにしています。</p>
+</div>
+<div class="section" id="id3">
+<h2>フェーズを分けたけど串刺しで実施したい</h2>
+<p>fabfileが肥大化するので、フェーズを分けられるように構造を作りました。しかし、実際には複数のフェーズを一気に実行したいことがあります。毎回長大なfabコマンドを &amp;&amp; でつないで実行したりするのも少し面倒です。</p>
+<p>そこで、通常の1fabfile内複数タスクの実行をjobと呼ぶこととし、複数のフェーズにまたがるjobの連なりをjobsetと呼ぶこととしました。Oozappaでの実行単位はjobsetです（1jobのjobsetでも良い）。</p>
+</div>
+<div class="section" id="id4">
+<h2>記録をとりたい</h2>
+<p>いつどのjobsetを実施して、その際にはどういったリビジョンのファイルが使われ、何が行われたかはログを保存すればわかります。Oozappaは、ファイルへの出力とファイルパスや実施日時、結果をデータベースに保存します。</p>
+</div>
+<div class="section" id="id5">
+<h2>手離れしたい</h2>
+<p>デプロイには破壊的なものと破壊的で無いものがあります。例えば、ティザーサイトなどは多少の問題があったとしてもすぐに修正してやり直せばこと無きを得る場合が多く、デプロイ職人がスタンバッておく必要がないかもしれません。OozappaはWebUIを提供しますので、該当のjobsetを指定して誰でも簡単に実行できます。</p>
+<p>ティザーサイトなどはmasterにマージしたら即配信とはいかないビジネス上の事情や、逆にチャンスが転がっている場合にはエンジニアがいなくても配信したいといった事情があるでしょう。そんな場合でもストレスなく配信を行え、エンジニアはいつでもWebUIでjobsetの実施ログが確認できるので、きっと便利です（実際1年以上運用している感じ、便利っぽい評価を受けています）。</p>
+<img alt="run jobset" class="align-center" src="https://dl.dropboxusercontent.com/u/382460/oozappa/readme/jobset.png" style="width: 372px; height: 330px;" />
+<p>ちょっとだれにでもは実行させたく無いけれどjobsetとしてまとめて実行したいし記録も取りたい、という要求にも答えます。jobsetをCLIからのみ実行できるように制限できます。いつ実施したかや、ログの確認はWebUIからできます。</p>
+</div>
+<div class="section" id="id6">
+<h2>動くの？</h2>
+<p>1年以上運用されていて、そこそこの頻度で使われているのできっと動きます。動かない場合にはPRお待ちしております。</p>
+</div>
+<div class="section" id="id7">
+<h2>お礼</h2>
+<p>退職に関するエントリでウィッシュリストを貼り付けたところ、本当に贈り物が届きました。届くと思っていなくて、普通に使っているウィッシュリストを貼ってしまいました :-)</p>
+<p>ID書くといやらしいので書きません。みんなありがとーーーー！！！１</p>
+<p class="annot">送りたいものが見当たらなくてGift Cardを送ってきてくれた若者までいて恐縮してます</p>
+</div>
+
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/blog/2015/12/18/provisioning_and_deploy_using_oozappa/" data-numposts="5"></div>
+    </section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2015/12/14/quitting_job/">株式会社TOLOTを退職します</a></li>
+      
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
