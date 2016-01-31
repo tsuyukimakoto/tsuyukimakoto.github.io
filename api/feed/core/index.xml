@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Wed, 13 Jan 2016 13:56:36 -0000</lastBuildDate>
+        <lastBuildDate>Sun, 31 Jan 2016 10:11:10 -0000</lastBuildDate>
         <item>
+            <title>UNCOVER TRUTHに入社しました</title>
+            <link>http://www.tsuyukimakoto.com/blog/2016/02/01/to_join_uncover_truth_as_tech_lead/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Mon, 01 Feb 2016 00:30:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2016/02/01/to_join_uncover_truth_as_tech_lead/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>Oozappaにdeployしようぜ</title>
             <link>http://www.tsuyukimakoto.com/blog/2015/12/18/provisioning_and_deploy_using_oozappa/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Sun, 03 May 2015 03:01:07 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2015/05/03/noctiluca_with_vanguard_sydney_2/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>鎌倉goでもくもくと</title>
-            <link>http://www.tsuyukimakoto.com/blog/2015/03/01/erulolo_at_kamakurago/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Sun, 01 Mar 2015 06:02:14 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2015/03/01/erulolo_at_kamakurago/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
