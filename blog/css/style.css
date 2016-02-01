@@ -43,3 +43,11 @@ h2, h3, h4, h5 {
   font-size: 2em;
 }
 .annot { font-size: 75.6%; line-height: inherit; }
+
+@media screen and (max-width: 767px) {
+  h1 { font-size: 1.6em; border-bottom: 1px solid #4C49FF; }
+  h2 { font-size: 1.4em; }
+  h3 { font-size: 1.2em; }
+  h4 { font-size: 1.0em; }
+  h5 { font-size: 0.6em; }
+}
