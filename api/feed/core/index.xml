@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Sat, 27 Feb 2016 07:13:29 -0000</lastBuildDate>
+        <lastBuildDate>Sat, 27 Feb 2016 15:10:33 -0000</lastBuildDate>
         <item>
+            <title>読書に適したAndroid Tablet</title>
+            <link>http://www.tsuyukimakoto.com/blog/2016/02/28/good_android_tablet_for_reading/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sat, 27 Feb 2016 15:15:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2016/02/28/good_android_tablet_for_reading/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>AWSとVanilla, Role Pattern</title>
             <link>http://www.tsuyukimakoto.com/blog/2016/02/22/aws_vanilla_role_pattern/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Thu, 27 Aug 2015 13:00:00 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2015/08/27/we_are_area_boss/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>Apple Musicがやってきた</title>
-            <link>http://www.tsuyukimakoto.com/blog/2015/07/01/apple_music_is_comming/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Tue, 30 Jun 2015 16:27:50 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2015/07/01/apple_music_is_comming/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>

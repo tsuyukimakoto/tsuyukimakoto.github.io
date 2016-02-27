@@ -42,6 +42,15 @@ h2, h3, h4, h5 {
   padding: 0.5em;
 }
 
+.aff {
+  border: dotted 1px #888888;
+  padding: 0.5em;
+}
+
+div#contents {
+  display: none;
+}
+
 table caption {
   padding-bottom: 0px;
   text-align: left;
