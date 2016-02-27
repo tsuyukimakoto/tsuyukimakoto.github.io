@@ -1,6 +1,9 @@
-/*
-We highly recommend you use SASS and write your custom styles in sass/_custom.scss.
-However, this blank file is available if you prefer
+/**
+*  logo
+*
+*  @sample
+*  div.logo a(href="http://www.tsuyukimakoto.com/")
+* 
 */
 .logo a { color: #3A64FF; font-size: 80%;}
 .logo a:hover { color: #4B9DFF; }
@@ -9,13 +12,23 @@ li p.first { font-size: 120%; font-weight: 800; border-bottom: groove thin #7af;
 h1, h2, h3, h4, h5 {
     font-family: OpenSans, 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
 }
-h1 { font-size: 3em; }
-h2 { font-size: 2.0em; }
-h3 { font-size: 1.6em; }
-h4 { font-size: 1.3em; }
+h1 { font-size: 3em; color: #FFFFFF;}
+h2 { font-size: 2.0em; margin-top: 0.8em; border-left: ridge thin #7af; border-top: ridge thin #7af; padding-left: 0.5em;}
+h3 { font-size: 1.6em; margin-top: 0.8em; }
+h4 { font-size: 1.3em; margin-top: 0.6em; }
 h5 { font-size: 1.0em; }
 h2, h3, h4, h5 {
-    background-color: #FFFCF5;
+  background-color: #FFFCF5;
+}
+
+.titlerow {
+  border-top: groove 1px #FFFFFF;
+}
+
+.snsbuttons {
+    padding: 1em;
+    margin-bottom: 0.5em;
+    border: 1px solid #CCCCCC;
 }
 
 .topic {
@@ -23,6 +36,20 @@ h2, h3, h4, h5 {
 }
 .topic-title {
     background-color: #CCCCCC;
+}
+
+.section p {
+  padding: 0.5em;
+}
+
+table caption {
+  padding-bottom: 0px;
+  text-align: left;
+  font-size: 1.3em;
+}
+
+img {
+  border-radius: 5%;
 }
 
 .linkbox {
@@ -45,7 +72,7 @@ h2, h3, h4, h5 {
 .annot { font-size: 75.6%; line-height: inherit; }
 
 @media screen and (max-width: 767px) {
-  h1 { font-size: 1.6em; border-bottom: 1px solid #4C49FF; }
+  h1 { font-size: 1.6em; }
   h2 { font-size: 1.4em; }
   h3 { font-size: 1.2em; }
   h4 { font-size: 1.0em; }
