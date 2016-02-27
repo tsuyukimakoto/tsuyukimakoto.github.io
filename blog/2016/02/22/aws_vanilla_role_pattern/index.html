@@ -58,18 +58,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </form></li>
           </ul>
       </div>
+      <div class="row titlerow">
+        <section class="one columns"></section>
+        <section class="ten columns">
+        <h1>AWSとVanilla, Role Pattern</h1>
+          <li class="success badge">2016-02-22 09:30:00</li>
+          <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+        </section>
+        <section class="one columns"></section>
+      </div>
   </div>
   <div class="row">
-    <section class="two columns">
-      <li class="success badge">2016-02-22 09:30:00</li><br />
-      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
-      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2016/02/22/aws_vanilla_role_pattern/"></g:plusone><br />
-      <div class="fb-like" data-layout="box_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    <section class="one columns">
     </section>
     <section class="ten columns">
-    <h1>AWSとVanilla, Role Pattern</h1>
     <p>AWSを利用したシステムに関して、構成管理ツール・デプロイツールの使い方が「複数サーバへの一括パラレル配信どやー！」といった時代ではなくなってきていると感じています。</p>
 <p>イミュータブルインフラストラクチャーとブルーグリーンデプロイメントが完全に機能する世界、良いですね！AMIを中心に据えた構成管理とデプロイに関しては、すでに冪等性さえもどうでもよいことが多いのではないでしょうか。</p>
 <p>しかし、現時点でそういった仕組みを用意している構成管理・デプロイツールがあるような気がしていないので、 <a class="reference external" href="https://github.com/tsuyukimakoto/oozappa">Oozappa</a> にテンプレート的な機能を追加したいと思うのです。このエントリはそのプロポーザル的なものです。</p>
@@ -198,6 +200,20 @@ https://dl.dropboxusercontent.com/u/382460/blog/2016/0222/AWS_Vanilla_Role_Patte
 <p>※ それとはべつに Oozappa をマシにしたいって人がいたらorganization作ったのでそっちに移すことも考えるくらいまともなことを言ってみてください。</p>
 </div>
 
+    <div class="row snsbuttons">
+      <section class="one columns"></section>
+      <section class="ten columns">
+        <li class="badge 3rd"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a></li>
+            <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+            <li class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></li>
+            <li class="badge 3rd"><a href="http://b.hatena.ne.jp/entry/http://www.tsuyukimakoto.com/blog/2016/02/22/aws_vanilla_role_pattern/" class="hatena-bookmark-button" data-hatena-bookmark-title="Consulのメモ 2014/07" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script></li>
+            <li class="badge 3rd"><g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2016/02/22/aws_vanilla_role_pattern/"></g:plusone></li>
+            <li class="badge 3rd"><a data-pocket-label="pocket" data-save-url="http://www.tsuyukimakoto.com/blog/2016/02/22/aws_vanilla_role_pattern/" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a></li>
+            <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+      </section>
+      <section class="one columns"></section>
+    </div>
       <div class="row">
         <section class="centered three columns">
           <li class="label info">みなさんのコメント</li>
@@ -210,6 +226,7 @@ https://dl.dropboxusercontent.com/u/382460/blog/2016/0222/AWS_Vanilla_Role_Patte
       </div>
       <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/blog/2016/02/22/aws_vanilla_role_pattern/" data-numposts="5"></div>
     </section>
+    <section class="one columns"></section>
   </div>
   <div class="navbar pretty" id="nav_bottom">
     <div class="row">

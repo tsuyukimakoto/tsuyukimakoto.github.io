@@ -58,18 +58,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </form></li>
           </ul>
       </div>
+      <div class="row titlerow">
+        <section class="one columns"></section>
+        <section class="ten columns">
+        <h1>Djangoでsimplejsonを使おうとしてはまりちゅう</h1>
+          <li class="success badge">2006-07-13 00:52:15</li>
+          <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+        </section>
+        <section class="one columns"></section>
+      </div>
   </div>
   <div class="row">
-    <section class="two columns">
-      <li class="success badge">2006-07-13 00:52:15</li><br />
-      <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a>
-      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-      <g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2006/07/13/django-simplejson-problem/"></g:plusone><br />
-      <div class="fb-like" data-layout="box_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    <section class="one columns">
     </section>
     <section class="ten columns">
-    <h1>Djangoでsimplejsonを使おうとしてはまりちゅう</h1>
     <p>ブログの右側部分の検索を、習作としてAjax化しています。</p>
 <p>見た目きにせずに出力しているのはあれとして、simplejsonのdjangoラッパーが、日本語をord(s)したエスケープで返してきて困っています。</p>
 <p>一応、jsonを返すビューで、ensure_ascii=False付きで呼び出しているのですが、値が使われることなくascii以外はordするエンコーダが選択されてしまいます。</p>
@@ -85,6 +87,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   -         simplejson.dump(self.objects, self.stream, cls=DateTimeAwareJSONEncoder)
   +         simplejson.dump(self.objects, self.stream, cls=DateTimeAwareJSONEncoder, ensure_ascii=self.options['ensure_ascii'])</code></pre><p>ふーむ。どうしようかな。</p>
 <div class="notes"><blockquote class="last"><i class="icon-info"></i>  trunk版は修正されています。上記ビビり修正ではなく **self.options を渡しているようです。いや、だって怖かったから・・ (2006-10-06)</blockquote></div>
+    <div class="row snsbuttons">
+      <section class="one columns"></section>
+      <section class="ten columns">
+        <li class="badge 3rd"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a></li>
+            <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+            <li class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></li>
+            <li class="badge 3rd"><a href="http://b.hatena.ne.jp/entry/http://www.tsuyukimakoto.com/blog/2006/07/13/django-simplejson-problem/" class="hatena-bookmark-button" data-hatena-bookmark-title="Consulのメモ 2014/07" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script></li>
+            <li class="badge 3rd"><g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2006/07/13/django-simplejson-problem/"></g:plusone></li>
+            <li class="badge 3rd"><a data-pocket-label="pocket" data-save-url="http://www.tsuyukimakoto.com/blog/2006/07/13/django-simplejson-problem/" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a></li>
+            <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+      </section>
+      <section class="one columns"></section>
+    </div>
       <div class="row">
         <section class="centered three columns">
           <li class="label info">みなさんのコメント</li>
@@ -97,6 +113,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </div>
       <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/blog/2006/07/13/django-simplejson-problem/" data-numposts="5"></div>
     </section>
+    <section class="one columns"></section>
   </div>
   <div class="navbar pretty" id="nav_bottom">
     <div class="row">
