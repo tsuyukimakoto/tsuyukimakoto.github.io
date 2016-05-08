@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Sat, 16 Apr 2016 15:12:52 -0000</lastBuildDate>
+        <lastBuildDate>Sun, 08 May 2016 03:44:23 -0000</lastBuildDate>
         <item>
+            <title>ナノクリ20mm F1.8がやってきた</title>
+            <link>http://www.tsuyukimakoto.com/blog/2016/05/08/af-s-nikkor-20mm-f18g-ed/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Sun, 08 May 2016 02:46:57 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2016/05/08/af-s-nikkor-20mm-f18g-ed/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>東京リージョン開設前夜のGCP勉強会 GCPUG Shonanに行ってきた</title>
             <link>http://www.tsuyukimakoto.com/blog/2016/04/17/gcpug_shonan/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Thu, 10 Dec 2015 16:23:45 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2015/12/11/pyspa-advent-calendar-2015/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>アツいかもzulip</title>
-            <link>http://www.tsuyukimakoto.com/blog/2015/09/26/zulip_is_comming/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Sat, 26 Sep 2015 01:57:19 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2015/09/26/zulip_is_comming/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
