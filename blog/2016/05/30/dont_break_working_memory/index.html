@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="generator" content="blackkite" />
+  <meta property="og:title" content="思考の中断と文化指向の採用 | tsuyuki.makoto" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:image" content="http://2.gravatar.com/avatar/a49edf2521f9e75826c6546c7585f17a" />
+  <meta property="og:url" content="http://www.tsuyukimakoto.com/blog/2016/05/30/dont_break_working_memory/" />
+  <meta property="og:site_name" content="tsuyuki.makoto" />
+  <meta property="fb:admins" content="535742035" />
+  <title>思考の中断と文化指向の採用 | tsuyuki.makoto</title>
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/gumby.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/prism.css">
+<link rel="stylesheet" href="http://www.tsuyukimakoto.com/blog/css/style.css">
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/modernizr-2.6.2.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/jquery-2.0.2.min.js"></script>
+<script gumby-touch="js/libs" src="http://www.tsuyukimakoto.com/blog/js/libs/gumby.min.js"></script>
+<script src="http://www.tsuyukimakoto.com/blog/js/libs/prism.js"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.tsuyukimakoto.com/api/feed/core/" />
+</head>
+<body>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TL93FW"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TL93FW');</script>
+<!-- End Google Tag Manager -->
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=194346604081719";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <div class="navbar" id="nav_top">
+      <div class="row">
+          <a class="toggle" gumby-trigger="#nav_top > .row > ul" href="#"><i class="icon-menu"></i></a>
+          <h1 class="eight columns logo">
+              <a href="http://www.tsuyukimakoto.com/">
+                  <img src="http://www.tsuyukimakoto.com/blog/image/mainlogo.png" gumby-retina /> tsuyukimakoto
+              </a>
+          </h1>
+          <ul class="four columns">
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/about/">About</a></li>
+              <li class="field"><form action="http://www.google.co.jp/cse" id="cse-search-box">
+            <input type="hidden" name="cx" value="partner-pub-6359580088223585:17om3l-wxlu" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" class="xwide text input" placeholder="Google Custom Search" name="q" />
+            <input type="submit" class="google_search_button" name="sa" value="&#x691c;&#x7d22;" />
+        </form></li>
+          </ul>
+      </div>
+      <div class="row titlerow">
+        <section class="one columns"></section>
+        <section class="ten columns">
+        <h1>思考の中断と文化指向の採用</h1>
+          <li class="success badge">2016-05-30 09:30:00</li>
+          <li class="primary badge"><a href="https://plus.google.com/104851813299865505589?rel=author">by makoto tsuyuki</a></li>
+        </section>
+        <section class="one columns"></section>
+      </div>
+  </div>
+  <div class="row">
+    <section class="one columns">
+      <p><img src="http://2.gravatar.com/avatar/a49edf2521f9e75826c6546c7585f17a?size=140px" /></p>
+    </section>
+    <section class="ten columns">
+    <p>エンジニアに無視をされたり、無言のまま手であっちにいけとジェスチャーされてもショックを受けないようにしましょう。</p>
+<p>あなたのことが嫌いなのでも意地悪をしているわけでもなく、これから説明するフロー状態をなんとか維持しようとしてるんです（たいていは維持できないのでそのあと機嫌が悪くなります）。</p>
+<div class="section" id="id1">
+<h2>エンジニアの生産性は短期記憶の扱いにかかっている</h2>
+<p>設計をする時も既存のコードを追う時も新しいコードを書く時も、とにかく短期記憶を使います。</p>
+<p>たとえば、Xという関数はA,B,C,Dという4つの関数から呼ばれることがあってAからDの関数からは3通りの性質の違うデータが渡されてくることがあって、関数Xで処理されたデータはその後に状況によって関数E,F,Gのいずれかで処理をされるけれど…、といったように人間が扱えるとされている短期記憶数9を軽く超えていきます（実際は9のうち2はチャンク？）。</p>
+<p>ピープルウェアでは、作業に没頭して能率があがる「フロー状態」に入るには少なくとも15分かかるとしています。</p>
+<p>私の理解では集中して15分以上経過した非常に集中できている状態では短期記憶が <a class="reference external" href="https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two">Seven, Plus or Minus Two</a> に打ち勝てる、そして打ち勝てるエンジニアの生産性が非常に高い、ということなのかと。</p>
+<p>フロー状態は中断されるとやり直しです（短期記憶も失われて最初からやり直し）。</p>
+    <div class="row aff">
+      <section class="one columns"></section>
+      <section class="three columns">
+      <img src="http://images-jp.amazon.com/images/P/4822285243.09.SZZZZZZZ.jpg">
+      </section>
+      <section class="eight columns">
+      <a href="http://www.amazon.co.jp/gp/product/4822285243?tag=everes-22"><h4>ピープルウェア</h4>
+      <img src="http://ecx.images-amazon.com/images/G/09/buttons/buy-from-tan.gif" /></a>
+      </section>
+    </div></div>
+<div class="section" id="id2">
+<h2>応募があるのに断ってるのはなぜ？</h2>
+<p>エンジニアがとれないとれないと騒いでるのに応募があっても会いもせずに断ってる、他の職種からすると意味がわからないと思います。</p>
+<p>エンジニアが仲間になったときに双方不幸がなくやっていけるか、文化的な部分についての確認をしています。文化的な確認には実際はこの短期記憶に関する問題も含まれているかもしれない、というのが本エントリの本題です。</p>
+<p>短期記憶は9までしか扱えないとされているのに、エンジニアはもっとたくさんのことを短期記憶に詰め込んで仕事をしています。フロー状態で少し9を超えられるとしても、たとえば1の領域に4を入れられるとしたらどうでしょう？a,b,c,dという事象は当然のZとして短期記憶に格納できるとしたら生産性が上がることになるでしょう。この、a,b,c,dという事象が当然Zであるという考えをチーム全員が共有出来るとしたら？</p>
+<p>日々の勉強のインプットの仕方が似ていたり、書いているコードの考え方が同質であったり、ツイートに共感できるか、などから指向や知識に関しての文化が自分たちにあうと推測できてはじめて実際に会ってみるというステップに進みます。もちろん、事前には判断不能で可能性に期待して会ってみるということはありますが、そもそも会う前から粗探しをして無下に断っているわけではありません。</p>
+<hr class="docutils" />
+<p>短期記憶と中断について考えていたら、採用についても実は短期記憶が関係していたことに気づいたので、書いてみました。全然そんなことねーよーって意見も聞いてみたいところ。</p>
+<p><a class="reference external" href="http://d.hatena.ne.jp/mura303/20070916">プログラマ殺しの職場環境</a> というエントリでは、電話のコール数をカウントするのに短期記憶を使ってしまうというかなしい職場環境の話が書かれていてうかつにも笑ってしまいました（すぐに辞めれば良いのにと思いましたよ）。ピープルウェアの第1版は1989年だし、ソフトウェア開発の現場で何十年も同じ悩みが発露されていてかなり萎えます。</p>
+<p>なんじゃ!?このスパゲッティコードは〜？とか、コンポーネントレベルでスパゲッティとか初めて見たわー、とかってのは、想定外過ぎて短期記憶が足りないので相手するのが困難、ということなのかな。ぐへー</p>
+</div>
+
+    <div class="row snsbuttons">
+      <section class="one columns"></section>
+      <section class="ten columns">
+        <li class="badge 3rd"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="everes">Tweet</a></li>
+            <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+            <li class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></li>
+            <li class="badge 3rd"><a href="http://b.hatena.ne.jp/entry/http://www.tsuyukimakoto.com/blog/2016/05/30/dont_break_working_memory/" class="hatena-bookmark-button" data-hatena-bookmark-title="Consulのメモ 2014/07" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script></li>
+            <li class="badge 3rd"><g:plusone size="medium" href="http://www.tsuyukimakoto.com/blog/2016/05/30/dont_break_working_memory/"></g:plusone></li>
+            <li class="badge 3rd"><a data-pocket-label="pocket" data-save-url="http://www.tsuyukimakoto.com/blog/2016/05/30/dont_break_working_memory/" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a></li>
+            <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+      </section>
+      <section class="one columns"></section>
+    </div>
+      <div class="row">
+        <section class="centered three columns">
+          <li class="label info">みなさんのコメント</li>
+        </section>
+        <section class="eleven columns">
+          <ul>
+          
+          </ul>
+        </section>
+      </div>
+      <div class="fb-comments" data-href="http://www.tsuyukimakoto.com/blog/2016/05/30/dont_break_working_memory/" data-numposts="5"></div>
+    </section>
+    <section class="one columns"></section>
+  </div>
+  <div class="navbar pretty" id="nav_bottom">
+    <div class="row">
+      <a class="toggle" gumby-trigger="#nav_bottom > .row > ul" href="#"><i class="icon-menu"></i></a>
+      <ul class="twelve columns">
+      <li class="medium info btn icon-left entypo icon-fast-backward"><a href="http://www.tsuyukimakoto.com/blog/2016/05/08/af-s-nikkor-20mm-f18g-ed/">ナノクリ20mm F1.8がやってきた</a></li>
+      
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

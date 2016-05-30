@@ -5,8 +5,15 @@
         <link>http://www.tsuyukimakoto.com</link>
         <description></description>
         <language>ja</language>
-        <lastBuildDate>Sun, 08 May 2016 03:44:23 -0000</lastBuildDate>
+        <lastBuildDate>Sun, 29 May 2016 15:28:10 -0000</lastBuildDate>
         <item>
+            <title>思考の中断と文化指向の採用</title>
+            <link>http://www.tsuyukimakoto.com/blog/2016/05/30/dont_break_working_memory/</link>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
+            <pubDate>Mon, 30 May 2016 00:30:00 -0000</pubDate>
+            <guid>http://www.tsuyukimakoto.com/blog/2016/05/30/dont_break_working_memory/</guid>
+            <category>Blog Entry</category>
+        </item><item>
             <title>ナノクリ20mm F1.8がやってきた</title>
             <link>http://www.tsuyukimakoto.com/blog/2016/05/08/af-s-nikkor-20mm-f18g-ed/</link>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
@@ -54,13 +61,6 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
             <pubDate>Mon, 14 Dec 2015 14:30:00 -0000</pubDate>
             <guid>http://www.tsuyukimakoto.com/blog/2015/12/14/quitting_job/</guid>
-            <category>Blog Entry</category>
-        </item><item>
-            <title>2015 PySpa Advent Calendar #11</title>
-            <link>http://www.tsuyukimakoto.com/blog/2015/12/11/pyspa-advent-calendar-2015/</link>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">makoto tsuyuki</dc:creator>
-            <pubDate>Thu, 10 Dec 2015 16:23:45 -0000</pubDate>
-            <guid>http://www.tsuyukimakoto.com/blog/2015/12/11/pyspa-advent-calendar-2015/</guid>
             <category>Blog Entry</category>
         </item>
     </channel>
